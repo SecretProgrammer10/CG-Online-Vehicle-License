@@ -1,8 +1,8 @@
 package com.capgemini.onlinevehiclelicense.model;
 
 public class User {
-	String email;
-	String password;
+	private String email;
+	private String password;
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -12,12 +12,16 @@ public class User {
 		this.email=email;
 		this.password=password;
 	}
-	public String getEmail()
-	{
+	public String getEmail() {
 		return email;
 	}
-	public String getPassword()
-	{
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPassword() {
 		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

@@ -3,12 +3,12 @@ package com.capgemini.onlinevehiclelicense.model;
 import java.util.Date;
 
 public class Application {
-	String applicationNumber;
-	Date applicationDate;
-	String modeOfPayment;
-	Double amountPaid;
-	String paymentStatus;
-	String remarks;
+	private String applicationNumber;
+	private Date applicationDate;
+	private String modeOfPayment;
+	private Double amountPaid;
+	private String paymentStatus;
+	private String remarks;
 	public Application() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -26,19 +26,37 @@ public class Application {
 	public String getApplicationNumber() {
 		return applicationNumber;
 	}
+	public void setApplicationNumber(String applicationNumber) {
+		this.applicationNumber = applicationNumber;
+	}
 	public Date getApplicationDate() {
 		return applicationDate;
+	}
+	public void setApplicationDate(Date applicationDate) {
+		this.applicationDate = applicationDate;
 	}
 	public String getModeOfPayment() {
 		return modeOfPayment;
 	}
+	public void setModeOfPayment(String modeOfPayment) {
+		this.modeOfPayment = modeOfPayment;
+	}
 	public Double getAmountPaid() {
 		return amountPaid;
+	}
+	public void setAmountPaid(Double amountPaid) {
+		this.amountPaid = amountPaid;
 	}
 	public String getPaymentStatus() {
 		return paymentStatus;
 	}
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
 	public String getRemarks() {
 		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 }
