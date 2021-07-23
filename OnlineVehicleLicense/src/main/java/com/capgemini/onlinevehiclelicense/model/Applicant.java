@@ -2,25 +2,50 @@ package com.capgemini.onlinevehiclelicense.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Applicant")
 public class Applicant {
+	@Column(name="first_name")
 	private String firstName;
+	@Column(name="middle_name")
 	private String middleName;
+	@Column(name="last_name")
 	private String lastName;
+	@Column(name="dare_of_birth")
 	private Date dateOfBirth;
+	@Column(name="place_of_birth")
 	private String placeOfBirth;
+	@Column(name="qualification")
 	private String qualification;
+	@Column(name="mobile")
 	private String mobile;
-	private String email;
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="email")
+	@Column(name="nationality")
 	private String nationality;
+	@Column(name="vehicle_type")
 	private String vehicleType;
+	@Column(name="vehicle_number")
 	private String vehicleNumber;
+	@Column(name="address")
+	private Address address;
+	@Column(name="gender")
+	private String gender;
 	public Applicant() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public Applicant(String firstName, String middleName, String lastName, Date dateOfBirth, String placeOfBirth,
-			String qualification, String mobile, String email, String nationality, String vehicleType,
-			String vehicleNumber) {
+			String qualification, String mobile, String nationality, String vehicleType,
+			String vehicleNumber, Address address, String gender) {
 		super();
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -29,11 +54,13 @@ public class Applicant {
 		this.placeOfBirth = placeOfBirth;
 		this.qualification = qualification;
 		this.mobile = mobile;
-		this.email = email;
 		this.nationality = nationality;
 		this.vehicleType = vehicleType;
 		this.vehicleNumber = vehicleNumber;
+		this.address = address;
+		this.gender = gender;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -76,12 +103,6 @@ public class Applicant {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	public String getNationality() {
 		return nationality;
 	}
@@ -99,5 +120,17 @@ public class Applicant {
 	}
 	public void setVehicleNumber(String vehicleNumber) {
 		this.vehicleNumber = vehicleNumber;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	public String getString() {
+		return gender;
+	}
+	public void setString(String gender) {
+		this.gender = gender;
 	}
 }

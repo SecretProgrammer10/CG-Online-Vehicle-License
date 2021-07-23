@@ -1,11 +1,20 @@
 package com.capgemini.onlinevehiclelicense.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="User")
 public class User {
+	@Id
+	@Column(name="email")
 	private String email;
+	@Column(name="password")
 	private String password;
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public User(String email, String password)
 	{
