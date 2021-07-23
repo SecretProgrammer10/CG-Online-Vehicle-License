@@ -2,12 +2,9 @@ package com.capgemini.onlinevehiclelicense.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,10 +22,6 @@ public class License {
 	
 	@Column(name = "valid_till")
 	private Date validTill;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "application_number")
-	private Application application;
 	
 	public License() {
 		super();
@@ -69,13 +62,6 @@ public class License {
 	}
 	public void setValidTill(Date validTill) {
 		this.validTill = validTill;
-	}
-	public Application getApplication() {
-		return application;
-	}
-
-	public void setApplication(Application application) {
-		this.application = application;
 	}
 
 	@Override
