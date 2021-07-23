@@ -12,6 +12,7 @@ import javax.persistence.Table;
 public class License {
 	
 	@Id
+	@Column(name = "license_number")
 	private String licenseNumber;
 	
 	@Column(name = "license_type")
