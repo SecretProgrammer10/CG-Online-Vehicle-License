@@ -16,15 +16,15 @@ public class Application {
 	private int applicationNumber;
 	
 	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-	private Applicant applicant;
 	@JoinColumn(name="applicant_id")
-	
+	private Applicant applicant;
+		
 	@Column(name="application_date")
 	private LocalDate applicationDate=LocalDate.now();
 	
 	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
-	private RTOOffice rtoOffice;
 	@JoinColumn(name="rto_id")
+	private RTOOffice rtoOffice;
 
 	@Column(name="mode_of_payment")
 	private String modeOfPayment;
@@ -35,28 +35,24 @@ public class Application {
 	@Column(name="remarks")
 	private String remarks;
 	@Column(name="application_status")
-	private ApplicationStatus applicationStatus;
+	private String applicationStatus;
 	@Column(name="application_type")
-	private ApplicationType applicationType;
+	private String applicationType;
 	
-	@JoinColumn(name="appointment_number")
-	private Appointment appointment;
-	private ApplicationStatus status;
 	
 	public Application(int applicationNumber, Applicant applicant, LocalDate applicationDate, RTOOffice rtoOffice,
 			ApplicationType type, Documents documents, String modeOfPayment, double amountPaid, String paymentStatus,
-			Appointment appointment, ApplicationStatus status, String remarks) {
+			Appointment appointment, ApplicationStatus status, String remarks, String applicationType, String applicationStatus) {
 		super();
 		this.applicationNumber = applicationNumber;
 		this.applicant = applicant;
 		this.applicationDate = LocalDate.now();
 		this.rtoOffice = rtoOffice;
-		this.applicationType = type;
+		this.applicationStatus = applicationStatus;
+		this.applicationType = applicationType;
 		this.modeOfPayment = modeOfPayment;
 		this.amountPaid = amountPaid;
 		this.paymentStatus = paymentStatus;
-		this.appointment = appointment;
-		this.status = status;
 		this.remarks = remarks;
 	}
 	public Application() {
@@ -86,10 +82,10 @@ public class Application {
 	public void setRtoOffice(RTOOffice rtoOffice) {
 		this.rtoOffice = rtoOffice;
 	}
-	public ApplicationType getType() {
+	public String getType() {
 		return applicationType;
 	}
-	public void setType(ApplicationType type) {
+	public void setType(String type) {
 		this.applicationType = type;
 	}
 	public String getModeOfPayment() {
@@ -110,17 +106,11 @@ public class Application {
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
-	public Appointment getAppointment() {
-		return appointment;
+	public String getStatus() {
+		return applicationStatus;
 	}
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
-	}
-	public ApplicationStatus getStatus() {
-		return status;
-	}
-	public void setStatus(ApplicationStatus status) {
-		this.status = status;
+	public void setStatus(String status) {
+		this.applicationStatus = status;
 	}
 	public String getRemarks() {
 		return remarks;
@@ -132,7 +122,7 @@ public class Application {
 	public String toString() {
 		return "Application [applicationNumber=" + applicationNumber + ", applicant=" + applicant + ", applicationDate="
 				+ applicationDate + ", rtoOffice=" + rtoOffice + ", type=" + applicationType + ", modeOfPayment=" + modeOfPayment + ", amountPaid=" + amountPaid + ", paymentStatus=" + paymentStatus
-				+ ", appointment=" + appointment + ", status=" + status + ", remarks=" + remarks + "]";
+				+ ", status=" + applicationStatus + ", remarks=" + remarks + "]";
 	}
 	
 	
