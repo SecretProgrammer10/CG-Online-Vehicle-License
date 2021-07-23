@@ -13,7 +13,7 @@ public class RTOOffice {
 	@Id
 	@Column(name="rto_id")
 	private int rtoId;
-	@Column(name="rtoName")
+	@Column(name="rto_name")
 	private String rtoName;
 	public RTOOffice() {
 		
