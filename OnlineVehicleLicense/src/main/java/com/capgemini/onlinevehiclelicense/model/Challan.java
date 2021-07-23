@@ -1,9 +1,24 @@
 package com.capgemini.onlinevehiclelicense.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "challan")
 public class Challan {
+	
+	@Id
+	@Column(name = "challan_number")
 	private String challanNumber;
+	
+	@Column(name = "vehicle_number")
 	private String vehicleNumber;
+	
+	@Column(name = "amount")
 	private Double amount;
+	
 	public Challan() {
 		super();
 		// TODO Auto-generated constructor stub
