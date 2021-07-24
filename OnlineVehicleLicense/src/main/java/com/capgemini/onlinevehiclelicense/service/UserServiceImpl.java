@@ -13,16 +13,16 @@ import com.capgemini.onlinevehiclelicense.repository.IUserRepository;
 @Service
 public class UserServiceImpl implements UserService{
 	@Autowired
-	IUserRepository userDao;
+	IUserRepository userRepo;
 	
 	@Override
 	public String userRegistration(User user)
 	{
-		Optional<User> findUser = userDao.findById(user.getEmail());
+		Optional<User> findUser = userRepo.findById(user.getEmail());
 		try {
 			if(!findUser.isPresent())
 			{
-				userDao.save(user);
+				userRepo.save(user);
 				return "user registered";
 			}
 			else
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public String userLogin(User user) {
-		Optional<User> findUser = userDao.findById(user.getEmail());
+		Optional<User> findUser = userRepo.findById(user.getEmail());
 		try {
 			if(!findUser.isPresent())
 			{
@@ -57,11 +57,11 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public String changePassword(User user) {
-		Optional<User> findUser = userDao.findById(user.getEmail());
+		Optional<User> findUser = userRepo.findById(user.getEmail());
 		try {
 			if(findUser.isPresent())
 			{
-				userDao.save(user);
+				userRepo.save(user);
 				return "password changed";
 			}
 			else
