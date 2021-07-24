@@ -13,7 +13,7 @@ public class Application {
 	@SequenceGenerator(name="application_seq",sequenceName="application_seq", allocationSize=1)
 	
 	@Column(name="application_number")
-	private int applicationNumber;
+	private String applicationNumber;
 	
 	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name="applicant_id")
@@ -40,7 +40,7 @@ public class Application {
 	private String applicationType;
 	
 	
-	public Application(int applicationNumber, Applicant applicant, LocalDate applicationDate, RTOOffice rtoOffice,
+	public Application(String applicationNumber, Applicant applicant, LocalDate applicationDate, RTOOffice rtoOffice,
 			ApplicationType type, Documents documents, String modeOfPayment, double amountPaid, String paymentStatus,
 			Appointment appointment, ApplicationStatus status, String remarks, String applicationType, String applicationStatus) {
 		super();
@@ -58,10 +58,10 @@ public class Application {
 	public Application() {
 		super();
 	}
-	public int getApplicationNumber() {
+	public String getApplicationNumber() {
 		return applicationNumber;
 	}
-	public void setApplicationNumber(int applicationNumber) {
+	public void setApplicationNumber(String applicationNumber) {
 		this.applicationNumber=applicationNumber;
 	}
 	public Applicant getApplicant() {
