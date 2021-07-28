@@ -1,4 +1,4 @@
-package com.capgemini.onlinevehiclelicense.dao;
+package com.capgemini.onlinevehiclelicense.repository;
 
 import java.util.List;
 
