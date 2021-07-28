@@ -11,7 +11,7 @@ import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 
 
 @Repository
-public interface IRTOOfficerRepository extends JpaRepository {
+public interface IRTOOfficerRepository extends JpaRepository<RTOOfficer,Integer> {
 	
 	public String login(RTOOfficer officer);
 	public List<Application> getAllPendingApplications();
