@@ -19,16 +19,20 @@ public class Challan {
 	@Column(name = "amount")
 	private Double amount;
 	
+	@Column(name = "status")
+	private String status;
+	
 	public Challan() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public Challan(String challanNumber, String vehicleNumber, Double amount) {
+	public Challan(String challanNumber, String vehicleNumber, Double amount, String status) {
 		super();
 		this.challanNumber = challanNumber;
 		this.vehicleNumber = vehicleNumber;
 		this.amount = amount;
+		this.status = status;
 	}
+	
 	public String getChallanNumber() {
 		return challanNumber;
 	}
@@ -46,5 +50,17 @@ public class Challan {
 	}
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	@Override
+	public String toString() {
+		return "Challan [challanNumber=" + challanNumber + ", vehicleNumber=" + vehicleNumber + ", amount=" + amount
+				+ ", status=" + status + "]";
 	}
 }
