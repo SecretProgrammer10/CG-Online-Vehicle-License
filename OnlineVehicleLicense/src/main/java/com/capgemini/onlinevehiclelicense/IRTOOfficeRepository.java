@@ -1,4 +1,4 @@
-package com.capgemini.onlinevehiclelicense.repository;
+package com.capgemini.onlinevehiclelicense.dao;
 
 import org.springframework.stereotype.Repository;
 
