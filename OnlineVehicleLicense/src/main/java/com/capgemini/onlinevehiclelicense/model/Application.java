@@ -42,7 +42,7 @@ public class Application {
 	
 	public Application(String applicationNumber, Applicant applicant, LocalDate applicationDate, RTOOffice rtoOffice,
 			ApplicationType type, Documents documents, String modeOfPayment, double amountPaid, String paymentStatus,
-			Appointment appointment, ApplicationStatus status, String remarks, String applicationType, String applicationStatus) {
+			Appointment appointment, String status, String remarks, String applicationType, String applicationStatus) {
 		super();
 		this.applicationNumber = applicationNumber;
 		this.applicant = applicant;
