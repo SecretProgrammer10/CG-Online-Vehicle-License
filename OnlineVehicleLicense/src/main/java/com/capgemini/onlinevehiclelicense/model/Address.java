@@ -21,7 +21,7 @@ public class Address {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="address_seq")
 	@SequenceGenerator(name="address_seq",sequenceName="address_seq", allocationSize=1)
 	@Column(name="addr_id")
-	private int addrId;
+	private String addrId;
 	@Column(name="house")
 	private String house;
 	@Column(name="state")
@@ -42,7 +42,7 @@ public class Address {
 	}
 
 
-	public Address(int addrId, String house, String state, String city, String landmark, int pincode, Applicant applicant) {
+	public Address(String addrId, String house, String state, String city, String landmark, int pincode, Applicant applicant) {
 		super();
 		this.addrId = addrId;
 		this.house = house;
@@ -54,7 +54,7 @@ public class Address {
 	}
 
 
-	public int getAddrId() {
+	public String getAddrId() {
 		return addrId;
 	}
 
