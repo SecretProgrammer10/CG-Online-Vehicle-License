@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.User;
-import com.capgemini.onlinevehiclelicense.service.UserServiceImpl;
+import com.capgemini.onlinevehiclelicense.service.UserService;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
-	UserServiceImpl userService;
+	UserService userService;
 	
 	@PostMapping("/registerUser")
 	@ExceptionHandler(RecordAlreadyPresentException.class)

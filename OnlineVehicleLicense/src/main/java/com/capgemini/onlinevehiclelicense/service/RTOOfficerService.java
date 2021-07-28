@@ -13,7 +13,6 @@ import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.License;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
-import com.capgemini.onlinevehiclelicense.model.User;
 import com.capgemini.onlinevehiclelicense.repository.IApplicationRepository;
 import com.capgemini.onlinevehiclelicense.repository.IChallanRepository;
 import com.capgemini.onlinevehiclelicense.repository.ILicenseRepository;
