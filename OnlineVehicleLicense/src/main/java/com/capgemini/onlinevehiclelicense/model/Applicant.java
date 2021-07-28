@@ -13,6 +13,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Applicant")
 public class Applicant {
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "email", referencedColumnName = "email")
+	private User user;
+	@Id
+	@Column(name="applicant_number")
+	private String applicantNumber;
 	@Column(name="first_name")
 	private String firstName;
 	@Column(name="middle_name")
@@ -27,8 +33,6 @@ public class Applicant {
 	private String qualification;
 	@Column(name="mobile")
 	private String mobile;
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="email")
 	@Column(name="nationality")
 	private String nationality;
 	@Column(name="vehicle_type")
@@ -43,10 +47,13 @@ public class Applicant {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Applicant(String firstName, String middleName, String lastName, Date dateOfBirth, String placeOfBirth,
-			String qualification, String mobile, String nationality, String vehicleType,
-			String vehicleNumber, Address address, String gender) {
+	
+
+	public Applicant(String applicantNumber, String firstName, String middleName, String lastName,
+			Date dateOfBirth, String placeOfBirth, String qualification, String mobile, String nationality,
+			String vehicleType, String vehicleNumber, Address address, String gender) {
 		super();
+		this.applicantNumber = applicantNumber;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -60,7 +67,12 @@ public class Applicant {
 		this.address = address;
 		this.gender = gender;
 	}
-
+	public String getApplicantNumber() {
+		return applicantNumber;
+	}
+	public void setApplicantNumber(String applicantNumber) {
+		this.applicantNumber = applicantNumber;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -127,10 +139,18 @@ public class Applicant {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	public String getString() {
+	public String getGender() {
 		return gender;
 	}
-	public void setString(String gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	@Override
+	public String toString() {
+		return "Applicant [applicantNumber=" + applicantNumber + ", firstName=" + firstName + ", middleName="
+				+ middleName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", placeOfBirth="
+				+ placeOfBirth + ", qualification=" + qualification + ", mobile=" + mobile + ", email=" + user.getEmail() + ", nationality="
+				+ nationality + ", vehicleType=" + vehicleType + ", vehicleNumber=" + vehicleNumber + ", address="
+				+ address + ", gender=" + gender + "]";
 	}
 }
