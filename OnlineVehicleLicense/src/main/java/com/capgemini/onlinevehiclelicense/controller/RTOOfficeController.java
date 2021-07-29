@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,12 @@ public class RTOOfficeController {
 	@Autowired
 	private IRTOOfficeService rtoofficeService;
 	
-	@RequestMapping("/view-all-rtooffices")
+	@GetMapping("/view-all-rtooffices")
 	public List<RTOOffice> viewAllRtoOffices(@RequestBody RTOOffice rtooffice) {
 		return rtoofficeService.viewAllRtoOffices();
 	}
 	
-	@RequestMapping("/find-rtooffice-byId{rto_id}")
+	@GetMapping("/find-rtooffice-byId{rto_id}")
 	@ExceptionHandler(RecordNotFoundException.class)
 	public ResponseEntity<RTOOffice> findRtoOfficesById(@PathVariable("rto_id")int rto_id )
 	{

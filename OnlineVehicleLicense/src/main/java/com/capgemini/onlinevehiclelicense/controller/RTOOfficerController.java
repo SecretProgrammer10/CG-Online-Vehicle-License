@@ -33,35 +33,35 @@ public class RTOOfficerController {
 		rtoofficerService.officeLogin(rtoofficer);
 	}
 	
-	@RequestMapping("/view-pending-application")
+	@GetMapping("/view-pending-application")
 	@ExceptionHandler(ApplicationNotFoundException.class)
 	public ResponseEntity<Application> viewAllPendingApplications(@RequestBody RTOOfficer rtoofficer) 
 	{
 		return rtoofficerService.viewAllPendingApplications();
 	}
 	
-	@RequestMapping("/view-rejected-application")
+	@GetMapping("/view-rejected-application")
 	@ExceptionHandler(ApplicationNotFoundException.class)
 	public ResponseEntity<Application> viewAllRejectedApplications(@RequestBody RTOOfficer rtoofficer) 
 	{
 		return rtoofficerService.viewAllRejectedApplications();
 	}
 	
-	@RequestMapping("/view-approved-application")
+	@GetMapping("/view-approved-application")
 	@ExceptionHandler(ApplicationNotFoundException.class)
 	public ResponseEntity<Application> viewAllApprovedApplications(@RequestBody RTOOfficer rtoofficer) 
 	{
 		return rtoofficerService.viewAllApprovedApplications();
 	}
 	
-	@RequestMapping("/view-applicationby-id/{applicationNumber}")
+	@GetMapping("/view-applicationby-id/{applicationNumber}")
 	@ExceptionHandler(ApplicationNotFoundException.class)
 	public ResponseEntity<Application> viewApplicationById(@PathVariable("applicationNumber")String applicationNumber)
 	{
 		return rtoofficerService.viewApplicationById(applicationNumber);
 	}
 	
-	@RequestMapping("/view-challanby-vehiclenumber/{vehicleNumber}")
+	@GetMapping("/view-challanby-vehiclenumber/{vehicleNumber}")
 	@ExceptionHandler(ChallanNotFoundException.class)
 	public ResponseEntity<Challan> checkChallanByVehicleNumber(@PathVariable("vehicleNumber")String vehicleNumber)
 	{
@@ -69,7 +69,7 @@ public class RTOOfficerController {
 		
 	}
 	
-	@RequestMapping("/check-all-challan")
+	@GetMapping("/check-all-challan")
 	public List<Challan> checkAllChallan(@RequestBody Challan challan)
 	{
 		return rtoofficerService.checkAllChallan();
