@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "challan")
@@ -11,28 +12,27 @@ public class Challan {
 	
 	@Id
 	@Column(name = "challan_number")
+	@NotEmpty(message="challan Number should not be empty")
 	private String challanNumber;
 	
 	@Column(name = "vehicle_number")
+	@NotEmpty(message="vehicle number should not be empty")
 	private String vehicleNumber;
 	
 	@Column(name = "amount")
+	@NotEmpty(message="amount should not be empty")
 	private Double amount;
-	
-	@Column(name = "status")
-	private String status;
 	
 	public Challan() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	public Challan(String challanNumber, String vehicleNumber, Double amount, String status) {
+	public Challan(String challanNumber, String vehicleNumber, Double amount) {
 		super();
 		this.challanNumber = challanNumber;
 		this.vehicleNumber = vehicleNumber;
 		this.amount = amount;
-		this.status = status;
 	}
-	
 	public String getChallanNumber() {
 		return challanNumber;
 	}
@@ -50,17 +50,5 @@ public class Challan {
 	}
 	public void setAmount(Double amount) {
 		this.amount = amount;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	@Override
-	public String toString() {
-		return "Challan [challanNumber=" + challanNumber + ", vehicleNumber=" + vehicleNumber + ", amount=" + amount
-				+ ", status=" + status + "]";
 	}
 }
