@@ -35,7 +35,8 @@ public class Address {
 	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name="applicant_id")
 	private Applicant applicant;
-	
+//	@Column(name="type")
+//	private String type;
 	
 	public Address() {
 		super();

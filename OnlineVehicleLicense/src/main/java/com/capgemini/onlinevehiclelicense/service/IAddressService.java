@@ -1,11 +1,14 @@
 package com.capgemini.onlinevehiclelicense.service;
 
+import org.springframework.http.ResponseEntity;
+
 import com.capgemini.onlinevehiclelicense.model.Address;
 
 public interface IAddressService {
-	public String createAddress(Address addr);
-	public String updateAddress(Address addr, String addr_id);
-	public String viewAddress(String addr_id);
-	public String deleteAddress(String addr_id);
+	public ResponseEntity<Address> createAddress(Address addr);
+	public ResponseEntity<Address> updateAddress(Address addr, String addrId);
+	public ResponseEntity<Address> viewAddress(String addrId);
+	public ResponseEntity<Address> deleteAddress(String addrId);
+	
 	
 }

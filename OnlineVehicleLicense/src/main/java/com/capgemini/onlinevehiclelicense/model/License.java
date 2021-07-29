@@ -6,6 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "license")
@@ -13,15 +17,21 @@ public class License {
 	
 	@Id
 	@Column(name = "license_number")
+	@Pattern(regexp="^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$")
 	private String licenseNumber;
 	
 	@Column(name = "license_type")
+	@NotEmpty(message="license type should not be empty")
 	private String licenseType;
 	
 	@Column(name = "date_of_issue")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@NotEmpty(message="date of issue should not be empty")
 	private Date dateOfIssue;
 	
 	@Column(name = "valid_till")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@NotEmpty(message="validity should not be empty")
 	private Date validTill;
 	
 	public License() {

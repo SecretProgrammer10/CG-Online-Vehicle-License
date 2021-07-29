@@ -1,5 +1,6 @@
 package com.capgemini.onlinevehiclelicense.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -158,17 +159,37 @@ public class RTOOfficerService implements IRTOOfficerService {
 
 	
 	@Override
-	public License generateLearnerLicense(License license) {
-		return this.licenseRepo.save(license);
-		
+	public License generateLearnerLicense(String applcationNumber) {
+		Application matchApplication = this.appRepo.findById(applcationNumber)
+				.orElseThrow(() -> new ApplicationNotFoundException("Application Not Found!!!"));
+		License license = new License();
+		license.setLicenseType("Learner");
+		java.util.Date today=new java.util.Date(); 
+		license.setDateOfIssue(today);
+		Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 *5));
+		license.setValidTill(validity);
+		if(matchApplication.getStatus().equalsIgnoreCase("approved")) {
+			this.licenseRepo.save(license);
+		}
+		return license;		
 	}
-	
-	
+
 
 	@Override
 	public License generateDrivingLicense(String applcationNumber) {
 		// TODO Auto-generated method stub
-		return null;
+		Application matchApplication = this.appRepo.findById(applcationNumber)
+				.orElseThrow(() -> new ApplicationNotFoundException("Application Not Found!!!"));
+		License license = new License();
+		license.setLicenseType("Driving");
+		java.util.Date today=new java.util.Date(); 
+		license.setDateOfIssue(today);
+		Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 *5));
+		license.setValidTill(validity);
+		if(matchApplication.getStatus().equalsIgnoreCase("approved")) {
+			this.licenseRepo.save(license);
+		}
+		return license;
 	}
 
 	@Override
