@@ -23,6 +23,9 @@ public class Challan {
 	@NotEmpty(message="amount should not be empty")
 	private Double amount;
 	
+	@Column(name = "status")
+	private String status;
+	
 	public Challan() {
 		super();
 		// TODO Auto-generated constructor stub
