@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.onlinevehiclelicense.model.Application;
-import com.capgemini.onlinevehiclelicense.model.License;
+//import com.capgemini.onlinevehiclelicense.model.License;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
-import com.capgemini.onlinevehiclelicense.model.User;
+//import com.capgemini.onlinevehiclelicense.model.User;
 
 
 @Repository

@@ -3,7 +3,6 @@ package com.capgemini.onlinevehiclelicense.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +27,7 @@ public class RTOOfficeController {
 	
 	@GetMapping("/find-rtooffice-byId{rto_id}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<RTOOffice> findRtoOfficesById(@PathVariable("rto_id")int rto_id )
+	public RTOOffice findRtoOfficesById(@PathVariable("rto_id")int rto_id )
 	{
 		return rtoofficeService.findRtoOfficesById(rto_id);
 		

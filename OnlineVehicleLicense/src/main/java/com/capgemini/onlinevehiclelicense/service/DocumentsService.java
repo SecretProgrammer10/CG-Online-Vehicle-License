@@ -16,9 +16,10 @@ public class DocumentsService implements IDocumentsService{
 	
 	
 	@Override
-	public ResponseEntity<Documents> createDocuments(Documents doc) {
+	public ResponseEntity<Documents> uploadDocuments(Documents doc) {
 		// TODO Auto-generated method stub
 		this.documentsRepository.save(doc);
+		
 		return ResponseEntity.ok().build();
 	}
 
