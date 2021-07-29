@@ -20,7 +20,7 @@ public interface IRTOOfficerService {
 	public ResponseEntity<Challan> checkChallanByVehicleNumber(String vehicleNumber);
 	public List<Challan> checkAllChallan();
 	public Application modifyTestResultById(String applicationNumber);
-	public License generateLearnerLicense(License license);
+	public License generateLearnerLicense(String applcationNumber);
 	public License generateDrivingLicense(String applcationNumber);
 	public String emailLicense(License license);
 	
