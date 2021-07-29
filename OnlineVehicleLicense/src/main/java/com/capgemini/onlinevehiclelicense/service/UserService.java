@@ -82,7 +82,10 @@ public class UserService implements IUserService{
 
 	@Override
 	public String generateOtp() {
-		return null;
+		int min = 100000;
+		int max = 999999;
+		int otp = (int)(Math.random()*(max-min+1)+min);
+		return String.valueOf(otp);
 	}
 
 	@Override

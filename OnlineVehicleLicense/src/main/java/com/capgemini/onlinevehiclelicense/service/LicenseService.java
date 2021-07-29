@@ -32,7 +32,7 @@ public class LicenseService implements ILicenseService {
 				.orElseThrow(() -> new LicenseNotFoundException("License Not Found!!!"));
 		matchLicense.setDateOfIssue(license.getDateOfIssue());
 		matchLicense.setValidTill(license.getValidTill());
-		this.licenseRepository.save(license);
+		this.licenseRepository.save(matchLicense);
 		return ResponseEntity.ok().build();
 	}
 
