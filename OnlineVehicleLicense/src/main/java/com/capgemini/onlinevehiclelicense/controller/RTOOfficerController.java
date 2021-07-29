@@ -1,5 +1,7 @@
 package com.capgemini.onlinevehiclelicense.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.onlinevehiclelicense.exception.ApplicationNotFoundException;
+import com.capgemini.onlinevehiclelicense.exception.ChallanNotFoundException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Application;
+import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 import com.capgemini.onlinevehiclelicense.service.IRTOOfficerService;
 
@@ -29,32 +33,47 @@ public class RTOOfficerController {
 		rtoofficerService.officeLogin(rtoofficer);
 	}
 	
-	@RequestMapping("/view-pending-application")
+	@GetMapping("/view-pending-application")
 	@ExceptionHandler(ApplicationNotFoundException.class)
 	public ResponseEntity<Application> viewAllPendingApplications(@RequestBody RTOOfficer rtoofficer) 
 	{
 		return rtoofficerService.viewAllPendingApplications();
 	}
 	
-	@RequestMapping("/view-rejected-application")
+	@GetMapping("/view-rejected-application")
 	@ExceptionHandler(ApplicationNotFoundException.class)
 	public ResponseEntity<Application> viewAllRejectedApplications(@RequestBody RTOOfficer rtoofficer) 
 	{
 		return rtoofficerService.viewAllRejectedApplications();
 	}
 	
-	@RequestMapping("/view-approved-application")
+	@GetMapping("/view-approved-application")
 	@ExceptionHandler(ApplicationNotFoundException.class)
 	public ResponseEntity<Application> viewAllApprovedApplications(@RequestBody RTOOfficer rtoofficer) 
 	{
 		return rtoofficerService.viewAllApprovedApplications();
 	}
 	
-	@RequestMapping("/view-pending-application")
+	@GetMapping("/view-applicationby-id/{applicationNumber}")
 	@ExceptionHandler(ApplicationNotFoundException.class)
 	public ResponseEntity<Application> viewApplicationById(@PathVariable("applicationNumber")String applicationNumber)
 	{
 		return rtoofficerService.viewApplicationById(applicationNumber);
 	}
-
+	
+	@GetMapping("/view-challanby-vehiclenumber/{vehicleNumber}")
+	@ExceptionHandler(ChallanNotFoundException.class)
+	public ResponseEntity<Challan> checkChallanByVehicleNumber(@PathVariable("vehicleNumber")String vehicleNumber)
+	{
+		return rtoofficerService.checkChallanByVehicleNumber(vehicleNumber);
+		
+	}
+	
+	@GetMapping("/check-all-challan")
+	public List<Challan> checkAllChallan(@RequestBody Challan challan)
+	{
+		return rtoofficerService.checkAllChallan();
+	}
+	
+	
 }
