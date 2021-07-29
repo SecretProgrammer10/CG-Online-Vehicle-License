@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Applicant;
-import com.capgemini.onlinevehiclelicense.model.User;
 import com.capgemini.onlinevehiclelicense.repository.IApplicantRepository;
 
 @Service

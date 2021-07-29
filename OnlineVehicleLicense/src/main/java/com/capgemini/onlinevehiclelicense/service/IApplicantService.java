@@ -1,7 +1,7 @@
 package com.capgemini.onlinevehiclelicense.service;
 
 import com.capgemini.onlinevehiclelicense.model.Applicant;
-import com.capgemini.onlinevehiclelicense.model.User;
+
 
 public interface IApplicantService {
 

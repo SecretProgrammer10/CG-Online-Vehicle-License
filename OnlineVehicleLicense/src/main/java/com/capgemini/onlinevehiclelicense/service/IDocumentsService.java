@@ -1,6 +1,6 @@
 package com.capgemini.onlinevehiclelicense.service;
 
-import com.capgemini.onlinevehiclelicense.model.Address;
+
 import com.capgemini.onlinevehiclelicense.model.Documents;
 
 public interface IDocumentsService {
