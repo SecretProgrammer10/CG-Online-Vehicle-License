@@ -12,7 +12,7 @@ public interface ILicenseService {
 	public ResponseEntity<License> renewLicense(License license, String licenseNumber);
 	public List<License> viewAllLicense();
 	public License viewLicenseByNumber(String licenseNumber);
-	public ResponseEntity<License> viewLicenseByType(String licenseType);
+	public License viewLicenseByType(String licenseType);
 	public ResponseEntity<License> deleteLicense(String licenseNumber);
 	
 }
