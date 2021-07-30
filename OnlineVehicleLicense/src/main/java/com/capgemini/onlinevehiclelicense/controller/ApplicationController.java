@@ -17,46 +17,54 @@ import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.service.ApplicationService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/application")
 public class ApplicationController {
 
 	@Autowired
 	ApplicationService applicationService;
-	
+	@ApiOperation(value = "Create application")
 	@PostMapping("/createApplication")
 	@ExceptionHandler(RecordAlreadyPresentException.class)
-	public void createApplication(@RequestBody Application application) {
-		applicationService.createApplication(application);
+	public ResponseEntity<Application> createApplication(@RequestBody Application application) {
+		return applicationService.createApplication(application);
 	}
+	@ApiOperation(value = "View application by id")
 	@GetMapping("/viewApplication/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void viewApplicationById(@PathVariable String applicationNumber) {
-		applicationService.viewApplicationById(applicationNumber);
+	public String viewApplicationById(@PathVariable String applicationNumber) {
+		return applicationService.viewApplicationById(applicationNumber);
 	}
+	@ApiOperation(value = "Update application")
 	@PutMapping("/updateApplication")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void updateApplication(@RequestBody Application application) {
-		applicationService.updateApplication(application);
+	public ResponseEntity<Application> updateApplication(@RequestBody Application application) {
+		return applicationService.updateApplication(application);
 	}
+	@ApiOperation(value = "Remove application")
 	@DeleteMapping("/removeApplication/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void deleteApplicationById(@PathVariable String applicationNumber) {
-		applicationService.deleteApplicationById(applicationNumber);
+	public ResponseEntity<Application> deleteApplicationById(@PathVariable String applicationNumber) {
+		return applicationService.deleteApplicationById(applicationNumber);
 	}
+	@ApiOperation(value = "Check mode of payment")
 	@GetMapping("/paymentMode/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void checkModeOfPayment(@PathVariable String applicationNumber) {
-		applicationService.checkModeOfPayment(applicationNumber);
+	public String checkModeOfPayment(@PathVariable String applicationNumber) {
+		return applicationService.checkModeOfPayment(applicationNumber);
 	}
+	@ApiOperation(value = "Pay amount")
 	@PutMapping("/payAmount/{applicationNumber}/{amountPaid}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void payAmount(@PathVariable String applicationNumber, @PathVariable Double amountPaid) {
-		applicationService.payAmount(applicationNumber, amountPaid);
+	public ResponseEntity<Application> payAmount(@PathVariable String applicationNumber, @PathVariable Double amountPaid) {
+		return applicationService.payAmount(applicationNumber, amountPaid);
 	}
+	@ApiOperation(value = "View payment status")
 	@GetMapping("/payAmount/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void viewPaymentStatus(@PathVariable String applicationNumber) {
-		applicationService.viewPaymentStatus(applicationNumber);
+	public String viewPaymentStatus(@PathVariable String applicationNumber) {
+		return applicationService.viewPaymentStatus(applicationNumber);
 	}
 }
