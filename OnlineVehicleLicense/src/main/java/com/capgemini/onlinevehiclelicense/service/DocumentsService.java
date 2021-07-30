@@ -1,9 +1,12 @@
 package com.capgemini.onlinevehiclelicense.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 //import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Documents;
@@ -18,9 +21,23 @@ public class DocumentsService implements IDocumentsService{
 	@Override
 	public ResponseEntity<Documents> uploadDocuments(Documents doc) {
 		// TODO Auto-generated method stub
-		this.documentsRepository.save(doc);
+		Optional<Documents> documents = this.documentsRepository.findById(doc.getApplicationNumber());
+		try {
+			if(!documents.isPresent()) {
+				this.documentsRepository.save(doc);
+				return ResponseEntity.ok().build();
+			}
+			else {
+				throw new RecordAlreadyPresentException("Documents already uploaded!!!");
+			}
+		} catch (RecordAlreadyPresentException e) {
+			//e.printStackTrace();
+			return new ResponseEntity<Documents>(HttpStatus.ALREADY_REPORTED);
+		}
 		
-		return ResponseEntity.ok().build();
+		
+		
+		
 	}
 
 	@Override
@@ -42,18 +59,14 @@ public class DocumentsService implements IDocumentsService{
 	}
 
 	@Override
-	public ResponseEntity<Documents> viewDocuments(String app_number) {
+	public Documents viewDocuments(String app_number) {
 		// TODO Auto-generated method stub
 		try {
-			Documents matchDocuments = this.documentsRepository.findById(app_number)
+			return this.documentsRepository.findById(app_number)
 					.orElseThrow(() -> new RecordNotFoundException("Document Not Found!!!"));
-			System.out.println(matchDocuments.getIdProof());
-			System.out.println(matchDocuments.getAddressProof());
-			System.out.println(matchDocuments.getPhoto());
-			return ResponseEntity.ok().build();
 		} catch (RecordNotFoundException e) {
 			// TODO Auto-generated catch block
-			return  new ResponseEntity<Documents>(HttpStatus.NOT_FOUND);
+			return null;
 		}
 	}
 
