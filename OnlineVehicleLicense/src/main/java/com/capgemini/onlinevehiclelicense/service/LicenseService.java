@@ -1,13 +1,15 @@
 package com.capgemini.onlinevehiclelicense.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.capgemini.onlinevehiclelicense.exception.LicenseNotFoundException;
+import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
+import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.License;
 import com.capgemini.onlinevehiclelicense.repository.ILicenseRepository;
 
@@ -21,19 +23,38 @@ public class LicenseService implements ILicenseService {
 	@Override
 	public ResponseEntity<License> addLicense(License license) {
 		// TODO Auto-generated method stub
-		this.licenseRepository.save(license);
-		return ResponseEntity.ok().build();
+		Optional<License> findLicense = this.licenseRepository.findById(license.getLicenseNumber());
+		try {
+			if(!findLicense.isPresent()) {
+				this.licenseRepository.save(license);
+				return new ResponseEntity<License>(HttpStatus.CREATED);
+			}
+			else
+				throw new RecordAlreadyPresentException("License Already Issued to User!!!");
+		} catch(RecordAlreadyPresentException e) {
+			e.printStackTrace();
+			return new ResponseEntity<License>(HttpStatus.ALREADY_REPORTED);
+		}
+		
 	}
 
 	@Override
 	public ResponseEntity<License> renewLicense(License license, String licenseNumber) {
 		// TODO Auto-generated method stub
-		License matchLicense = this.licenseRepository.viewLicenseByNumber(licenseNumber)
-				.orElseThrow(() -> new LicenseNotFoundException("License Not Found!!!"));
-		matchLicense.setDateOfIssue(license.getDateOfIssue());
-		matchLicense.setValidTill(license.getValidTill());
-		this.licenseRepository.save(matchLicense);
-		return ResponseEntity.ok().build();
+		License matchLicense;
+		try {
+			matchLicense = this.licenseRepository.findById(licenseNumber)
+					.orElseThrow(() -> new RecordNotFoundException("License Not Found!!!"));
+			matchLicense.setDateOfIssue(license.getDateOfIssue());
+			matchLicense.setValidTill(license.getValidTill());
+			this.licenseRepository.save(matchLicense);
+			return new ResponseEntity<License>(HttpStatus.OK);
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<License>(HttpStatus.NOT_FOUND);
+		}
+		
 	}
 
 	@Override
@@ -45,34 +66,44 @@ public class LicenseService implements ILicenseService {
 	@Override
 	public License viewLicenseByNumber(String licenseNumber) {
 		// TODO Auto-generated method stub
-		return this.licenseRepository.viewLicenseByNumber(licenseNumber)
-				.orElseThrow(() -> new LicenseNotFoundException("License Not Found!!!"));
+		try {
+			return this.licenseRepository.findById(licenseNumber)
+					.orElseThrow(() -> new RecordNotFoundException("License Not Found!!!"));
+		} catch(RecordNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
-	public ResponseEntity<License> viewLicenseByType(String licenseType) {
+	public License viewLicenseByType(String licenseType) {
 		// TODO Auto-generated method stub
 		try {
-			List<License> licenseByTypeList = this.licenseRepository.viewLicenseByType(licenseType);
-			if(licenseByTypeList != null) {
-				//System.out.println(licenseByTypeList.toString());
-				licenseByTypeList.forEach((license) -> System.out.println(license));
-				return new ResponseEntity<License>(HttpStatus.OK);
-			}
-			else
-				throw new LicenseNotFoundException("No Licenses found for this License Type");
-		} catch (LicenseNotFoundException le){
-			return new ResponseEntity<License>(HttpStatus.NOT_FOUND); 
+			return this.licenseRepository.viewLicenseByType(licenseType)
+					.orElseThrow(() -> new RecordNotFoundException("License does not exist!!!"));
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
 	}
 
 	@Override
 	public ResponseEntity<License> deleteLicense(String licenseNumber) {
 		// TODO Auto-generated method stub
-		License matchLicense = this.licenseRepository.viewLicenseByNumber(licenseNumber)
-				.orElseThrow(() -> new LicenseNotFoundException("License Not Found!!!"));
-		this.licenseRepository.delete(matchLicense);
-		return ResponseEntity.ok().build();
+		License matchLicense;
+		try {
+			matchLicense = this.licenseRepository.findById(licenseNumber)
+					.orElseThrow(() -> new RecordNotFoundException("License Not Found!!!"));
+			this.licenseRepository.delete(matchLicense);
+			return new ResponseEntity<License>(HttpStatus.OK);
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<License>(HttpStatus.NOT_FOUND);
+		}
+		
+		
 	}
 	
 }

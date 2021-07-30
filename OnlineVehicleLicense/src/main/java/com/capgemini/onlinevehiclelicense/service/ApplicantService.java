@@ -3,11 +3,14 @@ package com.capgemini.onlinevehiclelicense.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Applicant;
+import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.User;
 import com.capgemini.onlinevehiclelicense.repository.IApplicantRepository;
 
@@ -16,13 +19,13 @@ public class ApplicantService implements IApplicantService{
 	@Autowired
 	IApplicantRepository applicantRepo;
 	@Override
-	public String addApplicant(Applicant applicant){
+	public ResponseEntity<Applicant> addApplicant(Applicant applicant){
 		Optional<Applicant> findUser = applicantRepo.findById(applicant.getApplicantNumber());
 		try {
 			if(!findUser.isPresent())
 			{
 				applicantRepo.save(applicant);
-				return "applicant profile created";
+				return new ResponseEntity<Applicant>(HttpStatus.OK);
 			}
 			else
 			{
@@ -31,60 +34,46 @@ public class ApplicantService implements IApplicantService{
 		}
 		catch(RecordAlreadyPresentException e)
 		{
-			return e.getMessage();
+			return new ResponseEntity<Applicant>(HttpStatus.ALREADY_REPORTED);
 		}
 	}
 	@Override
-	public String updateApplicantDetails(Applicant applicant) {
+	public ResponseEntity<Applicant> updateApplicantDetails(Applicant applicant) {
 		Optional<Applicant> findUser = applicantRepo.findById(applicant.getApplicantNumber());
 		try {
 			if(!findUser.isPresent())
 			{
 				applicantRepo.save(applicant);
-				return "applicant profile updated";
+				return new ResponseEntity<Applicant>(HttpStatus.OK);
 			}
 			else
 			{
-				throw new RecordNotFoundException("applicant profile not found");
+				throw new RecordNotFoundException("Applicant profile not found");
 			}
 		}
 		catch(RecordNotFoundException e)
 		{
-			return e.getMessage();
+			return new ResponseEntity<Applicant>(HttpStatus.NOT_FOUND);
 		}
 	}
 	@Override
-	public String removeApplicant(Applicant applicant) {
-		Optional<Applicant> findUser = applicantRepo.findById(applicant.getApplicantNumber());
+	public ResponseEntity<Applicant> removeApplicant(String applicantNumber) {
+		
 		try {
-			if(!findUser.isPresent())
-			{
-				applicantRepo.deleteById(applicant.getApplicantNumber());
-				return "applicant profile deleted";
-			}
-			else
-			{
-				throw new RecordNotFoundException("applicant profile not found");
-			}
+				Applicant findUser = applicantRepo.findById(applicantNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
+				applicantRepo.deleteById(applicantNumber);
+				return new ResponseEntity<Applicant>(HttpStatus.OK);
 		}
 		catch(RecordNotFoundException e)
 		{
-			return e.getMessage();
+			return new ResponseEntity<Applicant>(HttpStatus.NOT_FOUND);
 		}
 	}
 	@Override
-	public String viewApplicantDetails(Applicant applicant) {
-		Optional<Applicant> findUser = applicantRepo.findById(applicant.getApplicantNumber());
-		try {
-			if(!findUser.isPresent())
-			{
-				Applicant applicantFinder = findUser.get();
-				return applicantFinder.toString();
-			}
-			else
-			{
-				throw new RecordNotFoundException("applicant profile not found");
-			}
+	public String viewApplicantById(String applicantNumber) {
+		try {		
+			Applicant findUser = applicantRepo.findById(applicantNumber).orElseThrow(() -> new RecordNotFoundException("Applicant profile not found"));
+				return findUser.toString();
 		}
 		catch(RecordNotFoundException e)
 		{

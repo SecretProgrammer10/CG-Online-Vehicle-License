@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Documents")
@@ -19,12 +20,15 @@ public class Documents {
 	private String applicationNumber;
 	
 	@Column(name = "photo")
+	@NotEmpty(message="photo should not be empty")
 	private String photo;
 	
 	@Column(name = "id_proof")
+	@NotEmpty(message="id proof should not be empty")
 	private String idProof;
 	
 	@Column(name = "address_proof")
+	@NotEmpty(message="address proof should not be empty")
 	private String addressProof;
 
 	

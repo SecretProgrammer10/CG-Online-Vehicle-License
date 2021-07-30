@@ -36,14 +36,14 @@ public class ApplicantController {
 	}
 	@DeleteMapping("/removeApplicant")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void removeApplicant(@RequestBody Applicant applicant)
+	public void removeApplicant(@RequestBody String applicantNumber)
 	{
-		applicantService.removeApplicant(applicant);
+		applicantService.removeApplicant(applicantNumber);
 	}
 	@GetMapping("/viewApplicant")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void viewApplicantDetails(@RequestBody Applicant applicant)
+	public void viewApplicantById(@RequestBody String applicantNumber)
 	{
-		applicantService.viewApplicantDetails(applicant);
+		applicantService.viewApplicantById(applicantNumber);
 	}
 }

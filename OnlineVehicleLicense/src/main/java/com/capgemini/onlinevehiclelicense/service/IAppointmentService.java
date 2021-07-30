@@ -1,12 +1,14 @@
 package com.capgemini.onlinevehiclelicense.service;
 
+import org.springframework.http.ResponseEntity;
+
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 
 public interface IAppointmentService {
 	   
-	public String createAppointment(Appointment AP);
-	public String viewAppointment(Appointment AP);
-	public String updateAppointment(Appointment AP,String appointment_number);
-	public String deleteAppointment(Appointment AP);
+	public ResponseEntity<Appointment> createAppointment(Appointment appointment);
+	public Appointment viewAppointmentDetails(String appointmentNumber);
+	public ResponseEntity<Appointment> updateAppointment(Appointment appointment);
+	public ResponseEntity<Appointment> deleteAppointment(String appointmentNumber);
 
 }
