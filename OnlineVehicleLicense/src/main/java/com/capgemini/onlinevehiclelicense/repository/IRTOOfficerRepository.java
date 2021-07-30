@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.onlinevehiclelicense.model.Application;
+import com.capgemini.onlinevehiclelicense.model.Challan;
 //import com.capgemini.onlinevehiclelicense.model.License;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 //import com.capgemini.onlinevehiclelicense.model.User;
@@ -30,5 +31,8 @@ public interface IRTOOfficerRepository extends JpaRepository<RTOOfficer,Integer>
 	
 	@Query("select * from Application a where a.application_number like ?1")
 	public List<Application> viewApplicationbyId();
+
+	@Query("select * from Challan c where c.vehicle_number like ?1")
+	public List<Challan> checkAllChallanByVehicleNumber(String vehicleNumber);
 	
 }
