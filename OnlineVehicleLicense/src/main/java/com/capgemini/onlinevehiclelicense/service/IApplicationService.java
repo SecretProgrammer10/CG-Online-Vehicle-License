@@ -1,14 +1,16 @@
 package com.capgemini.onlinevehiclelicense.service;
 
+import org.springframework.http.ResponseEntity;
+
 import com.capgemini.onlinevehiclelicense.model.Application;
 
 public interface IApplicationService {
 	
-	public String createApplication(Application app_number);
-	public String viewApplication(Application app_number);
-	public String updateApplication(Application app_number);
-	public String deleteApplication(Application app_number);
-	public String checkModeOfPayment(String payment);
-	public String payAmount(int amount);
-	public String viewPaymentStatus(String payment_status);
+	public ResponseEntity<Application> createApplication(Application application);
+	public String viewApplicationById(String applicationNumber);
+	public ResponseEntity<Application> updateApplication(Application application);
+	public ResponseEntity<Application> deleteApplicationById(String applicationNumber);
+	public String checkModeOfPayment(String applicationNumber);
+	public ResponseEntity<Application> payAmount(String applicationNumber, Double amountPaid);
+	public String viewPaymentStatus(String applicationNumber);
 }

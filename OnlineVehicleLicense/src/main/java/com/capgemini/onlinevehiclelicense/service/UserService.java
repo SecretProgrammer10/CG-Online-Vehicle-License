@@ -3,6 +3,8 @@ package com.capgemini.onlinevehiclelicense.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
@@ -16,14 +18,14 @@ public class UserService implements IUserService{
 	IUserRepository userRepo;
 	
 	@Override
-	public String userRegistration(User user)
+	public ResponseEntity<User> userRegistration(User user)
 	{
 		Optional<User> findUser = userRepo.findById(user.getEmail());
 		try {
 			if(!findUser.isPresent())
 			{
 				userRepo.save(user);
-				return "user registered";
+				return new ResponseEntity<User>(HttpStatus.OK);
 			}
 			else
 			{
@@ -32,17 +34,17 @@ public class UserService implements IUserService{
 		}
 		catch(RecordAlreadyPresentException e)
 		{
-			return e.getMessage();
+			return new ResponseEntity<User>(HttpStatus.ALREADY_REPORTED);
 		}
 	}
 
 	@Override
-	public String userLogin(User user) {
+	public ResponseEntity<User> userLogin(User user) {
 		Optional<User> findUser = userRepo.findById(user.getEmail());
 		try {
 			if(!findUser.isPresent())
 			{
-				return "logged in";
+				return new ResponseEntity<User>(HttpStatus.OK);
 			}
 			else
 			{
@@ -51,18 +53,18 @@ public class UserService implements IUserService{
 		}
 		catch(RecordNotFoundException e)
 		{
-			return e.getMessage();
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@Override
-	public String changePassword(User user) {
+	public ResponseEntity<User> changePassword(User user) {
 		Optional<User> findUser = userRepo.findById(user.getEmail());
 		try {
 			if(findUser.isPresent())
 			{
 				userRepo.save(user);
-				return "password changed";
+				return new ResponseEntity<User>(HttpStatus.OK);
 			}
 			else
 			{
@@ -71,7 +73,7 @@ public class UserService implements IUserService{
 		}
 		catch(RecordNotFoundException e)
 		{
-			return e.getMessage();
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -82,10 +84,7 @@ public class UserService implements IUserService{
 
 	@Override
 	public String generateOtp() {
-		int min = 100000;
-		int max = 999999;
-		int otp = (int)(Math.random()*(max-min+1)+min);
-		return String.valueOf(otp);
+		return null;
 	}
 
 	@Override
