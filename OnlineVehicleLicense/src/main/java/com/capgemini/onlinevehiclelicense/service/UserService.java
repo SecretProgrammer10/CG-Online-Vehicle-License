@@ -40,15 +40,20 @@ public class UserService implements IUserService{
 
 	@Override
 	public ResponseEntity<User> userLogin(User user) {
-		Optional<User> findUser = userRepo.findById(user.getEmail());
+		Optional<User> findUser = this.userRepo.findById(user.getEmail());
 		try {
-			if(!findUser.isPresent())
+			if(findUser.isPresent())
 			{
-				return new ResponseEntity<User>(HttpStatus.OK);
+				if(findUser.get().getPassword().equals(user.getPassword())) {
+					return new ResponseEntity<User>(HttpStatus.OK);
+				}
+				else {
+					throw new RecordNotFoundException("Invlaid Password!!!");
+				}
 			}
 			else
 			{
-				throw new RecordNotFoundException("Invalid email or password");
+				throw new RecordNotFoundException("Invalid email");
 			}
 		}
 		catch(RecordNotFoundException e)

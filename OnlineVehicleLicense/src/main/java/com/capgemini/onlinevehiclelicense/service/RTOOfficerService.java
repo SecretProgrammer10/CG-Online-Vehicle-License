@@ -43,12 +43,18 @@ public class RTOOfficerService implements IRTOOfficerService {
 		try {
 			if(findOfficer.isPresent())
 			{
-				System.out.println("logged in");
-				return new ResponseEntity<RTOOfficer>(HttpStatus.OK);
+				if(findOfficer.get().getPassword().equals(officer.getPassword())) {
+					System.out.println("logged in");
+					return new ResponseEntity<RTOOfficer>(HttpStatus.OK);
+				}
+				else
+				{
+					throw new RecordNotFoundException("Invalid password");
+				}
 			}
 			else
 			{
-				throw new RecordNotFoundException("Invalid email or password");
+				throw new RecordNotFoundException("Invalid email");
 			}
 		}
 		catch(RecordNotFoundException e)
