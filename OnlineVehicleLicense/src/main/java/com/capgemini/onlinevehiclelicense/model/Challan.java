@@ -131,20 +131,28 @@ public class Challan {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
+<<<<<<< HEAD
+=======
 
+>>>>>>> 500e490a5f7c5ed72e30724e2d93733a880fcd80
 	/**
 	 * @return the status
 	 */
 	public String getStatus() {
 		return status;
 	}
+<<<<<<< HEAD
+=======
 
+>>>>>>> 500e490a5f7c5ed72e30724e2d93733a880fcd80
 	/**
 	 * @param status the status to set
 	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
+<<<<<<< HEAD
+=======
 
 	@Override
 	public String toString() {
@@ -152,4 +160,5 @@ public class Challan {
 				+ ", status=" + status + "]";
 	}
 	
+>>>>>>> 500e490a5f7c5ed72e30724e2d93733a880fcd80
 }
