@@ -158,7 +158,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 		// TODO Auto-generated method stub
 		try {
 			return this.applicationRepository.findById(applicationNumber)
-					.orElseThrow(() -> new RecordNotFoundException("Application does not Exist!!!"));
+					.orElseThrow(() -> new RecordNotFoundException("Application does not exist!!!"));
 		} catch (RecordNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

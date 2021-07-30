@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,46 +17,54 @@ import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.service.ApplicationService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/application")
 public class ApplicationController {
 
 	@Autowired
 	ApplicationService applicationService;
-	
+	@ApiOperation(value = "Create application")
 	@PostMapping("/createApplication")
 	@ExceptionHandler(RecordAlreadyPresentException.class)
-	public void createApplication(@RequestBody Application application) {
-		applicationService.createApplication(application);
+	public ResponseEntity<Application> createApplication(@RequestBody Application application) {
+		return applicationService.createApplication(application);
 	}
-	@GetMapping("/viewApplication")
+	@ApiOperation(value = "View application by id")
+	@GetMapping("/viewApplication/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void viewApplicationById(@RequestBody String applicationNumber) {
-		applicationService.viewApplicationById(applicationNumber);
+	public String viewApplicationById(@PathVariable String applicationNumber) {
+		return applicationService.viewApplicationById(applicationNumber);
 	}
+	@ApiOperation(value = "Update application")
 	@PutMapping("/updateApplication")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void updateApplication(@RequestBody Application application) {
-		applicationService.updateApplication(application);
+	public ResponseEntity<Application> updateApplication(@RequestBody Application application) {
+		return applicationService.updateApplication(application);
 	}
-	@DeleteMapping("/removeApplication")
+	@ApiOperation(value = "Remove application")
+	@DeleteMapping("/removeApplication/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void deleteApplicationById(@RequestBody String applicationNumber) {
-		applicationService.deleteApplicationById(applicationNumber);
+	public ResponseEntity<Application> deleteApplicationById(@PathVariable String applicationNumber) {
+		return applicationService.deleteApplicationById(applicationNumber);
 	}
-	@GetMapping("/paymentMode")
+	@ApiOperation(value = "Check mode of payment")
+	@GetMapping("/paymentMode/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void checkModeOfPayment(@RequestBody String applicationNumber) {
-		applicationService.checkModeOfPayment(applicationNumber);
+	public String checkModeOfPayment(@PathVariable String applicationNumber) {
+		return applicationService.checkModeOfPayment(applicationNumber);
 	}
-	@PutMapping("/payAmount")
+	@ApiOperation(value = "Pay amount")
+	@PutMapping("/payAmount/{applicationNumber}/{amountPaid}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void payAmount(@RequestBody String applicationNumber, @RequestBody Double amountPaid) {
-		applicationService.payAmount(applicationNumber, amountPaid);
+	public ResponseEntity<Application> payAmount(@PathVariable String applicationNumber, @PathVariable Double amountPaid) {
+		return applicationService.payAmount(applicationNumber, amountPaid);
 	}
-	@GetMapping("/payAmount")
+	@ApiOperation(value = "View payment status")
+	@GetMapping("/payAmount/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void viewPaymentStatus(@RequestBody String applicationNumber) {
-		applicationService.viewPaymentStatus(applicationNumber);
+	public String viewPaymentStatus(@PathVariable String applicationNumber) {
+		return applicationService.viewPaymentStatus(applicationNumber);
 	}
 }
