@@ -2,6 +2,7 @@ package com.capgemini.onlinevehiclelicense.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +18,18 @@ import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Applicant;
 import com.capgemini.onlinevehiclelicense.service.ApplicantService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/applicant")
+@Api(value = "Online Vehicle License")
+@Validated
 public class ApplicantController {
 	
 	@Autowired
 	ApplicantService applicantService;
+	
 	@ApiOperation(value = "Add applicant profile")
 	@PostMapping("/addApplicant")
 	@ExceptionHandler(RecordAlreadyPresentException.class)
@@ -32,6 +37,7 @@ public class ApplicantController {
 	{
 		return applicantService.addApplicant(applicant);
 	}
+	
 	@ApiOperation(value = "Update applicant profile")
 	@PutMapping("/updateApplicant")
 	@ExceptionHandler(RecordNotFoundException.class)
@@ -39,6 +45,7 @@ public class ApplicantController {
 	{
 		return applicantService.updateApplicantDetails(applicant);
 	}
+	
 	@ApiOperation(value = "Remove applicant profile")
 	@DeleteMapping("/removeApplicant/{applicantNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
@@ -46,6 +53,7 @@ public class ApplicantController {
 	{
 		return applicantService.removeApplicant(applicantNumber);
 	}
+	
 	@ApiOperation(value = "View applicant profile by id")
 	@GetMapping("/viewApplicant/{applicantNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)

@@ -57,7 +57,8 @@ public class LicenseController {
 	
 	@ApiOperation(value = "View License By License Number")
 	@GetMapping("/view-license/{licenseNumber}")
-	public License viewLicenseByLicenseNumber(@PathVariable("licenseNumber") String licenseNumber) {
+	public License viewLicenseByLicenseNumber(
+			@ApiParam(value = "License Type Based on which to retrieve license details") @PathVariable("licenseNumber") String licenseNumber) {
 		return licenseService.viewLicenseByNumber(licenseNumber);
 	}
 	

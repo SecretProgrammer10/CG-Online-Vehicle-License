@@ -2,6 +2,7 @@ package com.capgemini.onlinevehiclelicense.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,13 +16,17 @@ import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.User;
 import com.capgemini.onlinevehiclelicense.service.UserService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/user")
+@Api(value = "Online Vehicle License")
+@Validated
 public class UserController {
 	@Autowired
 	UserService userService;
+	
 	@ApiOperation(value = "Register User")
 	@PostMapping("/registerUser")
 	@ExceptionHandler(RecordAlreadyPresentException.class)
@@ -29,6 +34,7 @@ public class UserController {
 	{
 		return userService.userRegistration(user);
 	}
+	
 	@ApiOperation(value = "Login User")
 	@GetMapping("/loginUser")
 	@ExceptionHandler(RecordNotFoundException.class)
@@ -36,6 +42,7 @@ public class UserController {
 	{
 		return userService.userLogin(user);
 	}
+	
 	@ApiOperation(value = "Change Password")
 	@PutMapping("/changePassword")
 	@ExceptionHandler(RecordNotFoundException.class)

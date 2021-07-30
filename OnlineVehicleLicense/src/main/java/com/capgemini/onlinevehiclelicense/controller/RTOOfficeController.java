@@ -3,6 +3,7 @@ package com.capgemini.onlinevehiclelicense.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,20 +15,37 @@ import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.RTOOffice;
 import com.capgemini.onlinevehiclelicense.service.IRTOOfficeService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/rtoOffice")
+@Api(value = "Online Vehicle License")
+@Validated
 public class RTOOfficeController {
 	@Autowired
 	private IRTOOfficeService rtoofficeService;
 	
+	@ApiOperation(value = "View RTOOffices", response = List.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Operation Successful"),
+			@ApiResponse(code = 401, message = "You do not have the authorization to access this resource"),
+			@ApiResponse(code = 403, message = "Access to this resource is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
+	})
 	@GetMapping("/view-all-rtooffices")
 	public List<RTOOffice> viewAllRtoOffices(@RequestBody RTOOffice rtooffice) {
 		return rtoofficeService.viewAllRtoOffices();
 	}
 	
+	@ApiOperation(value = "View RTOOffice By rto_id")
 	@GetMapping("/find-rtooffice-byId{rto_id}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public RTOOffice findRtoOfficesById(@PathVariable("rto_id")int rto_id )
+	public RTOOffice findRtoOfficeById(
+			@ApiParam(value = "rto_id param") @PathVariable("rto_id")int rto_id )
 	{
 		return rtoofficeService.findRtoOfficesById(rto_id);
 		
