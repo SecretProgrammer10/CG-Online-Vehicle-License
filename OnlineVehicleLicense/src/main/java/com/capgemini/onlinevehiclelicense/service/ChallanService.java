@@ -17,10 +17,10 @@ public class ChallanService implements IChallanService {
 	
 
 	@Override
-	public String payChallanByVehicleNumber(String vehicleNumber) {
+	public String payChallan(String challanNumber) {
 		// TODO Auto-generated method stub
 		try {
-			Challan findChallan = this.challanRepository.findById(vehicleNumber)
+			Challan findChallan = this.challanRepository.findById(challanNumber)
 					.orElseThrow(() -> new RecordNotFoundException("Vehicle Does not Exist!!!"));
 			findChallan.setStatus("Paid");
 			this.challanRepository.save(findChallan);
@@ -41,16 +41,9 @@ public class ChallanService implements IChallanService {
 
 
 	@Override
-	public Challan getDetailsByVehicleNumber(String vehicleNumber) {
+	public List<Challan> getDetailsByVehicleNumber(String vehicleNumber) {
 		// TODO Auto-generated method stub
-		try {
-			return this.challanRepository.findById(vehicleNumber)
-					.orElseThrow(() -> new RecordNotFoundException("No Matching Vehicle Found!!!"));
-		} catch(RecordNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		}
-		 
+		return this.challanRepository.getDetailsByVehicleNumber(vehicleNumber);
 	}
-
+	
 }

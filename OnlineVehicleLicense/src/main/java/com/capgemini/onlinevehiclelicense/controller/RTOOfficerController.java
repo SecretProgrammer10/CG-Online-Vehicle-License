@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,13 +20,22 @@ import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 import com.capgemini.onlinevehiclelicense.service.IRTOOfficerService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/rtoOfficer")
+@Api(value = "Online Vehicle License")
+@Validated
 public class RTOOfficerController {
 	
 	@Autowired
 	private IRTOOfficerService rtoOfficerService;
 	
+	@ApiOperation(value = "Login RTO_Officer")
 	@GetMapping("/loginRtoOfficer")
 	@ExceptionHandler(RecordNotFoundException.class)
 	public void loginUser(@RequestBody RTOOfficer rtoofficer)
@@ -33,6 +43,13 @@ public class RTOOfficerController {
 		rtoOfficerService.officeLogin(rtoofficer);
 	}
 	
+	@ApiOperation(value = "View Pending Applications", response = List.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Operation Successful"),
+			@ApiResponse(code = 401, message = "You do not have the authorization to access this resource"),
+			@ApiResponse(code = 403, message = "Access to this resource is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
+	})
 	@GetMapping("/view-pending-application")
 	@ExceptionHandler(RecordNotFoundException.class)
 	public List<Application> viewAllPendingApplications() 
@@ -40,6 +57,13 @@ public class RTOOfficerController {
 		return rtoOfficerService.viewAllPendingApplications();
 	}
 	
+	@ApiOperation(value = "View Rejected Applications", response = List.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Operation Successful"),
+			@ApiResponse(code = 401, message = "You do not have the authorization to access this resource"),
+			@ApiResponse(code = 403, message = "Access to this resource is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
+	})
 	@GetMapping("/view-rejected-application")
 	@ExceptionHandler(RecordNotFoundException.class)
 	public List<Application> viewAllRejectedApplications() 
@@ -47,6 +71,13 @@ public class RTOOfficerController {
 		return rtoOfficerService.viewAllRejectedApplications();
 	}
 	
+	@ApiOperation(value = "View Approved Applications", response = List.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Operation Successful"),
+			@ApiResponse(code = 401, message = "You do not have the authorization to access this resource"),
+			@ApiResponse(code = 403, message = "Access to this resource is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
+	})
 	@GetMapping("/view-approved-application")
 	@ExceptionHandler(RecordNotFoundException.class)
 	public List<Application> viewAllApprovedApplications( ) 
@@ -54,37 +85,71 @@ public class RTOOfficerController {
 		return rtoOfficerService.viewAllApprovedApplications();
 	}
 	
+	@ApiOperation(value = "View Application By Id")
 	@GetMapping("/view-applicationby-id/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public Application viewApplicationById(@PathVariable("applicationNumber")String applicationNumber)
+	public Application viewApplicationById(
+			@ApiParam(value = "Application Number") @PathVariable("applicationNumber")String applicationNumber)
 	{
 		return rtoOfficerService.viewApplicationById(applicationNumber);
 	}
 	
+	@ApiOperation(value = "View Challan By Vehicle Number")
 	@GetMapping("/view-challanby-vehiclenumber/{vehicleNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public List<Challan> checkChallanByVehicleNumber(@PathVariable("vehicleNumber")String vehicleNumber)
+	public List<Challan> checkChallanByVehicleNumber(
+			@ApiParam(value = "Vehicle Number") @PathVariable("vehicleNumber")String vehicleNumber)
 	{
 		return rtoOfficerService.checkChallanByVehicleNumber(vehicleNumber);
 		
 	}
 	
+	@ApiOperation(value = "View All Challans", response = List.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Operation Successful"),
+			@ApiResponse(code = 401, message = "You do not have the authorization to access this resource"),
+			@ApiResponse(code = 403, message = "Access to this resource is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
+	})
 	@GetMapping("/check-all-challan")
 	public List<Challan> checkAllChallan()
 	{
 		return rtoOfficerService.checkAllChallan();
 	}
 	
+	@ApiOperation(value = "View All Appointments", response = List.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Operation Successful"),
+			@ApiResponse(code = 401, message = "You do not have the authorization to access this resource"),
+			@ApiResponse(code = 403, message = "Access to this resource is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
+	})
 	@GetMapping("/view-all-appointment")
-	public List<Appointment> viewAllappointment()
+	public List<Appointment> viewAllAppointments()
 	{
 		return rtoOfficerService.viewAllAppointments();
 		
 	}
 	
+	@ApiOperation(value = "View All Applications", response = List.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Operation Successful"),
+			@ApiResponse(code = 401, message = "You do not have the authorization to access this resource"),
+			@ApiResponse(code = 403, message = "Access to this resource is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
+	})
+	@GetMapping("/view-all-applications")
+	public List<Application> viewAllApplications()
+	{
+		return rtoOfficerService.viewAllApplications();
+		
+	}
+	
+	@ApiOperation(value = "Modify Test Results")
 	@PutMapping("/modify-test-results/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<Appointment> modifyTestResults(@PathVariable("applicationNumber") String applicationNumber)
+	public ResponseEntity<Appointment> modifyTestResults(
+			@ApiParam(value = "Application Number") @PathVariable("applicationNumber") String applicationNumber)
 	{
 		return rtoOfficerService.modifyTestResultById(applicationNumber, "Pass");
 	}

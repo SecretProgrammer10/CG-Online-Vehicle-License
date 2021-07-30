@@ -43,14 +43,16 @@ public class ChallanController {
 	
 	@ApiOperation(value = "View Challan By Vehicle Number")
 	@GetMapping("/get-challan-details/{vehicleNumber}")
-	public Challan viewChallanDetailsByVehicleNumber(
+	public List<Challan> viewChallanDetailsByVehicleNumber(
 			@ApiParam(value = "Vehicle Number used to retrive challans") @PathVariable("vehicleNumber") String vehicleNumber) {
 		return challanService.getDetailsByVehicleNumber(vehicleNumber);
 	}
 	
-	@PutMapping("/pay-challan/{vehicleNumber}")
-	public String payChallanByVehicleNumber(@PathVariable("vehicleNumber") String vehicleNumber) {
-		return challanService.payChallanByVehicleNumber(vehicleNumber);
+	@ApiOperation(value = "Pay Challan")
+	@PutMapping("/pay-challan/{challanNumber}")
+	public String payChallan(
+			@ApiParam(value = "Challan Number") @PathVariable("challanNumber") String challanNumber) {
+		return challanService.payChallan(challanNumber);
 	}
 	
 }
