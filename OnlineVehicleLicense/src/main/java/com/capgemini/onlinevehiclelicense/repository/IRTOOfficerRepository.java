@@ -29,8 +29,8 @@ public interface IRTOOfficerRepository extends JpaRepository<RTOOfficer,Integer>
 	@Query("select a from Application a where a.application_status like 'approved'")
 	public List<Application> viewApprovedApplications();
 	
-	@Query("select * from Application a where a.application_number like ?1")
-	public List<Application> viewApplicationbyId();
+	@Query("select a from Application a where a.application_number like ?1")
+	public List<Application> viewApplicationbyId( String applicationNumber);
 
 	@Query("select * from Challan c where c.vehicle_number like ?1")
 	public List<Challan> checkAllChallanByVehicleNumber(String vehicleNumber);
