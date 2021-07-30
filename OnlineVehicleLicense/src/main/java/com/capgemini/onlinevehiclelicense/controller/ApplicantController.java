@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,15 +35,15 @@ public class ApplicantController {
 	{
 		applicantService.updateApplicantDetails(applicant);
 	}
-	@DeleteMapping("/removeApplicant")
+	@DeleteMapping("/removeApplicant/{applicantNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void removeApplicant(@RequestBody String applicantNumber)
+	public void removeApplicant(@PathVariable String applicantNumber)
 	{
 		applicantService.removeApplicant(applicantNumber);
 	}
-	@GetMapping("/viewApplicant")
+	@GetMapping("/viewApplicant/{applicantNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void viewApplicantById(@RequestBody String applicantNumber)
+	public void viewApplicantById(@PathVariable String applicantNumber)
 	{
 		applicantService.viewApplicantById(applicantNumber);
 	}
