@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,9 +29,9 @@ public class ApplicationController {
 	public void createApplication(@RequestBody Application application) {
 		applicationService.createApplication(application);
 	}
-	@GetMapping("/viewApplication")
+	@GetMapping("/viewApplication/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void viewApplicationById(@RequestBody String applicationNumber) {
+	public void viewApplicationById(@PathVariable String applicationNumber) {
 		applicationService.viewApplicationById(applicationNumber);
 	}
 	@PutMapping("/updateApplication")
@@ -38,24 +39,24 @@ public class ApplicationController {
 	public void updateApplication(@RequestBody Application application) {
 		applicationService.updateApplication(application);
 	}
-	@DeleteMapping("/removeApplication")
+	@DeleteMapping("/removeApplication/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void deleteApplicationById(@RequestBody String applicationNumber) {
+	public void deleteApplicationById(@PathVariable String applicationNumber) {
 		applicationService.deleteApplicationById(applicationNumber);
 	}
-	@GetMapping("/paymentMode")
+	@GetMapping("/paymentMode/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void checkModeOfPayment(@RequestBody String applicationNumber) {
+	public void checkModeOfPayment(@PathVariable String applicationNumber) {
 		applicationService.checkModeOfPayment(applicationNumber);
 	}
-	@PutMapping("/payAmount")
+	@PutMapping("/payAmount/{applicationNumber}/{amountPaid}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void payAmount(@RequestBody String applicationNumber, @RequestBody Double amountPaid) {
+	public void payAmount(@PathVariable String applicationNumber, @PathVariable Double amountPaid) {
 		applicationService.payAmount(applicationNumber, amountPaid);
 	}
-	@GetMapping("/payAmount")
+	@GetMapping("/payAmount/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void viewPaymentStatus(@RequestBody String applicationNumber) {
+	public void viewPaymentStatus(@PathVariable String applicationNumber) {
 		applicationService.viewPaymentStatus(applicationNumber);
 	}
 }
