@@ -63,7 +63,7 @@ public class LicenseController {
 	
 	@ApiOperation(value = "View License By Type")
 	@GetMapping("/view-license-by-type/{licenseType}")
-	public ResponseEntity<License> viewLicenseByType(
+	public License viewLicenseByType(
 			@ApiParam(value = "License Type Based on which to retrieve license details") @PathVariable("licenseType") String licenseType) {
 		return licenseService.viewLicenseByType(licenseType);
 	}
