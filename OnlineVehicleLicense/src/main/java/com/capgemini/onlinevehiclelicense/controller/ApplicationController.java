@@ -50,12 +50,12 @@ public class ApplicationController {
 	}
 	@PutMapping("/payAmount")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void payAmount(String applicationNumber, Double amountPaid) {
+	public void payAmount(@RequestBody String applicationNumber, @RequestBody Double amountPaid) {
 		applicationService.payAmount(applicationNumber, amountPaid);
 	}
 	@GetMapping("/payAmount")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void viewPaymentStatus(String applicationNumber) {
+	public void viewPaymentStatus(@RequestBody String applicationNumber) {
 		applicationService.viewPaymentStatus(applicationNumber);
 	}
 }
