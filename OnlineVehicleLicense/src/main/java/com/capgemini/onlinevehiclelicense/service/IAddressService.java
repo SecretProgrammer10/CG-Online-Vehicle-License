@@ -7,7 +7,7 @@ import com.capgemini.onlinevehiclelicense.model.Address;
 public interface IAddressService {
 	public ResponseEntity<Address> createAddress(Address addr);
 	public ResponseEntity<Address> updateAddress(Address addr, String addrId);
-	public ResponseEntity<Address> viewAddress(String addrId);
+	public Address viewAddress(String addrId);
 	public ResponseEntity<Address> deleteAddress(String addrId);
 	
 	

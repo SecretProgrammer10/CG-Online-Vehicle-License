@@ -20,7 +20,7 @@ import com.capgemini.onlinevehiclelicense.service.IDocumentsService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("document")
+@RequestMapping("/document")
 public class DocumentsController {
 	
 	@Autowired

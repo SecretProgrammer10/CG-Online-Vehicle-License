@@ -52,21 +52,15 @@ public class AddressService implements IAddressService{
 	
 
 	@Override
-	public ResponseEntity<Address> viewAddress(String addrId) {
+	public Address viewAddress(String addrId) {
 		// TODO Auto-generated method stub
-		
 		try {
-			Address matchAddress = this.addressRepository.findById(addrId)
+			return this.addressRepository.findById(addrId)
 					.orElseThrow(() -> new RecordNotFoundException("Address Not Found"));
-			System.out.println(matchAddress.getHouse());
-			System.out.println(matchAddress.getCity());
-			System.out.println(matchAddress.getPincode());
-			System.out.println(matchAddress.getLandmark());
-			System.out.println(matchAddress.getState());
-			return ResponseEntity.ok().build(); 
+			
 		} catch (RecordNotFoundException e) {
 			// TODO Auto-generated catch block
-			return  new ResponseEntity<Address>(HttpStatus.NOT_FOUND);
+			return null;
 		}
 	}
 
