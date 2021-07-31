@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
-import com.capgemini.onlinevehiclelicense.model.Applicant;
+//import com.capgemini.onlinevehiclelicense.model.Applicant;
 import com.capgemini.onlinevehiclelicense.model.Application;
-import com.capgemini.onlinevehiclelicense.model.Application;
+//import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.repository.IApplicationRepository;
 
 @Service
@@ -76,7 +76,7 @@ public class ApplicationService implements IApplicationService{
 	public ResponseEntity<Application> deleteApplicationById(String applicationNumber) {
 		try {
 				Application findUser = applicationRepo.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
-				applicationRepo.deleteById(applicationNumber);
+				this.applicationRepo.delete(findUser);
 				return new ResponseEntity<Application>(HttpStatus.OK);
 		}
 		catch(RecordNotFoundException e)
