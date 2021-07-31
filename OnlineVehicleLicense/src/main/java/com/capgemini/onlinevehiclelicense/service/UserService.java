@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
-import com.capgemini.onlinevehiclelicense.model.User;
+import com.capgemini.onlinevehiclelicense.model.Users;
 import com.capgemini.onlinevehiclelicense.repository.IUserRepository;
 
 @Service
@@ -18,14 +18,14 @@ public class UserService implements IUserService{
 	IUserRepository userRepo;
 	
 	@Override
-	public ResponseEntity<User> userRegistration(User user)
+	public ResponseEntity<Users> userRegistration(Users user)
 	{
-		Optional<User> findUser = userRepo.findById(user.getEmail());
+		Optional<Users> findUser = userRepo.findById(user.getEmail());
 		try {
 			if(!findUser.isPresent())
 			{
 				userRepo.save(user);
-				return new ResponseEntity<User>(HttpStatus.OK);
+				return new ResponseEntity<Users>(HttpStatus.OK);
 			}
 			else
 			{
@@ -34,18 +34,18 @@ public class UserService implements IUserService{
 		}
 		catch(RecordAlreadyPresentException e)
 		{
-			return new ResponseEntity<User>(HttpStatus.ALREADY_REPORTED);
+			return new ResponseEntity<Users>(HttpStatus.ALREADY_REPORTED);
 		}
 	}
 
 	@Override
-	public ResponseEntity<User> userLogin(User user) {
-		Optional<User> findUser = this.userRepo.findById(user.getEmail());
+	public ResponseEntity<Users> userLogin(Users user) {
+		Optional<Users> findUser = this.userRepo.findById(user.getEmail());
 		try {
 			if(findUser.isPresent())
 			{
 				if(findUser.get().getPassword().equals(user.getPassword())) {
-					return new ResponseEntity<User>(HttpStatus.OK);
+					return new ResponseEntity<Users>(HttpStatus.OK);
 				}
 				else {
 					throw new RecordNotFoundException("Invlaid Password!!!");
@@ -58,18 +58,18 @@ public class UserService implements IUserService{
 		}
 		catch(RecordNotFoundException e)
 		{
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@Override
-	public ResponseEntity<User> changePassword(User user) {
-		Optional<User> findUser = userRepo.findById(user.getEmail());
+	public ResponseEntity<Users> changePassword(Users user) {
+		Optional<Users> findUser = userRepo.findById(user.getEmail());
 		try {
 			if(findUser.isPresent())
 			{
 				userRepo.save(user);
-				return new ResponseEntity<User>(HttpStatus.OK);
+				return new ResponseEntity<Users>(HttpStatus.OK);
 			}
 			else
 			{
@@ -78,12 +78,12 @@ public class UserService implements IUserService{
 		}
 		catch(RecordNotFoundException e)
 		{
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@Override
-	public String forgotPassword(User user) {
+	public String forgotPassword(Users user) {
 		return null;
 	}
 

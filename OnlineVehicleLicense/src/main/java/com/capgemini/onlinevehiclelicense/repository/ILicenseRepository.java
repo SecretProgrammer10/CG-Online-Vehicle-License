@@ -11,7 +11,7 @@ import com.capgemini.onlinevehiclelicense.model.License;
 @Repository
 public interface ILicenseRepository extends JpaRepository<License, String> {
 	
-	@Query("select l from License l where l.license_type like ?1")
+	@Query("select l from License l where l.licenseType like ?1")
 	public Optional<License> viewLicenseByType(String licenseType);
 	
 }

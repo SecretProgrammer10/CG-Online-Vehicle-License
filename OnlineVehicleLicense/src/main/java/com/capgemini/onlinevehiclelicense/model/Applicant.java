@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class Applicant {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "email", referencedColumnName = "email")
-	private User user;
+	private Users user;
 	@Id
 	@Column(name="applicant_number")
 	private String applicantNumber;
@@ -39,8 +39,11 @@ public class Applicant {
 	private String vehicleType;
 	@Column(name="vehicle_number")
 	private String vehicleNumber;
-	@Column(name="address")
+	
+	/*@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "email", referencedColumnName = "email")
 	private Address address;
+	*/
 	@Column(name="gender")
 	private String gender;
 	public Applicant() {
@@ -64,7 +67,7 @@ public class Applicant {
 		this.nationality = nationality;
 		this.vehicleType = vehicleType;
 		this.vehicleNumber = vehicleNumber;
-		this.address = address;
+	//	this.address = address;
 		this.gender = gender;
 	}
 	public String getApplicantNumber() {
@@ -133,12 +136,12 @@ public class Applicant {
 	public void setVehicleNumber(String vehicleNumber) {
 		this.vehicleNumber = vehicleNumber;
 	}
-	public Address getAddress() {
+	/*public Address getAddress() {
 		return address;
 	}
 	public void setAddress(Address address) {
 		this.address = address;
-	}
+	}*/
 	public String getGender() {
 		return gender;
 	}
@@ -150,7 +153,7 @@ public class Applicant {
 		return "Applicant [applicantNumber=" + applicantNumber + ", firstName=" + firstName + ", middleName="
 				+ middleName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", placeOfBirth="
 				+ placeOfBirth + ", qualification=" + qualification + ", mobile=" + mobile + ", email=" + user.getEmail() + ", nationality="
-				+ nationality + ", vehicleType=" + vehicleType + ", vehicleNumber=" + vehicleNumber + ", address="
-				+ address + ", gender=" + gender + "]";
+				+ nationality + ", vehicleType=" + vehicleType + ", vehicleNumber=" + vehicleNumber + /*", address="
+				+ address + */ ", gender=" + gender + "]";
 	}
 }

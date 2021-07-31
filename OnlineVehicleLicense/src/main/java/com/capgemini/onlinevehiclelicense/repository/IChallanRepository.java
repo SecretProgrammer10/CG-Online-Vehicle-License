@@ -11,6 +11,6 @@ import com.capgemini.onlinevehiclelicense.model.Challan;
 @Repository
 public interface IChallanRepository extends JpaRepository<Challan, String> {
 
-	@Query("select c from Challan c where c.vehicle_number like ?1")
+	@Query("select c from Challan c where c.vehicleNumber like ?1")
 	public List<Challan> getDetailsByVehicleNumber(String vehicleNumber);
 }

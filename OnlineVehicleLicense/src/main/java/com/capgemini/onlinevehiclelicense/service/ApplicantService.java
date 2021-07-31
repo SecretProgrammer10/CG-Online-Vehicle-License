@@ -11,7 +11,7 @@ import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentExceptio
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Applicant;
 import com.capgemini.onlinevehiclelicense.model.Application;
-import com.capgemini.onlinevehiclelicense.model.User;
+import com.capgemini.onlinevehiclelicense.model.Users;
 import com.capgemini.onlinevehiclelicense.repository.IApplicantRepository;
 
 @Service
