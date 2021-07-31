@@ -11,28 +11,28 @@ import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 //import com.capgemini.onlinevehiclelicense.model.License;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
-//import com.capgemini.onlinevehiclelicense.model.User;
+//import com.capgemini.onlinevehiclelicense.model.Users;
 
 
 @Repository
 public interface IRTOOfficerRepository extends JpaRepository<RTOOfficer,Integer> {
 	
-	@Query("select r from Rto_officer r where r.email like ?1 ")
+	@Query("select r from RTOOfficer r where r.email like ?1 ")
 	public Optional<RTOOfficer> findByEmail(String email);
 	
-	@Query("select a from Application a where a.application_status like 'pending'")
+	@Query("select a from Application a where a.applicationStatus like 'pending'")
 	public List<Application> viewPendingApplications();
 	
-	@Query("select a from Application a where a.application_status like 'rejected'")
+	@Query("select a from Application a where a.applicationStatus like 'rejected'")
 	public List<Application> viewAllRejectedApplications();
 	
-	@Query("select a from Application a where a.application_status like 'approved'")
+	@Query("select a from Application a where a.applicationStatus like 'approved'")
 	public List<Application> viewApprovedApplications();
 	
-	@Query("select a from Application a where a.application_number like ?1")
+	@Query("select a from Application a where a.applicationNumber like ?1")
 	public List<Application> viewApplicationbyId( String applicationNumber);
 
-	@Query("select * from Challan c where c.vehicle_number like ?1")
+	@Query("select c from Challan c where c.vehicleNumber like ?1")
 	public List<Challan> checkAllChallanByVehicleNumber(String vehicleNumber);
 	
 }

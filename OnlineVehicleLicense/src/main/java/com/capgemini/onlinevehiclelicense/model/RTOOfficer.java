@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(name="RTO_Officer")
+@Table(name="Rtoofficer")
 public class RTOOfficer {
 	
 	@OneToOne(cascade=CascadeType.ALL)

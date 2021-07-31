@@ -30,7 +30,7 @@ public class LicenseService implements ILicenseService {
 				return new ResponseEntity<License>(HttpStatus.CREATED);
 			}
 			else
-				throw new RecordAlreadyPresentException("License Already Issued to User!!!");
+				throw new RecordAlreadyPresentException("License Already Issued to Users!!!");
 		} catch(RecordAlreadyPresentException e) {
 			e.printStackTrace();
 			return new ResponseEntity<License>(HttpStatus.ALREADY_REPORTED);
