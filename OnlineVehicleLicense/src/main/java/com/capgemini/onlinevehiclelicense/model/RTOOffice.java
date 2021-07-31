@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 
 
 @Entity
-@Table(name="RTO_Office")
+@Table(name="Rtooffice")
 
 public class RTOOffice {
 	

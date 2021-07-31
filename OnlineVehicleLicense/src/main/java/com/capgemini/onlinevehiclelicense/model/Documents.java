@@ -15,14 +15,14 @@ public class Documents {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "application_number")
 	
-	@Id
-	@Column(name = "application_number")
-	private String applicationNumber;
+	
+	private Application application;
 	
 	@Column(name = "photo")
 	@NotEmpty(message="photo should not be empty")
 	private String photo;
 	
+	@Id
 	@Column(name = "id_proof")
 	@NotEmpty(message="id proof should not be empty")
 	private String idProof;
@@ -37,21 +37,49 @@ public class Documents {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Documents(String applicationNumber, String photo, String idProof, String addressProof) {
+	
+
+	/**
+	 * @param application
+	 * @param photo
+	 * @param idProof
+	 * @param addressProof
+	 */
+	public Documents(Application application, @NotEmpty(message = "photo should not be empty") String photo,
+			@NotEmpty(message = "id proof should not be empty") String idProof,
+			@NotEmpty(message = "address proof should not be empty") String addressProof) {
 		super();
-		this.applicationNumber = applicationNumber;
+		this.application = application;
 		this.photo = photo;
 		this.idProof = idProof;
 		this.addressProof = addressProof;
 	}
 
-	public String getApplicationNumber() {
-		return applicationNumber;
+
+
+
+
+	/**
+	 * @return the application
+	 */
+	public Application getApplication() {
+		return application;
 	}
 
-	public void setApplicationNumber(String applicationNumber) {
-		this.applicationNumber = applicationNumber;
+
+
+
+
+	/**
+	 * @param application the application to set
+	 */
+	public void setApplication(Application application) {
+		this.application = application;
 	}
+
+
+
+
 
 	public String getPhoto() {
 		return photo;
@@ -73,13 +101,17 @@ public class Documents {
 		return addressProof;
 	}
 
+	@Override
+	public String toString() {
+		return "Documents [application=" + application + ", photo=" + photo + ", idProof=" + idProof + ", addressProof="
+				+ addressProof + "]";
+	}
+
+
+
 	public void setAddressProof(String addressProof) {
 		this.addressProof = addressProof;
 	}
 
-	@Override
-	public String toString() {
-		return "Documents [applicationNumber=" + applicationNumber + ", photo=" + photo + ", idProof=" + idProof
-				+ ", addressProof=" + addressProof + "]";
-	}
+	
 }

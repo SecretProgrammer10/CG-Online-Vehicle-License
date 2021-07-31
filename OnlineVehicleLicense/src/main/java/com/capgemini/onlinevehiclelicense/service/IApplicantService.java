@@ -3,7 +3,7 @@ package com.capgemini.onlinevehiclelicense.service;
 import org.springframework.http.ResponseEntity;
 
 import com.capgemini.onlinevehiclelicense.model.Applicant;
-import com.capgemini.onlinevehiclelicense.model.User;
+import com.capgemini.onlinevehiclelicense.model.Users;
 
 public interface IApplicantService {
 

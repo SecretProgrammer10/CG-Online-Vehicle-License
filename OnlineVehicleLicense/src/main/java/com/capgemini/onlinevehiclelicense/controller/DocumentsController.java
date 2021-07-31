@@ -26,7 +26,7 @@ public class DocumentsController {
 	@Autowired
 	private IDocumentsService documentsService;
 	
-	
+	/*
 	@ApiOperation("Upload Documents")
 	@PostMapping("/upload-documents")
 	@ExceptionHandler(RecordAlreadyPresentException.class)
@@ -34,7 +34,7 @@ public class DocumentsController {
 	{
 		return documentsService.uploadDocuments(doc);
 	}
-	
+	*/
 	@ApiOperation("Update Documents")
 	@PutMapping("/update-documents/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)

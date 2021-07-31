@@ -7,8 +7,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(name="User")
-public class User {
+@Table(name="Users")
+public class Users {
 	@Id
 	@Column(name="email")
 	@Pattern(regexp="/^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/",
@@ -18,10 +18,10 @@ public class User {
 	@Column(name="password")
 	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\\]).{8,32}$",message="password is invalid")
 	private String password;
-	public User() {
+	public Users() {
 		super();
 	}
-	public User(String email, String password)
+	public Users(String email, String password)
 	{
 		this.email=email;
 		this.password=password;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
-import com.capgemini.onlinevehiclelicense.model.User;
+import com.capgemini.onlinevehiclelicense.model.Users;
 import com.capgemini.onlinevehiclelicense.service.UserService;
 
 import io.swagger.annotations.Api;
@@ -27,18 +27,18 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@ApiOperation(value = "Register User")
+	@ApiOperation(value = "Register Users")
 	@PostMapping("/registerUser")
 	@ExceptionHandler(RecordAlreadyPresentException.class)
-	public ResponseEntity<User> registerUser(@RequestBody User user)
+	public ResponseEntity<Users> registerUser(@RequestBody Users user)
 	{
 		return userService.userRegistration(user);
 	}
 	
-	@ApiOperation(value = "Login User")
+	@ApiOperation(value = "Login Users")
 	@GetMapping("/loginUser")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<User> loginUser(@RequestBody User user)
+	public ResponseEntity<Users> loginUser(@RequestBody Users user)
 	{
 		return userService.userLogin(user);
 	}
@@ -46,7 +46,7 @@ public class UserController {
 	@ApiOperation(value = "Change Password")
 	@PutMapping("/changePassword")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<User> changePassword(@RequestBody User user)
+	public ResponseEntity<Users> changePassword(@RequestBody Users user)
 	{
 		return userService.changePassword(user);
 	}
