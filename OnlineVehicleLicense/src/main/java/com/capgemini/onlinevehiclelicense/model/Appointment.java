@@ -2,6 +2,7 @@ package com.capgemini.onlinevehiclelicense.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class Appointment {
 	private LocalDate testDate;
 	
 	@Column(name = "time_slot")
-	private LocalDateTime timeSlot;
+	private LocalTime timeSlot;
 	
 	@Column(name = "test_result")
 	private String testResult;
@@ -46,7 +47,7 @@ public class Appointment {
 	 * @param timeSlot
 	 * @param testResult
 	 */
-	public Appointment(String appointmentNumber, LocalDate testDate, LocalDateTime timeSlot, String testResult) {
+	public Appointment(String appointmentNumber, LocalDate testDate, LocalTime timeSlot, String testResult) {
 		super();
 		this.appointmentNumber = appointmentNumber;
 		this.testDate = testDate;
@@ -87,14 +88,14 @@ public class Appointment {
 	/**
 	 * @return the timeSlot
 	 */
-	public LocalDateTime getTimeSlot() {
+	public LocalTime getTimeSlot() {
 		return timeSlot;
 	}
 
 	/**
 	 * @param timeSlot the timeSlot to set
 	 */
-	public void setTimeSlot(LocalDateTime timeSlot) {
+	public void setTimeSlot(LocalTime timeSlot) {
 		this.timeSlot = timeSlot;
 	}
 
