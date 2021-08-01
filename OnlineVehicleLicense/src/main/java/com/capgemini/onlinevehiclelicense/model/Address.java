@@ -1,25 +1,24 @@
 package com.capgemini.onlinevehiclelicense.model;
 
-import javax.persistence.CascadeType;
+//import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+//import javax.persistence.FetchType;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-
-
+//import javax.persistence.SequenceGenerator;
 
 
 @Entity
 public class Address {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="address_seq")
-	@SequenceGenerator(name="address_seq",sequenceName="address_seq", allocationSize=1)
+	/*@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="address_seq")
+	@SequenceGenerator(name="address_seq",sequenceName="address_seq", allocationSize=1)*/
 	@Column(name="addr_id")
 	private String addrId;
 	@Column(name="house")
@@ -32,7 +31,9 @@ public class Address {
 	private String landmark;
 	@Column(name="pincode")
 	private int pincode;
-	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	//@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToOne
+	@MapsId
 	@JoinColumn(name="applicant_id")
 	private Applicant applicant;
 //	@Column(name="type")
@@ -122,7 +123,5 @@ public class Address {
 		return "Address [addrId=" + addrId + ", house=" + house + ", state=" + state + ", city=" + city + ", landmark="
 				+ landmark + ", pincode=" + pincode + ", applicant=" + applicant + "]";
 	}
-
-
 	
 }

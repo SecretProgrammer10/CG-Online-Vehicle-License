@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -40,10 +41,10 @@ public class Applicant {
 	@Column(name="vehicle_number")
 	private String vehicleNumber;
 	
-	/*@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "email", referencedColumnName = "email")
+	@OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	private Address address;
-	*/
+	
 	@Column(name="gender")
 	private String gender;
 	public Applicant() {

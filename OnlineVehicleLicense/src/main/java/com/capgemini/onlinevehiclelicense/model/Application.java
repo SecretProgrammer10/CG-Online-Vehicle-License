@@ -40,6 +40,10 @@ public class Application {
 	@Column(name="application_type")
 	private String applicationType;
 	
+	@OneToOne(mappedBy = "application", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private Documents docs;
+	
 	
 	public Application(String applicationNumber, Applicant applicant, LocalDate applicationDate, RTOOffice rtoOffice,
 			Documents documents, String modeOfPayment, double amountPaid, String paymentStatus,
