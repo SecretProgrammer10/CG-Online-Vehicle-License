@@ -1,10 +1,11 @@
 package com.capgemini.onlinevehiclelicense.model;
 
-import javax.persistence.CascadeType;
+//import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -12,17 +13,21 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 @Table(name = "Documents")
 public class Documents {
-	@OneToOne(cascade = CascadeType.ALL)
+	//@OneToOne(cascade = CascadeType.ALL)
+	@Id
+	@Column(name = "application_id")
+	private String id;
+	
+	@OneToOne
+	@MapsId
 	@JoinColumn(name = "application_number")
-	
-	
 	private Application application;
 	
 	@Column(name = "photo")
 	@NotEmpty(message="photo should not be empty")
 	private String photo;
 	
-	@Id
+	//@Id
 	@Column(name = "id_proof")
 	@NotEmpty(message="id proof should not be empty")
 	private String idProof;
