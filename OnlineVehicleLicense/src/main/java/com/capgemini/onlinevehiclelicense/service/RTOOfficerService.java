@@ -15,6 +15,7 @@ import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.License;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
+import com.capgemini.onlinevehiclelicense.model.TestResult;
 import com.capgemini.onlinevehiclelicense.repository.IApplicationRepository;
 import com.capgemini.onlinevehiclelicense.repository.IAppointmentRepository;
 import com.capgemini.onlinevehiclelicense.repository.IChallanRepository;
@@ -89,7 +90,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 	}
 
 	@Override
-	public ResponseEntity<Appointment> modifyTestResultById(String applicationNumber, String testResult) {
+	public ResponseEntity<Appointment> modifyTestResultById(String applicationNumber, TestResult testResult) {
 		// TODO Auto-generated method stub
 		try {
 			Appointment findApplication = this.appointmentRepository.findById(applicationNumber)
@@ -112,7 +113,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 			matchApplication = this.applicationRepository.findById(applcationNumber)
 					.orElseThrow(() -> new RecordNotFoundException("Application Not Found!!!"));
 			
-			if(matchApplication.getStatus().equalsIgnoreCase("approved")) {
+			if(matchApplication.getStatus().toString().equalsIgnoreCase("approved")) {
 				License license = new License();
 				license.setLicenseType("Learner");
 				java.util.Date today=new java.util.Date(); 
@@ -137,7 +138,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 		try {
 			Appointment matchApplication = this.appointmentRepository.findById(applcationNumber)
 					.orElseThrow(() -> new RecordNotFoundException("Application Not Found!!!"));
-			if(matchApplication.getTestResult().equalsIgnoreCase("pass")) {
+			if(matchApplication.getTestResult().toString().equalsIgnoreCase("pass")) {
 				License license = new License();
 				license.setLicenseType("Driving");
 				java.util.Date today=new java.util.Date(); 

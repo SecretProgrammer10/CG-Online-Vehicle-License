@@ -9,6 +9,7 @@ import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.License;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
+import com.capgemini.onlinevehiclelicense.model.TestResult;
 
 public interface IRTOOfficerService {
 
@@ -20,7 +21,7 @@ public interface IRTOOfficerService {
 	public Application viewApplicationById(String applicationNumber);
 	public List<Challan> checkChallanByVehicleNumber(String vehicleNumber);
 	public List<Challan> checkAllChallan();
-	public ResponseEntity<Appointment> modifyTestResultById(String applicationNumber, String testResult);
+	public ResponseEntity<Appointment> modifyTestResultById(String applicationNumber, TestResult testResult);
 	public ResponseEntity<License> generateLearnerLicense(String applcationNumber);
 	public ResponseEntity<License> generateDrivingLicense(String applcationNumber);
 	public String emailLicense(License license);

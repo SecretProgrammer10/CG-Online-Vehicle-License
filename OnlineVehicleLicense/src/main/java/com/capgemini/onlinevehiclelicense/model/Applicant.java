@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -14,9 +16,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Applicant")
 public class Applicant {
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "email", referencedColumnName = "email")
 	private Users user;
+	
 	@Id
 	@Column(name="applicant_number")
 	private String applicantNumber;
@@ -30,6 +34,9 @@ public class Applicant {
 	private Date dateOfBirth;
 	@Column(name="place_of_birth")
 	private String placeOfBirth;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "gender")
+	private Gender gender;
 	@Column(name="qualification")
 	private String qualification;
 	@Column(name="mobile")
@@ -45,8 +52,6 @@ public class Applicant {
 	@PrimaryKeyJoinColumn
 	private Address address;
 	
-	@Column(name="gender")
-	private String gender;
 	public Applicant() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -55,7 +60,7 @@ public class Applicant {
 
 	public Applicant(String applicantNumber, String firstName, String middleName, String lastName,
 			Date dateOfBirth, String placeOfBirth, String qualification, String mobile, String nationality,
-			String vehicleType, String vehicleNumber, Address address, String gender) {
+			String vehicleType, String vehicleNumber, Address address, Gender gender) {
 		super();
 		this.applicantNumber = applicantNumber;
 		this.firstName = firstName;
@@ -143,10 +148,10 @@ public class Applicant {
 	public void setAddress(Address address) {
 		this.address = address;
 	}*/
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 	@Override

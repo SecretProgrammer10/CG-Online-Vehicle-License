@@ -1,11 +1,12 @@
 package com.capgemini.onlinevehiclelicense.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -26,8 +27,9 @@ public class Appointment {
 	@Column(name = "time_slot")
 	private LocalTime timeSlot;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "test_result")
-	private String testResult;
+	private TestResult testResult;
 	
 	@OneToOne
 	private Application application;
@@ -47,7 +49,7 @@ public class Appointment {
 	 * @param timeSlot
 	 * @param testResult
 	 */
-	public Appointment(String appointmentNumber, LocalDate testDate, LocalTime timeSlot, String testResult) {
+	public Appointment(String appointmentNumber, LocalDate testDate, LocalTime timeSlot, TestResult testResult) {
 		super();
 		this.appointmentNumber = appointmentNumber;
 		this.testDate = testDate;
@@ -102,14 +104,14 @@ public class Appointment {
 	/**
 	 * @return the testResult
 	 */
-	public String getTestResult() {
+	public TestResult getTestResult() {
 		return testResult;
 	}
 
 	/**
 	 * @param testResult the testResult to set
 	 */
-	public void setTestResult(String testResult) {
+	public void setTestResult(TestResult testResult) {
 		this.testResult = testResult;
 	}
 

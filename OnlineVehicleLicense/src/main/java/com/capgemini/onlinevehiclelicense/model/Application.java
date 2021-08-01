@@ -12,7 +12,6 @@ public class Application {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="application_seq")
 	@SequenceGenerator(name="application_seq",sequenceName="application_seq", allocationSize=1)
-	
 	@Column(name="application_number")
 	private String applicationNumber;
 	
@@ -35,10 +34,12 @@ public class Application {
 	private String paymentStatus;
 	@Column(name="remarks")
 	private String remarks;
+	@Enumerated(EnumType.STRING)
 	@Column(name="application_status")
-	private String applicationStatus;
+	private ApplicationStatus applicationStatus;
+	@Enumerated(EnumType.STRING)
 	@Column(name="application_type")
-	private String applicationType;
+	private ApplicationType applicationType;
 	
 	@OneToOne(mappedBy = "application", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
@@ -47,7 +48,7 @@ public class Application {
 	
 	public Application(String applicationNumber, Applicant applicant, LocalDate applicationDate, RTOOffice rtoOffice,
 			Documents documents, String modeOfPayment, double amountPaid, String paymentStatus,
-			Appointment appointment, String remarks, String applicationType, String applicationStatus) {
+			Appointment appointment, String remarks, ApplicationType applicationType, ApplicationStatus applicationStatus) {
 		super();
 		this.applicationNumber = applicationNumber;
 		this.applicant = applicant;
@@ -87,10 +88,10 @@ public class Application {
 	public void setRtoOffice(RTOOffice rtoOffice) {
 		this.rtoOffice = rtoOffice;
 	}
-	public String getType() {
+	public ApplicationType getType() {
 		return applicationType;
 	}
-	public void setType(String type) {
+	public void setType(ApplicationType type) {
 		this.applicationType = type;
 	}
 	public String getModeOfPayment() {
@@ -111,10 +112,10 @@ public class Application {
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
-	public String getStatus() {
+	public ApplicationStatus getStatus() {
 		return applicationStatus;
 	}
-	public void setStatus(String status) {
+	public void setStatus(ApplicationStatus status) {
 		this.applicationStatus = status;
 	}
 	public String getRemarks() {
