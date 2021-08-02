@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
@@ -39,9 +40,9 @@ public class RTOOfficerController {
 	@ApiOperation(value = "Login RTO_Officer")
 	@GetMapping("/loginRtoOfficer")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public void loginUser(@RequestBody RTOOfficer rtoofficer)
+	public void loginUser(@RequestParam String username, @RequestParam String pass)
 	{
-		rtoOfficerService.officeLogin(rtoofficer);
+		rtoOfficerService.officeLogin(username, pass);
 	}
 	
 	@ApiOperation(value = "View Pending Applications", response = List.class)

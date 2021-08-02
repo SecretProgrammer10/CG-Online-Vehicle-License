@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
@@ -39,12 +40,13 @@ public class UserService implements IUserService{
 	}
 
 	@Override
-	public ResponseEntity<Users> userLogin(Users user) {
-		Optional<Users> findUser = this.userRepo.findById(user.getEmail());
+	public ResponseEntity<Users> userLogin(String email, String pass) {
+		Optional<Users> findUser = this.userRepo.findById(email);
 		try {
 			if(findUser.isPresent())
 			{
-				if(findUser.get().getPassword().equals(user.getPassword())) {
+				if(findUser.get().getPassword().equals(pass)) {
+					System.out.println("Logged In");
 					return new ResponseEntity<Users>(HttpStatus.OK);
 				}
 				else {
@@ -58,6 +60,7 @@ public class UserService implements IUserService{
 		}
 		catch(RecordNotFoundException e)
 		{
+			System.out.println("Error!!");
 			return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
 		}
 	}

@@ -3,6 +3,7 @@ package com.capgemini.onlinevehiclelicense.service;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
@@ -14,7 +15,7 @@ import com.capgemini.onlinevehiclelicense.model.TestResult;
 public interface IRTOOfficerService {
 
 
-	public ResponseEntity<RTOOfficer> officeLogin(RTOOfficer officer);
+	public ResponseEntity<RTOOfficer> officeLogin(String username, String pass);
 	public List<Application> viewAllPendingApplications();
 	public List<Application> viewAllRejectedApplications();
 	public List<Application> viewAllApprovedApplications();

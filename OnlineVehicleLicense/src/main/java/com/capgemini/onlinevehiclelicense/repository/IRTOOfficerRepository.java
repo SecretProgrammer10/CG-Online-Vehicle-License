@@ -15,7 +15,7 @@ import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 
 
 @Repository
-public interface IRTOOfficerRepository extends JpaRepository<RTOOfficer,Integer> {
+public interface IRTOOfficerRepository extends JpaRepository<RTOOfficer, String> {
 	
 	@Query("select r from RTOOfficer r where r.email like ?1 ")
 	public Optional<RTOOfficer> findByEmail(String email);
