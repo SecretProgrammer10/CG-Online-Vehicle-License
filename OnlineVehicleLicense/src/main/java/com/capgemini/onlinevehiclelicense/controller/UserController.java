@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
@@ -38,9 +39,9 @@ public class UserController {
 	@ApiOperation(value = "Login Users")
 	@GetMapping("/loginUser")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<Users> loginUser(@RequestBody Users user)
+	public ResponseEntity<Users> loginUser(@RequestParam String email, @RequestParam String pass)
 	{
-		return userService.userLogin(user);
+		return userService.userLogin(email, pass);
 	}
 	
 	@ApiOperation(value = "Change Password")

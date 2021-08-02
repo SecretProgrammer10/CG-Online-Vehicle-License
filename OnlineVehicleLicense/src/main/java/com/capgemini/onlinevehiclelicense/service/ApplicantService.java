@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
@@ -15,16 +16,17 @@ import com.capgemini.onlinevehiclelicense.model.Applicant;
 import com.capgemini.onlinevehiclelicense.repository.IApplicantRepository;
 
 @Service
+@Transactional
 public class ApplicantService implements IApplicantService{
 	@Autowired
 	IApplicantRepository applicantRepo;
 	@Override
 	public ResponseEntity<Applicant> addApplicant(Applicant applicant){
-		Optional<Applicant> findUser = applicantRepo.findById(applicant.getApplicantNumber());
+		Optional<Applicant> findUser = this.applicantRepo.findById(applicant.getEmail());
 		try {
 			if(!findUser.isPresent())
 			{
-				applicantRepo.save(applicant);
+				this.applicantRepo.save(applicant);
 				return new ResponseEntity<Applicant>(HttpStatus.OK);
 			}
 			else
@@ -39,11 +41,11 @@ public class ApplicantService implements IApplicantService{
 	}
 	@Override
 	public ResponseEntity<Applicant> updateApplicantDetails(Applicant applicant) {
-		Optional<Applicant> findUser = applicantRepo.findById(applicant.getApplicantNumber());
+		Optional<Applicant> findUser = this.applicantRepo.findById(applicant.getEmail());
 		try {
 			if(!findUser.isPresent())
 			{
-				applicantRepo.save(applicant);
+				this.applicantRepo.save(applicant);
 				return new ResponseEntity<Applicant>(HttpStatus.OK);
 			}
 			else
@@ -60,7 +62,7 @@ public class ApplicantService implements IApplicantService{
 	public ResponseEntity<Applicant> removeApplicant(String applicantNumber) {
 		
 		try {
-				Applicant findUser = applicantRepo.findById(applicantNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
+				Applicant findUser = this.applicantRepo.findById(applicantNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
 				this.applicantRepo.delete(findUser);
 				return new ResponseEntity<Applicant>(HttpStatus.OK);
 		}
@@ -72,7 +74,7 @@ public class ApplicantService implements IApplicantService{
 	@Override
 	public String viewApplicantById(String applicantNumber) {
 		try {		
-			Applicant findUser = applicantRepo.findById(applicantNumber).orElseThrow(() -> new RecordNotFoundException("Applicant profile not found"));
+			Applicant findUser = this.applicantRepo.findById(applicantNumber).orElseThrow(() -> new RecordNotFoundException("Applicant profile not found"));
 				return findUser.toString();
 		}
 		catch(RecordNotFoundException e)

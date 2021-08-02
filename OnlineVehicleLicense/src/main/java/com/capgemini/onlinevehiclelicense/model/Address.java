@@ -1,5 +1,6 @@
 package com.capgemini.onlinevehiclelicense.model;
 
+import javax.persistence.CascadeType;
 //import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 //import javax.persistence.SequenceGenerator;
 
 
 @Entity
+@Table(name = "address")
 public class Address {
 
 	@Id
@@ -32,7 +35,7 @@ public class Address {
 	@Column(name="pincode")
 	private int pincode;
 	//@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@MapsId
 	@JoinColumn(name="applicant_id")
 	private Applicant applicant;
@@ -46,13 +49,13 @@ public class Address {
 
 	public Address(String addrId, String house, String state, String city, String landmark, int pincode, Applicant applicant) {
 		super();
-		this.addrId = addrId;
+		//this.addrId = addrId;
 		this.house = house;
 		this.state = state;
 		this.city = city;
 		this.landmark = landmark;
 		this.pincode = pincode;
-		this.applicant = applicant;
+		//this.applicant = applicant;
 	}
 
 
