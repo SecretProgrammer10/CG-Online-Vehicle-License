@@ -18,6 +18,7 @@ import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
+import com.capgemini.onlinevehiclelicense.model.TestResult;
 import com.capgemini.onlinevehiclelicense.service.IRTOOfficerService;
 
 import io.swagger.annotations.Api;
@@ -146,12 +147,13 @@ public class RTOOfficerController {
 	}
 	
 	@ApiOperation(value = "Modify Test Results")
-	@PutMapping("/modify-test-results/{applicationNumber}")
+	@PutMapping("/modify-test-results/{applicationNumber}-{testResult}")
 	@ExceptionHandler(RecordNotFoundException.class)
 	public ResponseEntity<Appointment> modifyTestResults(
-			@ApiParam(value = "Application Number") @PathVariable("applicationNumber") String applicationNumber)
+			@ApiParam(value = "Application Number") @PathVariable("applicationNumber") String applicationNumber, 
+			@ApiParam(value = "Test Result Enum Value") @PathVariable("testResult") TestResult testResult)
 	{
-		return rtoOfficerService.modifyTestResultById(applicationNumber, "Pass");
+		return rtoOfficerService.modifyTestResultById(applicationNumber, testResult);
 	}
 	
 }
