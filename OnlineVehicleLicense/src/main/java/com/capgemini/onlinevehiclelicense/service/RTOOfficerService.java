@@ -118,7 +118,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 				license.setLicenseType("Learner");
 				java.util.Date today=new java.util.Date(); 
 				license.setDateOfIssue(today);
-				Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 *5));
+				Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 * 20));
 				license.setValidTill(validity);
 				this.licenseRepository.save(license);
 			}
