@@ -1,5 +1,6 @@
 package com.capgemini.onlinevehiclelicense.model;
 
+import javax.persistence.CascadeType;
 //import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 //import javax.persistence.SequenceGenerator;
 
 
 @Entity
+@Table(name = "address")
 public class Address {
 
 	@Id
@@ -32,16 +35,13 @@ public class Address {
 	@Column(name="pincode")
 	private int pincode;
 	//@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@MapsId
 	@JoinColumn(name="applicant_id")
 	private Applicant applicant;
 //	@Column(name="type")
 //	private String type;
 	
-	
-
-
 	public Address() {
 		super();
 	}
@@ -49,13 +49,13 @@ public class Address {
 
 	public Address(String addrId, String house, String state, String city, String landmark, int pincode, Applicant applicant) {
 		super();
-		this.addrId = addrId;
+		//this.addrId = addrId;
 		this.house = house;
 		this.state = state;
 		this.city = city;
 		this.landmark = landmark;
 		this.pincode = pincode;
-		this.applicant = applicant;
+		//this.applicant = applicant;
 	}
 
 
@@ -119,65 +119,6 @@ public class Address {
 	
 	public void setApplicant(Applicant applicant) {
 		this.applicant = applicant;
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((addrId == null) ? 0 : addrId.hashCode());
-		result = prime * result + ((applicant == null) ? 0 : applicant.hashCode());
-		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((house == null) ? 0 : house.hashCode());
-		result = prime * result + ((landmark == null) ? 0 : landmark.hashCode());
-		result = prime * result + pincode;
-		result = prime * result + ((state == null) ? 0 : state.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Address other = (Address) obj;
-		if (addrId == null) {
-			if (other.addrId != null)
-				return false;
-		} else if (!addrId.equals(other.addrId))
-			return false;
-		if (applicant == null) {
-			if (other.applicant != null)
-				return false;
-		} else if (!applicant.equals(other.applicant))
-			return false;
-		if (city == null) {
-			if (other.city != null)
-				return false;
-		} else if (!city.equals(other.city))
-			return false;
-		if (house == null) {
-			if (other.house != null)
-				return false;
-		} else if (!house.equals(other.house))
-			return false;
-		if (landmark == null) {
-			if (other.landmark != null)
-				return false;
-		} else if (!landmark.equals(other.landmark))
-			return false;
-		if (pincode != other.pincode)
-			return false;
-		if (state == null) {
-			if (other.state != null)
-				return false;
-		} else if (!state.equals(other.state))
-			return false;
-		return true;
 	}
 
 	@Override

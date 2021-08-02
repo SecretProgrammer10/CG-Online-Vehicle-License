@@ -1,9 +1,13 @@
 package com.capgemini.onlinevehiclelicense.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -11,18 +15,23 @@ import javax.validation.constraints.Pattern;
 public class Users {
 	@Id
 	@Column(name="email")
+	@NotEmpty(message = "Email cannot be empty")
 	@Pattern(regexp="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$", message="Email Not Valid") ///^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/
 	private String email;
 	
 	@Column(name="username")
 	@Pattern(regexp="^[A-Za-z]\\\\w{5, 29}$", message="Username invalid")
+	@NotEmpty(message = "Username cannot be empty")
 	private String username;
 	
 	@Column(name="password")
-	@Pattern(regexp="(?=.\\d)(?=.[a-z])(?=.[A-Z])(?=.[@#$%]).{8,20}", message="Password Not Valid") //^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\\]).{8,32}$
+	@Pattern(regexp="(?=.\\d)(?=.[a-z])(?=.[A-Z])(?=.[@#$%]).{8,20}", message="Password Not Valid") //^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[*.!@$%^&(){}[]:;<>,.?/~_+-=|\\]).{8,32}$
+	@NotEmpty(message = "Password cannot be empty")
 	private String password;
 	
-	
+	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private Applicant applicant;
 	
 	/**
 	 * 
@@ -62,18 +71,6 @@ public class Users {
 		this.email = email;
 	}
 	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	/**
 	 * @return the username
 	 */
 	public String getUsername() {
@@ -86,6 +83,19 @@ public class Users {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -121,8 +131,12 @@ public class Users {
 			return false;
 		return true;
 	}
+
+
 	@Override
 	public String toString() {
-		return "Users [email=" + email + ", username=" + username + ", password=" + password + "]";
+		return "Users [getEmail()=" + getEmail() + ", getPassword()=" + getPassword() + ", getUsername()="
+				+ getUsername() +"]";
 	}
+	
 }

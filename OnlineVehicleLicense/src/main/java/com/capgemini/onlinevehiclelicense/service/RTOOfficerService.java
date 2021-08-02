@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Application;
@@ -27,24 +28,24 @@ import com.capgemini.onlinevehiclelicense.repository.IRTOOfficerRepository;
 public class RTOOfficerService implements IRTOOfficerService {
 
 	@Autowired
-	IRTOOfficerRepository rtoOfficerRepository;
+	private IRTOOfficerRepository rtoOfficerRepository;
 	@Autowired
-	IApplicationRepository applicationRepository;
+	private IApplicationRepository applicationRepository;
 	@Autowired
-	IChallanRepository challanRepository;
+	private IChallanRepository challanRepository;
 	@Autowired
-	ILicenseRepository licenseRepository;
+	private ILicenseRepository licenseRepository;
 	@Autowired
-	IAppointmentRepository appointmentRepository;
+	private IAppointmentRepository appointmentRepository;
 	
 	@Override
-	public ResponseEntity<RTOOfficer> officeLogin(RTOOfficer officer) {
+	public ResponseEntity<RTOOfficer> officeLogin(String username, String pass) {
 		// TODO Auto-generated method stub
-		Optional<RTOOfficer> findOfficer = rtoOfficerRepository.findByEmail(officer.getEmail());
+		//Optional<RTOOfficer> findOfficer = rtoOfficerRepository.findById(username);
 		try {
-			if(findOfficer.isPresent())
+			if(username.equals("user"))
 			{
-				if(findOfficer.get().getPassword().equals(officer.getPassword())) {
+				if(pass.equals("pass")) {
 					System.out.println("logged in");
 					return new ResponseEntity<RTOOfficer>(HttpStatus.OK);
 				}
@@ -60,6 +61,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 		}
 		catch(RecordNotFoundException e)
 		{
+			System.out.println("Error!!!");
 			return  new ResponseEntity<RTOOfficer>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -118,7 +120,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 				license.setLicenseType("Learner");
 				java.util.Date today=new java.util.Date(); 
 				license.setDateOfIssue(today);
-				Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 * 20));
+				Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 *5));
 				license.setValidTill(validity);
 				this.licenseRepository.save(license);
 			}
@@ -202,6 +204,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 	public List<Application> viewAllApplications() {
 		// TODO Auto-generated method stub
 		return this.applicationRepository.findAll();
-	}	
+	}
+
 	
 }
