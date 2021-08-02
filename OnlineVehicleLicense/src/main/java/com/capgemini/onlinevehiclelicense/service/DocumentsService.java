@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-//import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
+import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 //import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Documents;
@@ -23,7 +23,7 @@ public class DocumentsService implements IDocumentsService{
 /*	@Override
 	public ResponseEntity<Documents> uploadDocuments(Documents doc) {
 		// TODO Auto-generated method stub
-		Optional<Documents> documents = this.documentsRepository.findById(doc.getApplication());
+		Optional<Documents> documents = this.documentsRepository.findById(doc.get);
 		try {
 			if(!documents.isPresent()) {
 				this.documentsRepository.save(doc);
@@ -36,10 +36,6 @@ public class DocumentsService implements IDocumentsService{
 			//e.printStackTrace();
 			return new ResponseEntity<Documents>(HttpStatus.ALREADY_REPORTED);
 		}
-		
-		
-		
-		
 	}
 */
 	@Override
