@@ -15,8 +15,12 @@ public class Application {
 	@Column(name="application_number")
 	private String applicationNumber;
 	
-	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+/*	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name="applicant_id")
+	private Applicant applicant;
+*/	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "applicant_id", nullable = false)
 	private Applicant applicant;
 		
 	@Column(name="application_date")
@@ -28,27 +32,41 @@ public class Application {
 
 	@Column(name="mode_of_payment")
 	private String modeOfPayment;
+	
 	@Column(name="amount_paid")
 	private Double amountPaid;
+	
 	@Column(name="payment_status")
 	private String paymentStatus;
+	
 	@Column(name="remarks")
 	private String remarks;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name="application_status")
+	
 	private ApplicationStatus applicationStatus;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name="application_type")
-	private ApplicationType applicationType;
+	private LicenseType applicationType;
 	
 	@OneToOne(mappedBy = "application", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	private Documents docs;
 	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")
+	private License license;
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")
+	private Appointment appointment;
+	
+	
+	
 	
 	public Application(String applicationNumber, Applicant applicant, LocalDate applicationDate, RTOOffice rtoOffice,
 			Documents documents, String modeOfPayment, double amountPaid, String paymentStatus,
-			Appointment appointment, String remarks, ApplicationType applicationType, ApplicationStatus applicationStatus) {
+			Appointment appointment, String remarks, LicenseType applicationType, ApplicationStatus applicationStatus) {
 		super();
 		this.applicationNumber = applicationNumber;
 		this.applicant = applicant;
@@ -88,10 +106,10 @@ public class Application {
 	public void setRtoOffice(RTOOffice rtoOffice) {
 		this.rtoOffice = rtoOffice;
 	}
-	public ApplicationType getType() {
+	public LicenseType getType() {
 		return applicationType;
 	}
-	public void setType(ApplicationType type) {
+	public void setType(LicenseType type) {
 		this.applicationType = type;
 	}
 	public String getModeOfPayment() {

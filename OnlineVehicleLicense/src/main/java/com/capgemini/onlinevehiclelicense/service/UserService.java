@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
@@ -85,14 +84,30 @@ public class UserService implements IUserService{
 		}
 	}
 
+	
 	@Override
-	public String forgotPassword(Users user) {
-		return null;
+	public ResponseEntity<Users> forgotPassword(Users user, String pass) {
+		Users findUser;
+		try {
+			findUser = userRepo.findById(user.getEmail())
+					.orElseThrow(() -> new RecordNotFoundException("Email not found"));
+			findUser.setPassword(pass);
+			return new ResponseEntity<Users>(HttpStatus.OK);
+			
+		}
+		catch(RecordNotFoundException e)
+		{
+			return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@Override
 	public String generateOtp() {
-		return null;
+		int min = 100000;  
+		int max = 999999;  
+		//Generate random int value from 200 to 400   
+		int b = (int)(Math.random()*(max-min+1)+min);  
+		return String.valueOf(b);
 	}
 
 	@Override

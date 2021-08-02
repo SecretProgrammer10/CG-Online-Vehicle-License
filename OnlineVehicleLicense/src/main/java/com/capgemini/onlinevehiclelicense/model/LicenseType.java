@@ -1,7 +1,7 @@
 package com.capgemini.onlinevehiclelicense.model;
 
 
-public enum ApplicationType {
+public enum LicenseType {
 
 	LL, DL;
 	
