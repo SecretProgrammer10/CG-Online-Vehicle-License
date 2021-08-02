@@ -47,11 +47,11 @@ public class Applicant {
 	@Column(name="vehicle_number")
 	private String vehicleNumber;
 	
-	@OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
+	/*@OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
-	private Address address;
+	private Address address;*/
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@MapsId
 	@JoinColumn(name = "user_email")
 	private Users users;
@@ -94,7 +94,7 @@ public class Applicant {
 		this.nationality = nationality;
 		this.vehicleType = vehicleType;
 		this.vehicleNumber = vehicleNumber;
-		this.address = address;
+		//this.address = address;
 	}
 
 	/**
@@ -268,16 +268,16 @@ public class Applicant {
 	/**
 	 * @return the address
 	 */
-	public Address getAddress() {
+	/*public Address getAddress() {
 		return address;
 	}
 
 	/**
 	 * @param address the address to set
 	 */
-	public void setAddress(Address address) {
+	/*public void setAddress(Address address) {
 		this.address = address;
-	}
+	}*/
 
 	/**
 	 * @return the users
@@ -297,7 +297,7 @@ public class Applicant {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		//result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
@@ -323,11 +323,11 @@ public class Applicant {
 		if (getClass() != obj.getClass())
 			return false;
 		Applicant other = (Applicant) obj;
-		if (address == null) {
+		/*if (address == null) {
 			if (other.address != null)
 				return false;
 		} else if (!address.equals(other.address))
-			return false;
+			return false;*/
 		if (dateOfBirth == null) {
 			if (other.dateOfBirth != null)
 				return false;
@@ -400,7 +400,7 @@ public class Applicant {
 				+ ", getPlaceOfBirth()=" + getPlaceOfBirth() + ", getGender()=" + getGender() + ", getQualification()="
 				+ getQualification() + ", getMobile()=" + getMobile() + ", getNationality()=" + getNationality()
 				+ ", getVehicleType()=" + getVehicleType() + ", getVehicleNumber()=" + getVehicleNumber()
-				+ ", getAddress()=" + getAddress() + "]";
+				+ ", getAddress()="/* + getAddress()*/ + "]";
 	}
 	
 	
