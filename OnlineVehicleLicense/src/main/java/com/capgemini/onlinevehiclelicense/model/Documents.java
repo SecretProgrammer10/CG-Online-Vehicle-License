@@ -27,7 +27,6 @@ public class Documents {
 	@NotEmpty(message="photo should not be empty")
 	private String photo;
 	
-	//@Id
 	@Column(name = "id_proof")
 	@NotEmpty(message="id proof should not be empty")
 	private String idProof;
@@ -50,7 +49,8 @@ public class Documents {
 	 * @param idProof
 	 * @param addressProof
 	 */
-	public Documents(Application application, @NotEmpty(message = "photo should not be empty") String photo,
+	public Documents(Application application, 
+			@NotEmpty(message = "photo should not be empty") String photo,
 			@NotEmpty(message = "id proof should not be empty") String idProof,
 			@NotEmpty(message = "address proof should not be empty") String addressProof) {
 		super();

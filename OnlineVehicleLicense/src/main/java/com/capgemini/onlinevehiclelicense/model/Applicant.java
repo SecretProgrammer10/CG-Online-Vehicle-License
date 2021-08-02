@@ -1,60 +1,84 @@
 package com.capgemini.onlinevehiclelicense.model;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Applicant")
 public class Applicant {
 	
 	@Id
-	@Column(name="user_email")
-	@NotEmpty(message = "Email cannot be empty")
-	private String email;
+	@Column(name="applicant_id")
+	@NotEmpty(message = "ID cannot be empty")
+	private String applicantId;
+	
 	@Column(name="first_name")
 	private String firstName;
+	
 	@Column(name="middle_name")
 	private String middleName;
+	
 	@Column(name="last_name")
 	private String lastName;
+	
 	@Column(name="dare_of_birth")
 	private Date dateOfBirth;
+	
 	@Column(name="place_of_birth")
 	private String placeOfBirth;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "gender")
 	private Gender gender;
+	
 	@Column(name="qualification")
 	private String qualification;
+	
 	@Column(name="mobile")
 	private String mobile;
+	
 	@Column(name="nationality")
 	private String nationality;
+	
 	@Column(name="vehicle_type")
 	private String vehicleType;
+	
 	@Column(name="vehicle_number")
 	private String vehicleNumber;
 	
-	@OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	private Address address;
+	//@OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
+	//@PrimaryKeyJoinColumn
+	//private Address address;
 	
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "user_email")
+	@OneToMany(cascade=CascadeType.ALL)
+	@JsonIgnore
+	private Set<Address> address;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JsonIgnore
+	private Set<Application> application;
+	
+	@OneToOne(fetch = FetchType.LAZY, optional=false)
+	@JoinColumn(name = "user_id", nullable = false)
 	private Users users;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<Challan> challan;
 
 	/**
 	 * 
@@ -64,7 +88,7 @@ public class Applicant {
 	}
 
 	/**
-	 * @param email
+	 * @param applicantId
 	 * @param firstName
 	 * @param middleName
 	 * @param lastName
@@ -78,11 +102,11 @@ public class Applicant {
 	 * @param vehicleNumber
 	 * @param address
 	 */
-	public Applicant(@NotEmpty(message = "Email cannot be empty") String email, String firstName, String middleName,
+	public Applicant(@NotEmpty(message = "Id cannot be empty") String applicantId, String firstName, String middleName,
 			String lastName, Date dateOfBirth, String placeOfBirth, Gender gender, String qualification, String mobile,
-			String nationality, String vehicleType, String vehicleNumber, Address address) {
+			String nationality, String vehicleType, String vehicleNumber /* , Address address */) {
 		super();
-		this.email = email;
+		this.applicantId = applicantId;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -94,21 +118,21 @@ public class Applicant {
 		this.nationality = nationality;
 		this.vehicleType = vehicleType;
 		this.vehicleNumber = vehicleNumber;
-		this.address = address;
+		//this.address = address;
 	}
 
 	/**
-	 * @return the email
+	 * @return the applicantId
 	 */
-	public String getEmail() {
-		return email;
+	public String getApplicantId() {
+		return applicantId;
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param applicantId the applicantId to set
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setApplicantId(String applicantId) {
+		this.applicantId = applicantId;
 	}
 
 	/**
@@ -268,15 +292,29 @@ public class Applicant {
 	/**
 	 * @return the address
 	 */
-	public Address getAddress() {
+	public Set<Address> getAddress() {
 		return address;
 	}
 
 	/**
 	 * @param address the address to set
 	 */
-	public void setAddress(Address address) {
+	public void setAddress(Set<Address> address) {
 		this.address = address;
+	}
+
+	/**
+	 * @return the application
+	 */
+	public Set<Application> getApplication() {
+		return application;
+	}
+
+	/**
+	 * @param application the application to set
+	 */
+	public void setApplication(Set<Application> application) {
+		this.application = application;
 	}
 
 	/**
@@ -299,7 +337,7 @@ public class Applicant {
 		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((applicantId == null) ? 0 : applicantId.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
@@ -333,10 +371,10 @@ public class Applicant {
 				return false;
 		} else if (!dateOfBirth.equals(other.dateOfBirth))
 			return false;
-		if (email == null) {
-			if (other.email != null)
+		if (applicantId == null) {
+			if (other.applicantId != null)
 				return false;
-		} else if (!email.equals(other.email))
+		} else if (!applicantId.equals(other.applicantId))
 			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
@@ -395,7 +433,7 @@ public class Applicant {
 
 	@Override
 	public String toString() {
-		return "Applicant [getEmail()=" + getEmail() + ", getFirstName()=" + getFirstName() + ", getMiddleName()="
+		return "Applicant [getApplicantId()=" + getApplicantId() + ", getFirstName()=" + getFirstName() + ", getMiddleName()="
 				+ getMiddleName() + ", getLastName()=" + getLastName() + ", getDateOfBirth()=" + getDateOfBirth()
 				+ ", getPlaceOfBirth()=" + getPlaceOfBirth() + ", getGender()=" + getGender() + ", getQualification()="
 				+ getQualification() + ", getMobile()=" + getMobile() + ", getNationality()=" + getNationality()

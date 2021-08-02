@@ -4,7 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -20,9 +25,10 @@ public class License {
 	@Pattern(regexp="^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$")
 	private String licenseNumber;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "license_type")
 	@NotEmpty(message="license type should not be empty")
-	private String licenseType;
+	private LicenseType licenseType;
 	
 	@Column(name = "date_of_issue")
 	@JsonFormat(pattern = "yyyy-MM-dd")
@@ -34,11 +40,15 @@ public class License {
 	@NotEmpty(message="validity should not be empty")
 	private Date validTill;
 	
+	@OneToOne(fetch = FetchType.LAZY, optional=false)
+	@JoinColumn(name = "application_id", nullable = false)
+	private Application application;
+	
 	public License() {
 		super();
 	}
 	
-	public License(String licenseType, String licenseNumber, Date dateOfIssue, Date validTill) {
+	public License(@NotEmpty(message = "license type should not be empty") LicenseType licenseType, String licenseNumber, Date dateOfIssue, Date validTill) {
 		super();
 		this.licenseType = licenseType;
 		this.licenseNumber = licenseNumber;
@@ -46,11 +56,11 @@ public class License {
 		this.validTill = validTill;
 	}
 	
-	public String getLicenseType() {
+	public @NotEmpty(message = "license type should not be empty") LicenseType getLicenseType() {
 		return licenseType;
 	}
 
-	public void setLicenseType(String licenseType) {
+	public void setLicenseType(@NotEmpty(message = "license type should not be empty") LicenseType licenseType) {
 		this.licenseType = licenseType;
 	}
 
