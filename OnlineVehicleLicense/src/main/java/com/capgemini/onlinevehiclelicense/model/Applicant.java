@@ -47,9 +47,9 @@ public class Applicant {
 	@Column(name="vehicle_number")
 	private String vehicleNumber;
 	
-	/*@OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
-	private Address address;*/
+	private Address address;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@MapsId
@@ -268,16 +268,16 @@ public class Applicant {
 	/**
 	 * @return the address
 	 */
-	/*public Address getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
 	/**
 	 * @param address the address to set
 	 */
-	/*public void setAddress(Address address) {
+	public void setAddress(Address address) {
 		this.address = address;
-	}*/
+	}
 
 	/**
 	 * @return the users
@@ -375,11 +375,11 @@ public class Applicant {
 				return false;
 		} else if (!qualification.equals(other.qualification))
 			return false;
-		if (users == null) {
+		/*if (users == null) {
 			if (other.users != null)
 				return false;
 		} else if (!users.equals(other.users))
-			return false;
+			return false;*/
 		if (vehicleNumber == null) {
 			if (other.vehicleNumber != null)
 				return false;
@@ -400,7 +400,7 @@ public class Applicant {
 				+ ", getPlaceOfBirth()=" + getPlaceOfBirth() + ", getGender()=" + getGender() + ", getQualification()="
 				+ getQualification() + ", getMobile()=" + getMobile() + ", getNationality()=" + getNationality()
 				+ ", getVehicleType()=" + getVehicleType() + ", getVehicleNumber()=" + getVehicleNumber()
-				+ ", getAddress()="/* + getAddress()*/ + "]";
+				+ ", getAddress()=" + getAddress() + "]";
 	}
 	
 	
