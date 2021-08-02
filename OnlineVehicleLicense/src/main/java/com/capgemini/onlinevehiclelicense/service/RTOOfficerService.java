@@ -204,6 +204,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 	public List<Application> viewAllApplications() {
 		// TODO Auto-generated method stub
 		return this.applicationRepository.findAll();
-	}	
+	}
+
 	
 }
