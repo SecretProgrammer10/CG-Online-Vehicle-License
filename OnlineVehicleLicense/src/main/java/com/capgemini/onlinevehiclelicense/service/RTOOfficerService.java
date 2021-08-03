@@ -116,7 +116,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 			matchApplication = this.applicationRepository.findById(applcationNumber)
 					.orElseThrow(() -> new RecordNotFoundException("Application Not Found!!!"));
 			
-			if(matchApplication.getStatus().toString().equalsIgnoreCase("approved")) {
+			if(matchApplication.getApplicationStatus().toString().equalsIgnoreCase("approved")) {
 				License license = new License();
 				license.setLicenseType(LicenseType.LL);
 				java.util.Date today=new java.util.Date(); 
