@@ -28,6 +28,12 @@ public class RTOOffice {
 	@OneToMany(cascade= CascadeType.ALL)
 	private Set<RTOOfficer> rtoOfficer;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<Application> application;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<License> license;
+	
 	public RTOOffice() {
 		
 		

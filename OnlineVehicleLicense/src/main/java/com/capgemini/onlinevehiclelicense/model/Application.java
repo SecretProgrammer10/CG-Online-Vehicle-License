@@ -14,21 +14,9 @@ public class Application {
 	@SequenceGenerator(name="application_seq",sequenceName="application_seq", allocationSize=1)
 	@Column(name="application_number")
 	private String applicationNumber;
-	
-/*	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-	@JoinColumn(name="applicant_id")
-	private Applicant applicant;
-*/	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "applicant_id", nullable = false)
-	private Applicant applicant;
 		
 	@Column(name="application_date")
 	private LocalDate applicationDate=LocalDate.now();
-	
-	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name="rto_id")
-	private RTOOffice rtoOffice;
 
 	@Column(name="mode_of_payment")
 	private String modeOfPayment;
@@ -44,7 +32,6 @@ public class Application {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="application_status")
-	
 	private ApplicationStatus applicationStatus;
 	
 	@Enumerated(EnumType.STRING)
@@ -60,6 +47,19 @@ public class Application {
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")
 	private Appointment appointment;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name="rto_id", nullable = false)
+	private RTOOffice rtoOffice;
+	
+
+/*	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	@JoinColumn(name="applicant_id")
+	private Applicant applicant;
+*/	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "applicant_id", nullable = false)
+	private Applicant applicant;
 	
 	
 	
