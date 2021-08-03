@@ -11,11 +11,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -37,6 +39,7 @@ public class Applicant {
 	private String lastName;
 	
 	@Column(name="dare_of_birth")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfBirth;
 	
 	@Column(name="place_of_birth")
@@ -65,11 +68,9 @@ public class Applicant {
 	//@PrimaryKeyJoinColumn
 	//private Address address;
 	
-<<<<<<< HEAD
 	@OneToOne(cascade = CascadeType.ALL)
 	@MapsId
 	@JoinColumn(name = "user_email")
-=======
 	@OneToMany(cascade=CascadeType.ALL)
 	@JsonIgnore
 	private Set<Address> address;
@@ -80,7 +81,6 @@ public class Applicant {
 	
 	@OneToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name = "user_id", nullable = false)
->>>>>>> 591fa4f53a8157896c1ad813b9a8d474744d7f81
 	private Users users;
 	
 	@OneToMany(cascade = CascadeType.ALL)

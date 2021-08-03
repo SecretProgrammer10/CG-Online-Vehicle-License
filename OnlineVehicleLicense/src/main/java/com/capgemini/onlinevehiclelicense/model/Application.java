@@ -26,7 +26,7 @@ public class Application {
 	@Column(name="application_date")
 	private LocalDate applicationDate=LocalDate.now();
 	
-	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name="rto_id")
 	private RTOOffice rtoOffice;
 
@@ -44,7 +44,6 @@ public class Application {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="application_status")
-	
 	private ApplicationStatus applicationStatus;
 	
 	@Enumerated(EnumType.STRING)

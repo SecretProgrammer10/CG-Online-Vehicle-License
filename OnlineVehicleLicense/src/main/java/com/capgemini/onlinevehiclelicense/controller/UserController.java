@@ -51,4 +51,11 @@ public class UserController {
 	{
 		return userService.changePassword(user);
 	}
+	
+	@ApiOperation(value = "Forget Password")
+	@PutMapping("/forgetPassword")
+	@ExceptionHandler(RecordNotFoundException.class)
+	public ResponseEntity<Users> forgetPassword(@RequestBody Users user, @RequestParam String pass){
+		return userService.forgotPassword(user, pass);
+	}
 }
