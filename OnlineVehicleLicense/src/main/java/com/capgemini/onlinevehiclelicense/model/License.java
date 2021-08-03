@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -43,6 +44,10 @@ public class License {
 	@OneToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name = "application_id", nullable = false)
 	private Application application;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "rto_id", nullable = false)
+	private RTOOffice rtoOffice;
 	
 	public License() {
 		super();
