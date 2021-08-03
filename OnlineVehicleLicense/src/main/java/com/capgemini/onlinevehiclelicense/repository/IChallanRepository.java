@@ -13,4 +13,7 @@ public interface IChallanRepository extends JpaRepository<Challan, String> {
 
 	@Query("select c from Challan c where c.vehicleNumber like ?1")
 	public List<Challan> getDetailsByVehicleNumber(String vehicleNumber);
+	
+	@Query("select c from Challan c where c.challanNumber like ?1")
+	public Challan findChallan(String challanNumber);
 }
