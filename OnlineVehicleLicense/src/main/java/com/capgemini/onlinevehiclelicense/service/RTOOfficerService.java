@@ -2,19 +2,20 @@ package com.capgemini.onlinevehiclelicense.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.License;
+import com.capgemini.onlinevehiclelicense.model.LicenseType;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 import com.capgemini.onlinevehiclelicense.model.TestResult;
 import com.capgemini.onlinevehiclelicense.repository.IApplicationRepository;
@@ -117,10 +118,10 @@ public class RTOOfficerService implements IRTOOfficerService {
 			
 			if(matchApplication.getStatus().toString().equalsIgnoreCase("approved")) {
 				License license = new License();
-				license.setLicenseType("Learner");
+				license.setLicenseType(LicenseType.LL);
 				java.util.Date today=new java.util.Date(); 
 				license.setDateOfIssue(today);
-				Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 *5));
+				Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 * 20));
 				license.setValidTill(validity);
 				this.licenseRepository.save(license);
 			}
@@ -142,10 +143,10 @@ public class RTOOfficerService implements IRTOOfficerService {
 					.orElseThrow(() -> new RecordNotFoundException("Application Not Found!!!"));
 			if(matchApplication.getTestResult().toString().equalsIgnoreCase("pass")) {
 				License license = new License();
-				license.setLicenseType("Driving");
+				license.setLicenseType(LicenseType.DL);
 				java.util.Date today=new java.util.Date(); 
 				license.setDateOfIssue(today);
-				Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 *5));
+				Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 * 20));
 				license.setValidTill(validity);
 				this.licenseRepository.save(license);
 				return new ResponseEntity<License>(HttpStatus.CREATED);

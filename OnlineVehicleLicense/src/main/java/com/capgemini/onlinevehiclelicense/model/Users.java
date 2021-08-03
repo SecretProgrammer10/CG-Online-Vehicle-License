@@ -3,9 +3,9 @@ package com.capgemini.onlinevehiclelicense.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -29,8 +29,7 @@ public class Users {
 	@NotEmpty(message = "Password cannot be empty")
 	private String password;
 	
-	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
 	private Applicant applicant;
 	
 	/**

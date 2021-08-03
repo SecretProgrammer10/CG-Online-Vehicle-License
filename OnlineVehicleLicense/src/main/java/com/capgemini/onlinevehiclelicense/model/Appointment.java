@@ -7,7 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -31,13 +33,17 @@ public class Appointment {
 	@Column(name = "test_result")
 	private TestResult testResult;
 	
-	@OneToOne
+/*	@OneToOne
+	private Application application;
+*/	
+	@OneToOne(fetch = FetchType.LAZY, optional=false)
+	@JoinColumn(name = "application_id", nullable = false)
 	private Application application;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "rto_officer_username", nullable=false)
 	private RTOOfficer rtoOfficer;
-	
-	
+
     public Appointment() {
 		super();
 		// TODO Auto-generated constructor stub

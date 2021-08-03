@@ -22,7 +22,7 @@ public class ApplicantService implements IApplicantService{
 	IApplicantRepository applicantRepo;
 	@Override
 	public ResponseEntity<Applicant> addApplicant(Applicant applicant){
-		Optional<Applicant> findUser = this.applicantRepo.findById(applicant.getEmail());
+		Optional<Applicant> findUser = this.applicantRepo.findById(applicant.getApplicantId());
 		try {
 			if(!findUser.isPresent())
 			{
@@ -41,7 +41,7 @@ public class ApplicantService implements IApplicantService{
 	}
 	@Override
 	public ResponseEntity<Applicant> updateApplicantDetails(Applicant applicant) {
-		Optional<Applicant> findUser = this.applicantRepo.findById(applicant.getEmail());
+		Optional<Applicant> findUser = this.applicantRepo.findById(applicant.getApplicantId());
 		try {
 			if(!findUser.isPresent())
 			{

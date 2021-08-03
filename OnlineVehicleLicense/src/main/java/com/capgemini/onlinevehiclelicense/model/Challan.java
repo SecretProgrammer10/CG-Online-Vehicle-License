@@ -2,7 +2,10 @@ package com.capgemini.onlinevehiclelicense.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -25,6 +28,10 @@ public class Challan {
 	
 	@Column(name = "status")
 	private String status;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "applicant_id", nullable = false)
+	private Applicant applicant;
 	
 	public Challan() {
 		super();

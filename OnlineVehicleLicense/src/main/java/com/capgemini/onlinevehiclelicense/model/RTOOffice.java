@@ -1,8 +1,12 @@
 package com.capgemini.onlinevehiclelicense.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -20,6 +24,10 @@ public class RTOOffice {
 	@Column(name="rto_name")
 	@NotEmpty(message="rtoName is required")
 	private String rtoName;
+	
+	@OneToMany(cascade= CascadeType.ALL)
+	private Set<RTOOfficer> rtoOfficer;
+	
 	public RTOOffice() {
 		
 		
