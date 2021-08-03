@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.mail.IMailService;
-import com.capgemini.onlinevehiclelicense.mail.mailService;
 import com.capgemini.onlinevehiclelicense.model.Users;
 import com.capgemini.onlinevehiclelicense.repository.IUserRepository;
 
@@ -108,8 +107,7 @@ public class UserService implements IUserService{
 		}
 	}
 
-	@Override
-	public String generateOtp() {
+	private String generateOtp() {
 		int min = 100000;  
 		int max = 999999;  
 		//Generate random int value from 200 to 400   

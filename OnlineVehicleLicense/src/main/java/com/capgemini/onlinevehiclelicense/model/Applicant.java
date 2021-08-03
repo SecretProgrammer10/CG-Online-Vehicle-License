@@ -68,9 +68,6 @@ public class Applicant {
 	//@PrimaryKeyJoinColumn
 	//private Address address;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@MapsId
-	@JoinColumn(name = "user_email")
 	@OneToMany(cascade=CascadeType.ALL)
 	@JsonIgnore
 	private Set<Address> address;
