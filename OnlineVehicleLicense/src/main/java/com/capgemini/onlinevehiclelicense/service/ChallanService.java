@@ -20,11 +20,16 @@ public class ChallanService implements IChallanService {
 	public String payChallan(String challanNumber) {
 		// TODO Auto-generated method stub
 		try {
-			Challan findChallan = this.challanRepository.findById(challanNumber)
-					.orElseThrow(() -> new RecordNotFoundException("Vehicle Does not Exist!!!"));
-			findChallan.setStatus("Paid");
-			this.challanRepository.save(findChallan);
-			return findChallan.getStatus();
+			Challan findChallan = this.challanRepository.findChallan(challanNumber);
+			if(findChallan != null) {
+				findChallan.setStatus("Paid");
+				this.challanRepository.save(findChallan);
+				return findChallan.getStatus();
+			}
+			else {
+				throw new RecordNotFoundException("Challan Does not Exist!!!");
+			}
+			
 		} catch (RecordNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
