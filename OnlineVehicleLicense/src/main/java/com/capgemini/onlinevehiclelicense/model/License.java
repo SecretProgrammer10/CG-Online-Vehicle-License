@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +17,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -24,6 +30,12 @@ public class License {
 	@Id
 	@Column(name = "license_number")
 	@Pattern(regexp="^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "license_seq")
+	@GenericGenerator(name = "license_seq", 
+			    strategy = "com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator", 
+			    parameters = { @Parameter(name = LicenseIdGenerator.INCREMENT_PARAM, value = "1"),
+			        @Parameter(name = LicenseIdGenerator.VALUE_PREFIX_PARAMETER, value = "MH_"),
+			        @Parameter(name = LicenseIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
 	private String licenseNumber;
 	
 	@Enumerated(EnumType.STRING)
