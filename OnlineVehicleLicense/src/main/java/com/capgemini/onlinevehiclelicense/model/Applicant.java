@@ -331,6 +331,20 @@ public class Applicant {
 		this.users = users;
 	}
 
+	/**
+	 * @return the challan
+	 */
+	public Set<Challan> getChallan() {
+		return challan;
+	}
+
+	/**
+	 * @param challan the challan to set
+	 */
+	public void setChallan(Set<Challan> challan) {
+		this.challan = challan;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

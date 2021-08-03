@@ -31,7 +31,7 @@ public class Users {
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
 	private Applicant applicant;
-	
+
 	/**
 	 * 
 	 */
@@ -40,70 +40,88 @@ public class Users {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	/**
 	 * @param email
 	 * @param username
 	 * @param password
 	 */
 	public Users(
-			@Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$", message = "Email Not Valid") String email,
-			@Pattern(regexp = "^[A-Za-z]\\\\w{5, 29}$", message = "Username invalid") String username,
-			@Pattern(regexp = "(?=.\\d)(?=.[a-z])(?=.[A-Z])(?=.[@#$%]).{8,20}", message = "Password Not Valid") String password) {
+			@NotEmpty(message = "Email cannot be empty") @Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$", message = "Email Not Valid") String email,
+			@Pattern(regexp = "^[A-Za-z]\\\\w{5, 29}$", message = "Username invalid") @NotEmpty(message = "Username cannot be empty") String username,
+			@Pattern(regexp = "(?=.\\d)(?=.[a-z])(?=.[A-Z])(?=.[@#$%]).{8,20}", message = "Password Not Valid") @NotEmpty(message = "Password cannot be empty") String password) {
 		super();
 		this.email = email;
 		this.username = username;
 		this.password = password;
 	}
 
-	
 	/**
 	 * @return the email
 	 */
 	public String getEmail() {
 		return email;
 	}
+
 	/**
 	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	/**
 	 * @return the username
 	 */
 	public String getUsername() {
 		return username;
 	}
-	
+
 	/**
 	 * @param username the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	/**
 	 * @return the password
 	 */
 	public String getPassword() {
 		return password;
 	}
+
 	/**
 	 * @param password the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	/**
+	 * @return the applicant
+	 */
+	public Applicant getApplicant() {
+		return applicant;
+	}
+
+	/**
+	 * @param applicant the applicant to set
+	 */
+	public void setApplicant(Applicant applicant) {
+		this.applicant = applicant;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((applicant == null) ? 0 : applicant.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -113,6 +131,11 @@ public class Users {
 		if (getClass() != obj.getClass())
 			return false;
 		Users other = (Users) obj;
+		if (applicant == null) {
+			if (other.applicant != null)
+				return false;
+		} else if (!applicant.equals(other.applicant))
+			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -131,11 +154,13 @@ public class Users {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Users [getEmail()=" + getEmail() + ", getPassword()=" + getPassword() + ", getUsername()="
-				+ getUsername() +"]";
+		return "Users [email=" + email + ", username=" + username + ", password=" + password + ", applicant="
+				+ applicant + "]";
 	}
+	
+	
+
 	
 }

@@ -60,95 +60,320 @@ public class Application {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "applicant_id", nullable = false)
 	private Applicant applicant;
-	
-	
-	
-	
-	public Application(String applicationNumber, Applicant applicant, LocalDate applicationDate, RTOOffice rtoOffice,
-			Documents documents, String modeOfPayment, double amountPaid, String paymentStatus,
-			Appointment appointment, String remarks, LicenseType applicationType, ApplicationStatus applicationStatus) {
+
+
+	/**
+	 * 
+	 */
+	public Application() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	/**
+	 * @param applicationNumber
+	 * @param applicationDate
+	 * @param modeOfPayment
+	 * @param amountPaid
+	 * @param paymentStatus
+	 * @param remarks
+	 * @param applicationStatus
+	 * @param applicationType
+	 */
+	public Application(String applicationNumber, LocalDate applicationDate, String modeOfPayment, Double amountPaid,
+			String paymentStatus, String remarks, ApplicationStatus applicationStatus, LicenseType applicationType) {
 		super();
 		this.applicationNumber = applicationNumber;
-		this.applicant = applicant;
-		this.applicationDate = LocalDate.now();
-		this.rtoOffice = rtoOffice;
-		this.applicationStatus = applicationStatus;
-		this.applicationType = applicationType;
+		this.applicationDate = applicationDate;
 		this.modeOfPayment = modeOfPayment;
 		this.amountPaid = amountPaid;
 		this.paymentStatus = paymentStatus;
 		this.remarks = remarks;
+		this.applicationStatus = applicationStatus;
+		this.applicationType = applicationType;
 	}
-	public Application() {
-		super();
-	}
+
+
+	/**
+	 * @return the applicationNumber
+	 */
 	public String getApplicationNumber() {
 		return applicationNumber;
 	}
+
+
+	/**
+	 * @param applicationNumber the applicationNumber to set
+	 */
 	public void setApplicationNumber(String applicationNumber) {
-		this.applicationNumber=applicationNumber;
+		this.applicationNumber = applicationNumber;
 	}
-	public Applicant getApplicant() {
-		return applicant;
-	}
-	public void setApplicant(Applicant applicant) {
-		this.applicant = applicant;
-	}
+
+
+	/**
+	 * @return the applicationDate
+	 */
 	public LocalDate getApplicationDate() {
 		return applicationDate;
 	}
+
+
+	/**
+	 * @param applicationDate the applicationDate to set
+	 */
 	public void setApplicationDate(LocalDate applicationDate) {
-		this.applicationDate = LocalDate.now();
+		this.applicationDate = applicationDate;
 	}
-	public RTOOffice getRtoOffice() {
-		return rtoOffice;
-	}
-	public void setRtoOffice(RTOOffice rtoOffice) {
-		this.rtoOffice = rtoOffice;
-	}
-	public LicenseType getType() {
-		return applicationType;
-	}
-	public void setType(LicenseType type) {
-		this.applicationType = type;
-	}
+
+
+	/**
+	 * @return the modeOfPayment
+	 */
 	public String getModeOfPayment() {
 		return modeOfPayment;
 	}
+
+
+	/**
+	 * @param modeOfPayment the modeOfPayment to set
+	 */
 	public void setModeOfPayment(String modeOfPayment) {
 		this.modeOfPayment = modeOfPayment;
 	}
-	public double getAmountPaid() {
+
+
+	/**
+	 * @return the amountPaid
+	 */
+	public Double getAmountPaid() {
 		return amountPaid;
 	}
-	public void setAmountPaid(double amountPaid) {
+
+
+	/**
+	 * @param amountPaid the amountPaid to set
+	 */
+	public void setAmountPaid(Double amountPaid) {
 		this.amountPaid = amountPaid;
 	}
+
+
+	/**
+	 * @return the paymentStatus
+	 */
 	public String getPaymentStatus() {
 		return paymentStatus;
 	}
+
+
+	/**
+	 * @param paymentStatus the paymentStatus to set
+	 */
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
-	public ApplicationStatus getStatus() {
-		return applicationStatus;
-	}
-	public void setStatus(ApplicationStatus status) {
-		this.applicationStatus = status;
-	}
+
+
+	/**
+	 * @return the remarks
+	 */
 	public String getRemarks() {
 		return remarks;
 	}
+
+
+	/**
+	 * @param remarks the remarks to set
+	 */
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
+
+	/**
+	 * @return the applicationStatus
+	 */
+	public ApplicationStatus getApplicationStatus() {
+		return applicationStatus;
+	}
+
+
+	/**
+	 * @param applicationStatus the applicationStatus to set
+	 */
+	public void setApplicationStatus(ApplicationStatus applicationStatus) {
+		this.applicationStatus = applicationStatus;
+	}
+
+
+	/**
+	 * @return the applicationType
+	 */
+	public LicenseType getApplicationType() {
+		return applicationType;
+	}
+
+
+	/**
+	 * @param applicationType the applicationType to set
+	 */
+	public void setApplicationType(LicenseType applicationType) {
+		this.applicationType = applicationType;
+	}
+
+
+	/**
+	 * @return the docs
+	 */
+	public Documents getDocs() {
+		return docs;
+	}
+
+
+	/**
+	 * @param docs the docs to set
+	 */
+	public void setDocs(Documents docs) {
+		this.docs = docs;
+	}
+
+
+	/**
+	 * @return the license
+	 */
+	public License getLicense() {
+		return license;
+	}
+
+
+	/**
+	 * @param license the license to set
+	 */
+	public void setLicense(License license) {
+		this.license = license;
+	}
+
+
+	/**
+	 * @return the appointment
+	 */
+	public Appointment getAppointment() {
+		return appointment;
+	}
+
+
+	/**
+	 * @param appointment the appointment to set
+	 */
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
+	}
+
+
+	/**
+	 * @return the rtoOffice
+	 */
+	public RTOOffice getRtoOffice() {
+		return rtoOffice;
+	}
+
+
+	/**
+	 * @param rtoOffice the rtoOffice to set
+	 */
+	public void setRtoOffice(RTOOffice rtoOffice) {
+		this.rtoOffice = rtoOffice;
+	}
+
+
+	/**
+	 * @return the applicant
+	 */
+	public Applicant getApplicant() {
+		return applicant;
+	}
+
+
+	/**
+	 * @param applicant the applicant to set
+	 */
+	public void setApplicant(Applicant applicant) {
+		this.applicant = applicant;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((amountPaid == null) ? 0 : amountPaid.hashCode());
+		result = prime * result + ((applicationDate == null) ? 0 : applicationDate.hashCode());
+		result = prime * result + ((applicationNumber == null) ? 0 : applicationNumber.hashCode());
+		result = prime * result + ((applicationStatus == null) ? 0 : applicationStatus.hashCode());
+		result = prime * result + ((applicationType == null) ? 0 : applicationType.hashCode());
+		result = prime * result + ((modeOfPayment == null) ? 0 : modeOfPayment.hashCode());
+		result = prime * result + ((paymentStatus == null) ? 0 : paymentStatus.hashCode());
+		result = prime * result + ((remarks == null) ? 0 : remarks.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Application other = (Application) obj;
+		if (amountPaid == null) {
+			if (other.amountPaid != null)
+				return false;
+		} else if (!amountPaid.equals(other.amountPaid))
+			return false;
+		if (applicationDate == null) {
+			if (other.applicationDate != null)
+				return false;
+		} else if (!applicationDate.equals(other.applicationDate))
+			return false;
+		if (applicationNumber == null) {
+			if (other.applicationNumber != null)
+				return false;
+		} else if (!applicationNumber.equals(other.applicationNumber))
+			return false;
+		if (applicationStatus != other.applicationStatus)
+			return false;
+		if (applicationType != other.applicationType)
+			return false;
+		if (modeOfPayment == null) {
+			if (other.modeOfPayment != null)
+				return false;
+		} else if (!modeOfPayment.equals(other.modeOfPayment))
+			return false;
+		if (paymentStatus == null) {
+			if (other.paymentStatus != null)
+				return false;
+		} else if (!paymentStatus.equals(other.paymentStatus))
+			return false;
+		if (remarks == null) {
+			if (other.remarks != null)
+				return false;
+		} else if (!remarks.equals(other.remarks))
+			return false;
+		return true;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Application [applicationNumber=" + applicationNumber + ", applicant=" + applicant + ", applicationDate="
-				+ applicationDate + ", rtoOffice=" + rtoOffice + ", type=" + applicationType + ", modeOfPayment=" + modeOfPayment + ", amountPaid=" + amountPaid + ", paymentStatus=" + paymentStatus
-				+ ", status=" + applicationStatus + ", remarks=" + remarks + "]";
+		return "Application [applicationNumber=" + applicationNumber + ", applicationDate=" + applicationDate
+				+ ", modeOfPayment=" + modeOfPayment + ", amountPaid=" + amountPaid + ", paymentStatus=" + paymentStatus
+				+ ", remarks=" + remarks + ", applicationStatus=" + applicationStatus + ", applicationType="
+				+ applicationType + ", docs=" + docs + ", license=" + license + ", appointment=" + appointment
+				+ ", rtoOffice=" + rtoOffice + ", applicant=" + applicant + "]";
 	}
-	
 	
 	
 }
