@@ -24,7 +24,7 @@ class AddressTest {
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		address = new Address("01","Mannat", "Maharashtra", "Mumbai", "Land's End", 400050, null);
+		address = new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050, AddressType.PERMANENT);
 	}
 
 	/**
@@ -52,6 +52,14 @@ class AddressTest {
 	}
 
 	/**
+	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#hashCode()}.
+	 */
+	@Test
+	void testHashCode() {
+		assertEquals(new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050, AddressType.PERMANENT).hashCode(), address.hashCode());
+	}
+
+	/**
 	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#Address()}.
 	 */
 	@Test
@@ -60,11 +68,11 @@ class AddressTest {
 	}
 
 	/**
-	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#Address(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int, com.capgemini.onlinevehiclelicense.model.Applicant)}.
+	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#Address(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int, com.capgemini.onlinevehiclelicense.model.AddressType)}.
 	 */
 	@Test
-	void testAddressStringStringStringStringStringIntApplicant() {
-		assertEquals(new Address("01","Mannat", "Maharashtra", "Mumbai", "Land's End", 400050, null), address);
+	void testAddressStringStringStringStringStringIntAddressType() {
+		assertEquals(new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050, AddressType.PERMANENT), address);
 	}
 
 	/**
@@ -72,7 +80,16 @@ class AddressTest {
 	 */
 	@Test
 	void testGetAddrId() {
-		assertEquals("01",address.getAddrId());
+		assertEquals(address.getAddrId(),"1");
+	}
+
+	/**
+	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#setAddrId(java.lang.String)}.
+	 */
+	@Test
+	void testSetAddrId() {
+		addr.setAddrId("1");
+		assertEquals(addr.getAddrId(),"1");
 	}
 
 	/**
@@ -80,7 +97,7 @@ class AddressTest {
 	 */
 	@Test
 	void testGetHouse() {
-		assertEquals("Mannat",address.getHouse());
+		assertEquals(address.getHouse(), "Mannat, Land's End, Bandstand, Bandra (West)");
 	}
 
 	/**
@@ -88,8 +105,8 @@ class AddressTest {
 	 */
 	@Test
 	void testSetHouse() {
-		addr.setHouse("Mannat");
-		assertEquals("Mannat", addr.getHouse());
+		addr.setHouse("Mannat, Land's End, Bandstand, Bandra (West)");
+		assertEquals(addr.getHouse(), "Mannat, Land's End, Bandstand, Bandra (West)");
 	}
 
 	/**
@@ -97,7 +114,7 @@ class AddressTest {
 	 */
 	@Test
 	void testGetState() {
-		assertEquals("Maharashtra",address.getState());
+		assertEquals(address.getState(),"Maharashtra");
 	}
 
 	/**
@@ -106,7 +123,7 @@ class AddressTest {
 	@Test
 	void testSetState() {
 		addr.setState("Maharashtra");
-		assertEquals("Maharashtra",addr.getState());
+		assertEquals(addr.getState(), "Maharashtra");
 	}
 
 	/**
@@ -114,7 +131,7 @@ class AddressTest {
 	 */
 	@Test
 	void testGetCity() {
-		assertEquals("Mumbai",address.getCity());
+		assertEquals(address.getCity(),"Mumbai");
 	}
 
 	/**
@@ -123,7 +140,7 @@ class AddressTest {
 	@Test
 	void testSetCity() {
 		addr.setCity("Mumbai");
-		assertEquals("Mumbai", addr.getCity());
+		assertEquals(addr.getCity(),"Mumbai");
 	}
 
 	/**
@@ -131,7 +148,7 @@ class AddressTest {
 	 */
 	@Test
 	void testGetLandmark() {
-		assertEquals("Land's End", address.getLandmark());
+		assertEquals(address.getLandmark(),null);
 	}
 
 	/**
@@ -139,8 +156,8 @@ class AddressTest {
 	 */
 	@Test
 	void testSetLandmark() {
-		addr.setLandmark("Land's End");
-		assertEquals("Land's End", addr.getLandmark());
+		addr.setLandmark(null);
+		assertEquals(addr.getLandmark(),null);
 	}
 
 	/**
@@ -148,7 +165,7 @@ class AddressTest {
 	 */
 	@Test
 	void testGetPincode() {
-		assertEquals(400050, address.getPincode());
+		assertEquals(address.getPincode(),400050);
 	}
 
 	/**
@@ -157,7 +174,7 @@ class AddressTest {
 	@Test
 	void testSetPincode() {
 		addr.setPincode(400050);
-		assertEquals(400050, addr.getPincode());
+		assertEquals(addr.getPincode(), 400050);
 	}
 
 	/**
@@ -165,23 +182,49 @@ class AddressTest {
 	 */
 	@Test
 	void testGetApplicant() {
-		assertEquals(null,address.getApplicant());
+		assertEquals(address.getApplicant(), null);
 	}
 
 	/**
 	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#setApplicant(com.capgemini.onlinevehiclelicense.model.Applicant)}.
 	 */
-/*	@Test
+	@Test
 	void testSetApplicant() {
-		fail("Not yet implemented");
+		addr.setApplicant(null);
+		assertEquals(addr.getApplicant(), null);
 	}
-*/
+
+	/**
+	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#getAddressType()}.
+	 */
+	@Test
+	void testGetAddressType() {
+		assertEquals(address.getAddressType(),AddressType.PERMANENT);
+	}
+
+	/**
+	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#setAddressType(com.capgemini.onlinevehiclelicense.model.AddressType)}.
+	 */
+	@Test
+	void testSetAddressType() {
+		addr.setAddressType(AddressType.PERMANENT);
+		assertEquals(addr.getAddressType(), AddressType.PERMANENT);
+	}
+
+	/**
+	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#equals(java.lang.Object)}.
+	 */
+	@Test
+	void testEqualsObject() {
+		assertEquals(new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050, AddressType.PERMANENT).equals(address),true);
+	}
+
 	/**
 	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#toString()}.
 	 */
 	@Test
 	void testToString() {
-		assertEquals("Address [addrId=01, house=Mannat, state=Maharashtra, city=Mumbai, landmark=Land's End, pincode=400050, applicant=null]", address.toString());
+		assertEquals(new Address("1", " Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050, AddressType.PERMANENT).toString(),"Address [addrId=1, house= Mannat, Land's End, Bandstand, Bandra (West), state=Maharashtra, city=Mumbai, landmark=null, pincode=400050, applicant=null, addressType=PERMANENT]");
 	}
 
 }
