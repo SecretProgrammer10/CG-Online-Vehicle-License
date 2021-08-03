@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +17,6 @@ import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
-import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 import com.capgemini.onlinevehiclelicense.model.TestResult;
 import com.capgemini.onlinevehiclelicense.service.IRTOOfficerService;
 
@@ -154,7 +152,16 @@ public class RTOOfficerController {
 			@ApiParam(value = "Application Number") @PathVariable("applicationNumber") String applicationNumber, 
 			@ApiParam(value = "Test Result Enum Value") @PathVariable("testResult") TestResult testResult)
 	{
+		if(testResult.toString().equals("PASS"))
+			sendLicenseMail(applicationNumber, true);
+		else
+			sendLicenseMail(applicationNumber, false);
 		return rtoOfficerService.modifyTestResultById(applicationNumber, testResult);
+	}
+
+	private String sendLicenseMail(String applicationNumber, boolean pass) {
+		// TODO Auto-generated method stub
+		return rtoOfficerService.emailLicense(applicationNumber, pass);
 	}
 	
 }
