@@ -3,7 +3,6 @@ package com.capgemini.onlinevehiclelicense.service;
 import java.util.Date;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
+import com.capgemini.onlinevehiclelicense.mail.IMailService;
 import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
@@ -38,6 +38,8 @@ public class RTOOfficerService implements IRTOOfficerService {
 	private ILicenseRepository licenseRepository;
 	@Autowired
 	private IAppointmentRepository appointmentRepository;
+	@Autowired
+	private IMailService mailService;
 	
 	@Override
 	public ResponseEntity<RTOOfficer> officeLogin(String username, String pass) {
@@ -158,9 +160,22 @@ public class RTOOfficerService implements IRTOOfficerService {
 	}
 
 	@Override
-	public String emailLicense(License license) {
+	public String emailLicense(String applicationNumber, boolean pass) {
 		// TODO Auto-generated method stub
-		return null;
+		String toAddress = this.applicationRepository.findById(applicationNumber)
+				.get().getApplicant().getUsers().getEmail();
+		String subject = "Your License";
+		if(pass == true) {
+			String message = "Application Number: " + applicationNumber + "\nYou have Successfully "
+					+ "passed the License Test.\n Your License has been attached below.";
+			mailService.sendMailWithAttachment(toAddress, subject, message, "License.txt");
+		}
+		else {
+			String message = "Application Number: " + applicationNumber + "\nWe regret to inform you that "
+					+ "you have not passed your license exam.";
+			mailService.sendNormalMail(toAddress, subject, message);
+		}
+		return applicationNumber;
 	}
 
 	@Override

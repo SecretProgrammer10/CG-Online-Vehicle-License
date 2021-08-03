@@ -9,7 +9,6 @@ public interface IUserService {
 	public ResponseEntity<Users> userLogin(String email, String pass);
 	public ResponseEntity<Users> changePassword(Users user);
 	public ResponseEntity<Users> forgotPassword(Users user, String pass);;
-	public String generateOtp();
-	public String sendOtp();
+	public boolean sendOtp(String toAddress);
 	
 }

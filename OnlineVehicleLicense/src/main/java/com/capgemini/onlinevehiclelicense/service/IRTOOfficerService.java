@@ -3,7 +3,6 @@ package com.capgemini.onlinevehiclelicense.service;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
@@ -25,7 +24,7 @@ public interface IRTOOfficerService {
 	public ResponseEntity<Appointment> modifyTestResultById(String applicationNumber, TestResult testResult);
 	public ResponseEntity<License> generateLearnerLicense(String applcationNumber);
 	public ResponseEntity<License> generateDrivingLicense(String applcationNumber);
-	public String emailLicense(License license);
+	public String emailLicense(String applicationNumber, boolean pass);
 	public List<Appointment> viewAllAppointments();
 	public List<Application> viewAllApplications();
 	

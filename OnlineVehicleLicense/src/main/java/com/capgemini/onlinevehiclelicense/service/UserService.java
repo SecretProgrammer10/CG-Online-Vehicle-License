@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
+import com.capgemini.onlinevehiclelicense.mail.IMailService;
 import com.capgemini.onlinevehiclelicense.model.Users;
 import com.capgemini.onlinevehiclelicense.repository.IUserRepository;
 
@@ -16,6 +17,9 @@ import com.capgemini.onlinevehiclelicense.repository.IUserRepository;
 public class UserService implements IUserService{
 	@Autowired
 	IUserRepository userRepo;
+	
+	@Autowired
+	IMailService mailService;
 	
 	@Override
 	public ResponseEntity<Users> userRegistration(Users user)
@@ -91,9 +95,11 @@ public class UserService implements IUserService{
 		try {
 			findUser = userRepo.findById(user.getEmail())
 					.orElseThrow(() -> new RecordNotFoundException("Email not found"));
-			findUser.setPassword(pass);
+			boolean checkOTP = sendOtp(findUser.getEmail());
+			if(checkOTP) {
+				findUser.setPassword(pass);
+			}
 			return new ResponseEntity<Users>(HttpStatus.OK);
-			
 		}
 		catch(RecordNotFoundException e)
 		{
@@ -101,8 +107,7 @@ public class UserService implements IUserService{
 		}
 	}
 
-	@Override
-	public String generateOtp() {
+	private String generateOtp() {
 		int min = 100000;  
 		int max = 999999;  
 		//Generate random int value from 200 to 400   
@@ -111,7 +116,11 @@ public class UserService implements IUserService{
 	}
 
 	@Override
-	public String sendOtp() {
-		return null;
+	public boolean sendOtp(String toAddress) {
+		String otp = generateOtp();
+		String subject = "OTP for Changing Password";
+		String message = "Your OTP for Re-Setting Password is: " + otp;
+		mailService.sendNormalMail(toAddress, subject, message);
+		return true;
 	}
 }
