@@ -1,13 +1,12 @@
 package com.capgemini.onlinevehiclelicense.model;
 
 import java.time.LocalDate;
-<<<<<<< HEAD
+
 import java.util.Date;
 
 import javax.persistence.*;
 
-=======
->>>>>>> cc0ef569fa06c4e5af94e7b2e99dcc9d6ccad984
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,7 +48,7 @@ public class Application {
 	private String applicationNumber;
 		
 	@Column(name="application_date")
-	private Date applicationDate;
+	private LocalDate applicationDate;
 
 	@Column(name="mode_of_payment")
 	private String modeOfPayment;
@@ -106,7 +105,7 @@ public class Application {
 
 	/**
 	 * @param applicationNumber
-	 * @param date
+	 * @param localDate.now()
 	 * @param modeOfPayment
 	 * @param amountPaid
 	 * @param paymentStatus
@@ -114,11 +113,11 @@ public class Application {
 	 * @param applicationStatus
 	 * @param applicationType
 	 */
-	public Application(String applicationNumber, Date date, String modeOfPayment, Double amountPaid,
+	public Application(String applicationNumber, LocalDate localDate, String modeOfPayment, Double amountPaid,
 			String paymentStatus, String remarks, ApplicationStatus applicationStatus, LicenseType applicationType) {
 		super();
 		this.applicationNumber = applicationNumber;
-		this.applicationDate = date;
+	    this.applicationDate=LocalDate.now();
 		this.modeOfPayment = modeOfPayment;
 		this.amountPaid = amountPaid;
 		this.paymentStatus = paymentStatus;
@@ -147,7 +146,7 @@ public class Application {
 	/**
 	 * @return the applicationDate
 	 */
-	public Date getApplicationDate() {
+	public LocalDate getApplicationDate() {
 		return applicationDate;
 	}
 
@@ -155,7 +154,7 @@ public class Application {
 	/**
 	 * @param applicationDate the applicationDate to set
 	 */
-	public void setApplicationDate(Date applicationDate) {
+	public void setApplicationDate(LocalDate applicationDate) {
 		this.applicationDate = applicationDate;
 	}
 
