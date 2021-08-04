@@ -12,22 +12,21 @@ import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentExceptio
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Applicant;
 import com.capgemini.onlinevehiclelicense.model.Users;
-//import com.capgemini.onlinevehiclelicense.model.Application;
-//import com.capgemini.onlinevehiclelicense.model.Users;
 import com.capgemini.onlinevehiclelicense.repository.IApplicantRepository;
-import com.capgemini.onlinevehiclelicense.repository.IUserRepository;
+
 
 @Service
 @Transactional
 public class ApplicantService implements IApplicantService{
 	@Autowired
 	private IApplicantRepository applicantRepo;
-	@Autowired
-	private IUserRepository userRepo;
 	
 	@Autowired
 	private IUserService userService;
 	
+	/**
+	 * method to add applicant profile
+	 */
 	@Override
 	public ResponseEntity<String> addApplicant(String username, Applicant applicant){
 		Users u = this.userService.getUserById(username);
@@ -69,6 +68,9 @@ public class ApplicantService implements IApplicantService{
 		
 	}
 
+	/**
+	 * method to update applicant profile
+	 */
 	@Override
 	public ResponseEntity<String> updateApplicantDetails(String username, Applicant applicant) {
 		Users u = this.userService.getUserById(username);
@@ -87,10 +89,6 @@ public class ApplicantService implements IApplicantService{
 				findUser.setQualification(applicant.getQualification());
 				findUser.setVehicleNumber(applicant.getVehicleNumber());
 				findUser.setVehicleType(applicant.getVehicleType());
-				/*findUser.setAddress(findUser.getAddress());
-				findUser.setApplication(findUser.getApplication());
-				findUser.setChallan(findUser.getChallan());
-				findUser.setUsers(findUser.getUsers());*/
 				this.applicantRepo.save(findUser);
 				return new ResponseEntity<String>("Applicant profile updated successfully.\nUsername: "+u.getUsername()+"\nApplicant id: "+findUser.getApplicantId(),HttpStatus.OK);
 			} catch (RecordNotFoundException e) {
@@ -105,6 +103,10 @@ public class ApplicantService implements IApplicantService{
 		}
 		
 	}
+	
+	/**
+	 * method to remove applicant profile
+	 */
 	@Override
 	public ResponseEntity<String> removeApplicant(String applicantNumber) {
 		
@@ -118,6 +120,10 @@ public class ApplicantService implements IApplicantService{
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	/**
+	 * method to view applicant by id
+	 */
 	@Override
 	public Applicant viewApplicantById(String username) {
 		try {		
