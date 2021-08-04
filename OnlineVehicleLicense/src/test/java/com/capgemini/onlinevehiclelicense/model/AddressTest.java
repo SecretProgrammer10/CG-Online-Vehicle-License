@@ -24,7 +24,7 @@ class AddressTest {
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		address = new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050, AddressType.PERMANENT);
+		address = new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050);
 	}
 
 	/**
@@ -56,7 +56,7 @@ class AddressTest {
 	 */
 	@Test
 	void testHashCode() {
-		assertEquals(new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050, AddressType.PERMANENT).hashCode(), address.hashCode());
+		assertEquals(new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050).hashCode(), address.hashCode());
 	}
 
 	/**
@@ -72,7 +72,7 @@ class AddressTest {
 	 */
 	@Test
 	void testAddressStringStringStringStringStringIntAddressType() {
-		assertEquals(new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050, AddressType.PERMANENT), address);
+		assertEquals(new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050), address);
 	}
 
 	/**
@@ -194,29 +194,13 @@ class AddressTest {
 		assertEquals(addr.getApplicant(), null);
 	}
 
-	/**
-	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#getAddressType()}.
-	 */
-	@Test
-	void testGetAddressType() {
-		assertEquals(address.getAddressType(),AddressType.PERMANENT);
-	}
-
-	/**
-	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#setAddressType(com.capgemini.onlinevehiclelicense.model.AddressType)}.
-	 */
-	@Test
-	void testSetAddressType() {
-		addr.setAddressType(AddressType.PERMANENT);
-		assertEquals(addr.getAddressType(), AddressType.PERMANENT);
-	}
 
 	/**
 	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Address#equals(java.lang.Object)}.
 	 */
 	@Test
 	void testEqualsObject() {
-		assertEquals(new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050, AddressType.PERMANENT).equals(address),true);
+		assertEquals(new Address("1", "Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050).equals(address),true);
 	}
 
 	/**
@@ -224,7 +208,7 @@ class AddressTest {
 	 */
 	@Test
 	void testToString() {
-		assertEquals(new Address("1", " Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050, AddressType.PERMANENT).toString(),"Address [addrId=1, house= Mannat, Land's End, Bandstand, Bandra (West), state=Maharashtra, city=Mumbai, landmark=null, pincode=400050, applicant=null, addressType=PERMANENT]");
+		assertEquals(new Address("1", " Mannat, Land's End, Bandstand, Bandra (West)", "Maharashtra", "Mumbai", null, 400050).toString(),"Address [addrId=1, house= Mannat, Land's End, Bandstand, Bandra (West), state=Maharashtra, city=Mumbai, landmark=null, pincode=400050, applicant=null]");
 	}
 
 }

@@ -1,19 +1,19 @@
 package com.capgemini.onlinevehiclelicense.model;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -25,6 +25,7 @@ public class Address {
 	/*@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="address_seq")
 	@SequenceGenerator(name="address_seq",sequenceName="address_seq", allocationSize=1)*/
 	@Column(name="address_id")
+	@JsonIgnore
 	private String addrId;
 	
 	@Column(name="house")
@@ -42,20 +43,21 @@ public class Address {
 	@Column(name="pincode")
 	private int pincode;
 	
+	@Transient
+	private boolean isSame;
+	
 	//@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	//@OneToOne(cascade = CascadeType.ALL)
 	//@MapsId
 	//@JoinColumn(name="applicant_id")
 	//private Applicant applicant;
 	
-	@ManyToOne(fetch = FetchType.LAZY , optional = false)
-	@JoinColumn(name = "applicant_id", nullable=false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToOne(cascade =CascadeType.ALL, fetch = FetchType.LAZY, optional=false)
+	@MapsId
+	@JoinColumn(name = "address_id", nullable = false)
+	@JsonIgnore
 	private Applicant applicant;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(name="address_type")
-	private AddressType addressType;
 
 	/**
 	 * 
@@ -72,10 +74,8 @@ public class Address {
 	 * @param city
 	 * @param landmark
 	 * @param pincode
-	 * @param addressType
 	 */
-	public Address(String addrId, String house, String state, String city, String landmark, int pincode,
-			AddressType addressType) {
+	public Address(String addrId, String house, String state, String city, String landmark, int pincode) {
 		super();
 		this.addrId = addrId;
 		this.house = house;
@@ -83,7 +83,6 @@ public class Address {
 		this.city = city;
 		this.landmark = landmark;
 		this.pincode = pincode;
-		this.addressType = addressType;
 	}
 
 	/**
@@ -184,18 +183,19 @@ public class Address {
 		this.applicant = applicant;
 	}
 
+
 	/**
-	 * @return the addressType
+	 * @return the isSame
 	 */
-	public AddressType getAddressType() {
-		return addressType;
+	public boolean isSame() {
+		return isSame;
 	}
 
 	/**
-	 * @param addressType the addressType to set
+	 * @param isSame the isSame to set
 	 */
-	public void setAddressType(AddressType addressType) {
-		this.addressType = addressType;
+	public void setSame(boolean isSame) {
+		this.isSame = isSame;
 	}
 
 	@Override
@@ -203,7 +203,6 @@ public class Address {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((addrId == null) ? 0 : addrId.hashCode());
-		result = prime * result + ((addressType == null) ? 0 : addressType.hashCode());
 		result = prime * result + ((applicant == null) ? 0 : applicant.hashCode());
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
 		result = prime * result + ((house == null) ? 0 : house.hashCode());
@@ -226,8 +225,6 @@ public class Address {
 			if (other.addrId != null)
 				return false;
 		} else if (!addrId.equals(other.addrId))
-			return false;
-		if (addressType != other.addressType)
 			return false;
 		if (applicant == null) {
 			if (other.applicant != null)
@@ -262,7 +259,7 @@ public class Address {
 	@Override
 	public String toString() {
 		return "Address [addrId=" + addrId + ", house=" + house + ", state=" + state + ", city=" + city + ", landmark="
-				+ landmark + ", pincode=" + pincode + ", applicant=" + applicant + ", addressType=" + addressType + "]";
+				+ landmark + ", pincode=" + pincode + ", applicant=" + applicant + "]";
 	}
 	
 }
