@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -63,13 +64,19 @@ public class Applicant {
 	@Column(name="vehicle_number")
 	private String vehicleNumber;
 	
-	//@OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
-	//@PrimaryKeyJoinColumn
-	//private Address address;
-	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "applicant", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	@JsonIgnore
-	private Set<Address> address;
+	private Address address;
+	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "applicant", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	@JsonIgnore
+	private TemporaryAddress tempAddress;
+	
+	//@OneToMany(cascade=CascadeType.ALL)
+	//@JsonIgnore
+	//private Set<Address> address;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JsonIgnore
@@ -327,14 +334,14 @@ public class Applicant {
 	/**
 	 * @return the address
 	 */
-	public Set<Address> getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
 	/**
 	 * @param address the address to set
 	 */
-	public void setAddress(Set<Address> address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 

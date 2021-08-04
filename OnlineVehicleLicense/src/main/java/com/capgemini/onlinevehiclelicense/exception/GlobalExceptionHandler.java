@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
  }
  
  @ExceptionHandler(RecordAlreadyPresentException.class)
- public ResponseEntity<?> resourceAlreadyPressnyException(RecordAlreadyPresentException ex, WebRequest request) {
+ public ResponseEntity<?> recordAlreadyPresentException(RecordAlreadyPresentException ex, WebRequest request) {
   ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
   return new ResponseEntity<>(errorDetails, HttpStatus.ALREADY_REPORTED);
  }
