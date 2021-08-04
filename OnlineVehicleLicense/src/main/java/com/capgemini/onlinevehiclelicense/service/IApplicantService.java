@@ -7,8 +7,8 @@ import com.capgemini.onlinevehiclelicense.model.Applicant;
 
 public interface IApplicantService {
 
-	public ResponseEntity<Applicant> addApplicant(Applicant applicant);
-	public ResponseEntity<Applicant> updateApplicantDetails(Applicant applicant);
-	public ResponseEntity<Applicant> removeApplicant(String applicantNumber);
-	public String viewApplicantById(String applicantNumber);
+	public ResponseEntity<String> addApplicant(String username, Applicant applicant);
+	public ResponseEntity<String> updateApplicantDetails(String username, Applicant applicant);
+	public ResponseEntity<String> removeApplicant(String applicantNumber);
+	public Applicant viewApplicantById(String applicantNumber);
 }

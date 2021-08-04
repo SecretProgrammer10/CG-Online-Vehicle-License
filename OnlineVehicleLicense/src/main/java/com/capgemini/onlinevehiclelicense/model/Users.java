@@ -6,30 +6,43 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name="Users")
 public class Users {
-	@Id
-	@Column(name="email")
-	@NotEmpty(message = "Email cannot be empty")
-	@Pattern(regexp="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$", message="Email Not Valid") ///^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/
-	private String email;
 	
+	@Id
 	@Column(name="username")
-	@Pattern(regexp="^[A-Za-z]\\\\w{5, 29}$", message="Username invalid")
+	@ApiModelProperty(notes = "Username of the user", example = "Jessica_12")
+	@Pattern(regexp="^[a-zA-Z0-9\\._\\-]{6,20}$", message="Username invalid")
 	@NotEmpty(message = "Username cannot be empty")
 	private String username;
 	
+	@Column(name="email",unique = true)
+	@ApiModelProperty(notes = "Email address of the user", example = "jessica@ngilang.com")
+	@Email(message = "Email Address")
+	@NotEmpty(message = "Email cannot be empty")
+	@Pattern(regexp="^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message="Email Not Valid") ///^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/
+	private String email;
+	
 	@Column(name="password")
-	@Pattern(regexp="(?=.\\d)(?=.[a-z])(?=.[A-Z])(?=.[@#$%]).{8,20}", message="Password Not Valid") //^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[*.!@$%^&(){}[]:;<>,.?/~_+-=|\\]).{8,32}$
+	@ApiModelProperty(notes = "Password of the user", example = "Jessica@1234")
+	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message="Password Not Valid") //^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[*.!@$%^&(){}[]:;<>,.?/~_+-=|\\]).{8,32}$
 	@NotEmpty(message = "Password cannot be empty")
 	private String password;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
+	@PrimaryKeyJoinColumn
+	@JsonIgnore
 	private Applicant applicant;
 
 	/**
