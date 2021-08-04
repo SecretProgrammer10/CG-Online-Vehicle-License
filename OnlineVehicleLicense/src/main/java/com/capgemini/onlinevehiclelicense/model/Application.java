@@ -1,6 +1,8 @@
 package com.capgemini.onlinevehiclelicense.model;
 
 import java.time.LocalDate;
+import java.util.Date;
+
 import javax.persistence.*;
 
 
@@ -16,7 +18,7 @@ public class Application {
 	private String applicationNumber;
 		
 	@Column(name="application_date")
-	private LocalDate applicationDate=LocalDate.now();
+	private Date applicationDate;
 
 	@Column(name="mode_of_payment")
 	private String modeOfPayment;
@@ -73,7 +75,7 @@ public class Application {
 
 	/**
 	 * @param applicationNumber
-	 * @param applicationDate
+	 * @param date
 	 * @param modeOfPayment
 	 * @param amountPaid
 	 * @param paymentStatus
@@ -81,11 +83,11 @@ public class Application {
 	 * @param applicationStatus
 	 * @param applicationType
 	 */
-	public Application(String applicationNumber, LocalDate applicationDate, String modeOfPayment, Double amountPaid,
+	public Application(String applicationNumber, Date date, String modeOfPayment, Double amountPaid,
 			String paymentStatus, String remarks, ApplicationStatus applicationStatus, LicenseType applicationType) {
 		super();
 		this.applicationNumber = applicationNumber;
-		this.applicationDate = applicationDate;
+		this.applicationDate = date;
 		this.modeOfPayment = modeOfPayment;
 		this.amountPaid = amountPaid;
 		this.paymentStatus = paymentStatus;
@@ -114,7 +116,7 @@ public class Application {
 	/**
 	 * @return the applicationDate
 	 */
-	public LocalDate getApplicationDate() {
+	public Date getApplicationDate() {
 		return applicationDate;
 	}
 
@@ -122,7 +124,7 @@ public class Application {
 	/**
 	 * @param applicationDate the applicationDate to set
 	 */
-	public void setApplicationDate(LocalDate applicationDate) {
+	public void setApplicationDate(Date applicationDate) {
 		this.applicationDate = applicationDate;
 	}
 

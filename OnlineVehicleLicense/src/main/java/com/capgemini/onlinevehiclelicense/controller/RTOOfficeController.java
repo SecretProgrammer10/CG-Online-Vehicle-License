@@ -37,7 +37,7 @@ public class RTOOfficeController {
 			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
 	})
 	@GetMapping("/view-all-rtooffices")
-	public List<RTOOffice> viewAllRtoOffices(@RequestBody RTOOffice rtooffice) {
+	public List<RTOOffice> viewAllRtoOffices() {
 		return rtoofficeService.viewAllRtoOffices();
 	}
 	
