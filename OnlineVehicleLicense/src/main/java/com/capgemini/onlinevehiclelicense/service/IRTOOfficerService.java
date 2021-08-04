@@ -2,6 +2,9 @@ package com.capgemini.onlinevehiclelicense.service;
 
 import java.util.List;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import com.capgemini.onlinevehiclelicense.model.Application;
@@ -25,7 +28,7 @@ public interface IRTOOfficerService {
 	public ResponseEntity<License> generateLearnerLicense(String applcationNumber);
 	public ResponseEntity<License> generateDrivingLicense(String applcationNumber);
 	public String emailLicense(String applicationNumber, boolean pass);
-	public List<Appointment> viewAllAppointments();
-	public List<Application> viewAllApplications();
+	public Page<Appointment> viewAllAppointments(Pageable pageable);
+	public Page<Application> viewAllApplications(Pageable pageable);
 	
 }

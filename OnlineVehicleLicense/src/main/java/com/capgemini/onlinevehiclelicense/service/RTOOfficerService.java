@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ import com.capgemini.onlinevehiclelicense.repository.IAppointmentRepository;
 import com.capgemini.onlinevehiclelicense.repository.IChallanRepository;
 import com.capgemini.onlinevehiclelicense.repository.ILicenseRepository;
 import com.capgemini.onlinevehiclelicense.repository.IRTOOfficerRepository;
+import org.springframework.data.domain.Pageable;
 
 
 @Service
@@ -210,16 +213,17 @@ public class RTOOfficerService implements IRTOOfficerService {
 	}
 	
 	@Override
-	public List<Appointment> viewAllAppointments() {
+	public Page<Appointment> viewAllAppointments(Pageable pageable) {
 		// TODO Auto-generated method stub
 		
-		return this.appointmentRepository.findAll();
+		return this.appointmentRepository.findAll(pageable);
 	}
 	
+	
 	@Override
-	public List<Application> viewAllApplications() {
+	public Page<Application> viewAllApplications(Pageable pageable) {
 		// TODO Auto-generated method stub
-		return this.applicationRepository.findAll();
+		return this.applicationRepository.findAll(pageable);
 	}
 
 	

@@ -1,7 +1,9 @@
 package com.capgemini.onlinevehiclelicense.model;
 
-import java.time.LocalDate;
+
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,10 +26,10 @@ public class Appointment {
 	private String appointmentNumber;
 	
 	@Column(name = "test_date")
-	private LocalDate testDate;
+	private Date testDate;
 	
 	@Column(name = "time_slot")
-	private LocalTime timeSlot;
+	private Date timeSlot;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "test_result")
@@ -55,7 +57,7 @@ public class Appointment {
 	 * @param timeSlot
 	 * @param testResult
 	 */
-	public Appointment(String appointmentNumber, LocalDate testDate, LocalTime timeSlot, TestResult testResult) {
+	public Appointment(String appointmentNumber, Date testDate, Date timeSlot, TestResult testResult) {
 		super();
 		this.appointmentNumber = appointmentNumber;
 		this.testDate = testDate;
@@ -82,28 +84,28 @@ public class Appointment {
 	/**
 	 * @return the testDate
 	 */
-	public LocalDate getTestDate() {
+	public Date getTestDate() {
 		return testDate;
 	}
 
 	/**
 	 * @param testDate the testDate to set
 	 */
-	public void setTestDate(LocalDate testDate) {
+	public void setTestDate(Date testDate) {
 		this.testDate = testDate;
 	}
 
 	/**
 	 * @return the timeSlot
 	 */
-	public LocalTime getTimeSlot() {
+	public Date getTimeSlot() {
 		return timeSlot;
 	}
 
 	/**
 	 * @param timeSlot the timeSlot to set
 	 */
-	public void setTimeSlot(LocalTime timeSlot) {
+	public void setTimeSlot(Date timeSlot) {
 		this.timeSlot = timeSlot;
 	}
 
@@ -194,8 +196,10 @@ public class Appointment {
 
 	@Override
 	public String toString() {
-		return "Appointment [appointmentNumber=" + appointmentNumber + ", testDate=" + testDate + ", timeSlot="
-				+ timeSlot + ", testResult=" + testResult + ", application=" + application + ", rtoOfficer="
+		SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat timeFormat=new SimpleDateFormat("HH:mm:ss");
+		return "Appointment [appointmentNumber=" + appointmentNumber + ", testDate=" + sdf.format(testDate) + ", timeSlot="
+				+ timeFormat.format(timeSlot) + ", testResult=" + testResult + ", application=" + application + ", rtoOfficer="
 				+ rtoOfficer + "]";
 	}
     

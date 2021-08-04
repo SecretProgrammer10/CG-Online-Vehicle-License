@@ -3,6 +3,8 @@ package com.capgemini.onlinevehiclelicense.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -125,9 +127,9 @@ public class RTOOfficerController {
 			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
 	})
 	@GetMapping("/view-all-appointment")
-	public List<Appointment> viewAllAppointments()
+	public Page<Appointment> viewAllAppointments(Pageable pageable)
 	{
-		return rtoOfficerService.viewAllAppointments();
+		return rtoOfficerService.viewAllAppointments(pageable);
 		
 	}
 	
@@ -139,9 +141,9 @@ public class RTOOfficerController {
 			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
 	})
 	@GetMapping("/view-all-applications")
-	public List<Application> viewAllApplications()
+	public Page<Application> viewAllApplications(Pageable pageable)
 	{
-		return rtoOfficerService.viewAllApplications();
+		return rtoOfficerService.viewAllApplications(pageable);
 		
 	}
 	
