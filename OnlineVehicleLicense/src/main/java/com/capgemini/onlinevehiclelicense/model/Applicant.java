@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,6 +26,7 @@ public class Applicant {
 	@Id
 	@Column(name="applicant_id")
 	@NotEmpty(message = "ID cannot be empty")
+	@JsonIgnore
 	private String applicantId;
 	
 	@Column(name="first_name")
@@ -73,11 +75,14 @@ public class Applicant {
 	@JsonIgnore
 	private Set<Application> application;
 	
-	@OneToOne(fetch = FetchType.LAZY, optional=false)
-	@JoinColumn(name = "user_id", nullable = false)
+	@OneToOne(cascade =CascadeType.ALL, fetch = FetchType.LAZY, optional=false)
+	@MapsId
+	@JoinColumn(name = "applicant_id", nullable = false)
+	@JsonIgnore
 	private Users users;
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Challan> challan;
 
 	/**
@@ -119,6 +124,36 @@ public class Applicant {
 		this.vehicleType = vehicleType;
 		this.vehicleNumber = vehicleNumber;
 		//this.address = address;
+	}
+
+	/**
+	 * @param firstName
+	 * @param middleName
+	 * @param lastName
+	 * @param dateOfBirth
+	 * @param placeOfBirth
+	 * @param gender
+	 * @param qualification
+	 * @param mobile
+	 * @param nationality
+	 * @param vehicleType
+	 * @param vehicleNumber
+	 */
+	public Applicant(String firstName, String middleName, String lastName, Date dateOfBirth, String placeOfBirth,
+			Gender gender, String qualification, String mobile, String nationality, String vehicleType,
+			String vehicleNumber) {
+		super();
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.placeOfBirth = placeOfBirth;
+		this.gender = gender;
+		this.qualification = qualification;
+		this.mobile = mobile;
+		this.nationality = nationality;
+		this.vehicleType = vehicleType;
+		this.vehicleNumber = vehicleNumber;
 	}
 
 	/**

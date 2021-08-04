@@ -17,10 +17,6 @@ import org.hibernate.type.Type;
 
 import com.capgemini.onlinevehiclelicense.model.Application;
 
-/**
- * @author DIBYENDU
- *
- */
 
 public class ApplicationIdGenerator extends SequenceStyleGenerator {
     
