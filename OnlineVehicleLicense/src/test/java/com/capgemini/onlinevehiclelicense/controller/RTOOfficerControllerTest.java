@@ -70,18 +70,18 @@ class RTOOfficerControllerTest {
 		this.rtoofficerList.add(new RTOOfficer("shyam123","Shyam@1234", "shyam@gmail.com"));
 		this.rtoofficerList.add(new RTOOfficer("koel12","Koel@1234","koel@gmail.com"));
 
-		this.applicationList.add(new Application("12345",LocalDate.parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.DL));
-		this.applicationList.add(new Application("12645",LocalDate.parse("2021-07-03"),"online",1200.00,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.LL));
-		this.applicationList.add(new Application("12395",LocalDate.parse("2021-07-03"),"online",1300.08,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.DL));
+		this.applicationList.add(new Application("12345",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.DL));
+		this.applicationList.add(new Application("12645",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1200.00,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.LL));
+		this.applicationList.add(new Application("12395",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1300.08,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.DL));
 
 
-		this.applicationList.add(new Application("12145", LocalDate.parse("2021-07-03"),"online",1900.08,"paid","all ok",ApplicationStatus.PENDING,LicenseType.DL));
-		this.applicationList.add(new Application("12545", LocalDate.parse("2021-07-03"),"online",1800.08,"due","all ok",ApplicationStatus.PENDING,LicenseType.DL));
-		this.applicationList.add(new Application("12445", LocalDate.parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.PENDING,LicenseType.LL));
+		this.applicationList.add(new Application("12145", new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1900.08,"paid","all ok",ApplicationStatus.PENDING,LicenseType.DL));
+		this.applicationList.add(new Application("12545", new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1800.08,"due","all ok",ApplicationStatus.PENDING,LicenseType.DL));
+		this.applicationList.add(new Application("12445", new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.PENDING,LicenseType.LL));
 
-		this.applicationList.add(new Application("12245",LocalDate.parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.REJECTED,LicenseType.LL));
-		this.applicationList.add(new Application("13345",LocalDate.parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.REJECTED,LicenseType.DL));
-		this.applicationList.add(new Application("14345",LocalDate.parse("2021-07-03"),"online",1500.08,"due","all ok",ApplicationStatus.REJECTED,LicenseType.LL));
+		this.applicationList.add(new Application("12245",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.REJECTED,LicenseType.LL));
+		this.applicationList.add(new Application("13345",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.REJECTED,LicenseType.DL));
+		this.applicationList.add(new Application("14345",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1500.08,"due","all ok",ApplicationStatus.REJECTED,LicenseType.LL));
 
 
 	}
@@ -145,7 +145,7 @@ class RTOOfficerControllerTest {
 	@Test
 	void testViewApplicationById() throws Exception {
 		String applicationNumber= "12345";
-		application = new Application(applicationNumber,LocalDate.parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.DL);
+		application = new Application(applicationNumber,new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.DL);
 		given(rtoofficerService.viewApplicationById(applicationNumber)).willReturn(application);
 
 
