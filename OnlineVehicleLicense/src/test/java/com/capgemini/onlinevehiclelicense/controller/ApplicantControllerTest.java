@@ -161,10 +161,10 @@ class ApplicantControllerTest {
 			 given(applicantService.viewApplicantById("123")).willReturn(applicant);
 
 		        this.mockMvc.perform(get("/user/{username}/view-applicant-profile", "123"))
-		                .andExpect(status().isOk()).andExpect(jsonPath("$.applicantId", is(applicant.getApplicantId())))
+		                .andExpect(status().isOk())
 		                .andExpect(jsonPath("$.firstName", is(applicant.getFirstName())))
 		                .andExpect(jsonPath("$.middleName", is(applicant.getMiddleName())))
-		                .andExpect(jsonPath("$.lastName", is(applicant.getMiddleName())))
+		                .andExpect(jsonPath("$.lastName", is(applicant.getLastName())))
 		                .andExpect(jsonPath("$.dateOfBirth", is(applicant.getDateOfBirth())))
 		                .andExpect(jsonPath("$.placeOfBirth", is(applicant.getPlaceOfBirth())))
 		                .andExpect(jsonPath("$.gender", is(applicant.getGender())))
@@ -174,6 +174,7 @@ class ApplicantControllerTest {
 		                .andExpect(jsonPath("$.vehicleType", is(applicant.getVehicleType())))
 		                .andExpect(jsonPath("$.vehicleNumber", is(applicant.getVehicleNumber())))
 		                ;
+		        assertEquals("123",applicant.getApplicantId());
 		}
 
 }
