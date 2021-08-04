@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
-import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Applicant;
 import com.capgemini.onlinevehiclelicense.service.ApplicantService;
 
@@ -22,7 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/applicant")
+@RequestMapping("/user")
 @Api(value = "Online Vehicle License")
 @Validated
 public class ApplicantController {
@@ -31,34 +28,30 @@ public class ApplicantController {
 	ApplicantService applicantService;
 	
 	@ApiOperation(value = "Add applicant profile")
-	@PostMapping("/addApplicant")
-	@ExceptionHandler(RecordAlreadyPresentException.class)
-	public ResponseEntity<Applicant> addApplicant(@RequestBody Applicant applicant)
+	@PostMapping("/{username}/add-applicant-profile")
+	public ResponseEntity<String> addApplicant(@PathVariable("username") String username, @RequestBody Applicant applicant)
 	{
-		return applicantService.addApplicant(applicant);
+		return applicantService.addApplicant(username, applicant);
 	}
 	
 	@ApiOperation(value = "Update applicant profile")
-	@PutMapping("/updateApplicant")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<Applicant> updateApplicantDetails(@RequestBody Applicant applicant)
+	@PutMapping("/{username}/update-applicant-profile")
+	public ResponseEntity<String> updateApplicantDetails(@PathVariable("username") String username, @RequestBody Applicant applicant)
 	{
-		return applicantService.updateApplicantDetails(applicant);
+		return applicantService.updateApplicantDetails(username, applicant);
 	}
 	
 	@ApiOperation(value = "Remove applicant profile")
-	@DeleteMapping("/removeApplicant/{applicantNumber}")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<Applicant> removeApplicant(@PathVariable String applicantNumber)
+	@DeleteMapping("/{username}/remove-applicant-profile")
+	public ResponseEntity<String> removeApplicant(@PathVariable("username") String username)
 	{
-		return applicantService.removeApplicant(applicantNumber);
+		return applicantService.removeApplicant(username);
 	}
 	
 	@ApiOperation(value = "View applicant profile by id")
-	@GetMapping("/viewApplicant/{applicantNumber}")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public String viewApplicantById(@PathVariable String applicantNumber)
+	@GetMapping("/{username}/view-applicant-profile")
+	public Applicant viewApplicantById(@PathVariable("username") String username)
 	{
-		return applicantService.viewApplicantById(applicantNumber);
+		return applicantService.viewApplicantById(username);
 	}
 }

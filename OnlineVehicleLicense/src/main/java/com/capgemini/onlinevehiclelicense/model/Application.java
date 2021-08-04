@@ -1,19 +1,50 @@
 package com.capgemini.onlinevehiclelicense.model;
 
 import java.time.LocalDate;
+<<<<<<< HEAD
 import java.util.Date;
 
 import javax.persistence.*;
 
+=======
+>>>>>>> cc0ef569fa06c4e5af94e7b2e99dcc9d6ccad984
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
 
 @Entity
 @Table(name="Application")
 public class Application {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="application_seq")
-	@SequenceGenerator(name="application_seq",sequenceName="application_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
+    @GenericGenerator(
+            name = "application_seq", 
+            strategy = "com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator", 
+            parameters = { 
+                    @Parameter(name = ApplicationIdGenerator.INCREMENT_PARAM, value = "1"),
+                    @Parameter(name = ApplicationIdGenerator.CODE_NUMBER_SEPARATOR_PARAMETER, value = "_"), 
+                    @Parameter(name = ApplicationIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")})
+    private String id;
+
+
 	@Column(name="application_number")
 	private String applicationNumber;
 		
