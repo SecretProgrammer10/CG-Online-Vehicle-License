@@ -43,7 +43,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 	private IMailService mailService;
 	@Autowired
 	private IRTOOfficeRepository rtoOfficeRepository;
-
+	
 	@Override
 	public ResponseEntity<String> officeLogin(String username, String pass) {
 		// TODO Auto-generated method stub
@@ -86,7 +86,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 	public List<Application> viewAllApprovedApplications() {
 
 		return rtoOfficerRepository.viewApprovedApplications(ApplicationStatus.APPROVED);
-
+    
 	}
 
 	@Override
@@ -120,8 +120,8 @@ public class RTOOfficerService implements IRTOOfficerService {
 		}
 	}
 
-
-
+	
+	
 
 	@Override
 	public String emailLicense(String applicationNumber, boolean pass) {
@@ -172,15 +172,15 @@ public class RTOOfficerService implements IRTOOfficerService {
 			return null;
 		}
 	}
-
+	
 	@Override
 	public Page<Appointment> viewAllAppointments(Pageable pageable) {
 		// TODO Auto-generated method stub
-
+		
 		return this.appointmentRepository.findAll(pageable);
 	}
-
-
+	
+	
 	@Override
 	public Page<Application> viewAllApplications(Pageable pageable) {
 		// TODO Auto-generated method stub
@@ -202,10 +202,6 @@ public class RTOOfficerService implements IRTOOfficerService {
 			} else {
 				return new ResponseEntity<String>("RTO Officer is already present",HttpStatus.ALREADY_REPORTED);
 			}
-		}
-
-
-	}
-
-
+		}	
+	}	
 }
