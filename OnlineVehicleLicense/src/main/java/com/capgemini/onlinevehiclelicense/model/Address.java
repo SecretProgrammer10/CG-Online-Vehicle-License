@@ -11,9 +11,12 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
 
 
 
@@ -28,21 +31,34 @@ public class Address {
 	@JsonIgnore
 	private String addrId;
 	
+	@NotNull(message = "House cannot be null")
+	@Size(min = 10, max = 200, message 
+		      = "Address must be between 10 and 200 characters")
+	@ApiModelProperty(notes = "House address with house name", example = "Mannat, Land’s End, Byramji Jeejeebhoy Road, Bandra (West)")
 	@Column(name="house")
 	private String house;
 	
+	@NotNull(message = "State cannot be null")
+	@ApiModelProperty(notes = "Name of State", example = "Maharashtra")
 	@Column(name="state")
 	private String state;
 	
+	@NotNull(message = "City cannot be null")
+	@ApiModelProperty(notes = "Name of city", example = "Mumbai")
 	@Column(name="city")
 	private String city;
 	
+	@ApiModelProperty(notes = "Landmark", example = "Bandstand")
 	@Column(name="landmark")
 	private String landmark;
 	
+	@NotNull(message = "Pincode cannot be null")
+	@ApiModelProperty(notes = "Pincode", example = "400050")
 	@Column(name="pincode")
 	private int pincode;
 	
+	@NotNull(message = "Field cannot be null")
+	@ApiModelProperty(notes = "True if present address is same as permanent address", example = "400050")
 	@Transient
 	private boolean isSame;
 	

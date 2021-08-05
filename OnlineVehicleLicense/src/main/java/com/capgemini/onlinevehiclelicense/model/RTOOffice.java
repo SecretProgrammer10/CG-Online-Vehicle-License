@@ -12,6 +12,8 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 @Table(name="Rtooffice")
@@ -22,7 +24,7 @@ public class RTOOffice {
 	@Column(name="rto_id")
 	private int rtoId;
 	
-	
+	@ApiModelProperty(notes = "RTO Office Name", example = "PUNE")
 	@Column(name="rto_name")
 	@NotEmpty(message="rtoName is required")
 	private String rtoName;

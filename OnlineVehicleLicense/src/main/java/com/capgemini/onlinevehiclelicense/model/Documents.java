@@ -12,6 +12,8 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "Documents")
 public class Documents {
@@ -27,14 +29,17 @@ public class Documents {
 	@JsonIgnore
 	private Application application;
 	
+	@ApiModelProperty(notes = "Photo", example = "Photo.jpeg")
 	@Column(name = "photo")
 	@NotEmpty(message="photo should not be empty")
 	private String photo;
 	
+	@ApiModelProperty(notes = "Photo", example = "Voter.pdf")
 	@Column(name = "id_proof")
 	@NotEmpty(message="id proof should not be empty")
 	private String idProof;
 	
+	@ApiModelProperty(notes = "Photo", example = "Aadhar.pdf")
 	@Column(name = "address_proof")
 	@NotEmpty(message="address proof should not be empty")
 	private String addressProof;

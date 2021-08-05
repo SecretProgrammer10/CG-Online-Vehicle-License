@@ -9,14 +9,23 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "Appointment")
@@ -24,17 +33,29 @@ public class Appointment {
 	
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
+	@GenericGenerator(name = "application_seq", 
+    strategy = "com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator", 
+    parameters = { @Parameter(name = CustomPrefixIdGenerator.INCREMENT_PARAM, value = "1"),
+        @Parameter(name = CustomPrefixIdGenerator.VALUE_PREFIX_PARAMETER, value = "21_"),
+        @Parameter(name = CustomPrefixIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
 	@Column(name = "appointment_number")
 	private String appointmentNumber;
 	
+	@NotNull(message = "Test date cannot be null")
+	@ApiModelProperty(notes = "Test Date", example = "10-10-2021")
 	@Column(name = "test_date")
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	private Date testDate;
 	
+	@NotNull(message = "Test slot cannot be null")
+	@ApiModelProperty(notes = "Test Slot", example = "12:30")
 	@Column(name = "time_slot")
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
 	private Date timeSlot;
 	
+	@NotNull(message = "Application date cannot be null")
+	@ApiModelProperty(notes = "Test Result")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "test_result")
 	private TestResult testResult;
