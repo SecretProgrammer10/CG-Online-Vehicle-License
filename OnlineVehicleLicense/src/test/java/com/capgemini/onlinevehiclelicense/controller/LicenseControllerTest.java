@@ -8,14 +8,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 //import org.springframework.test.web.servlet.MvcResult;
 
 //import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 import java.util.TimeZone;
 
 //import static org.assertj.core.api.Assertions.assertThat;
@@ -45,7 +47,7 @@ class LicenseControllerTest {
 	@MockBean
 	private LicenseService licenseService;
 	
-	private List<License> licenseList;
+	private Page<License> licenseList;
 	private License license;
 
 	/**
@@ -53,8 +55,7 @@ class LicenseControllerTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		licenseList = new ArrayList<>();
-		licenseList.add(new License("20214738292", LicenseType.DL, 
+		licenseList.and(new License("20214738292", LicenseType.DL, 
 				new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"), new SimpleDateFormat("yyyy-MM-dd").parse("2022-07-03")));
 	}
 	
@@ -79,12 +80,12 @@ class LicenseControllerTest {
 	 * @throws Exception 
 	 */
 	@Test
-	void testViewAllLicense() throws Exception {
-		given(licenseService.viewAllLicense()).willReturn(this.licenseList);
+	void testViewAllLicense(Pageable pageable) throws Exception {
+		given(licenseService.viewAllLicense(pageable)).willReturn(this.licenseList);
 		
 		this.mockMvc.perform(get("/api/v1/license/view-all-licenses"))
 		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.size()", is(licenseList.size())));
+		.andExpect(jsonPath("$.size()", is(licenseList.getSize())));
 	}
 
 	/**
@@ -131,14 +132,6 @@ class LicenseControllerTest {
 		.andExpect(jsonPath("$.licenseType", is(license.getLicenseType().toString())))
 		.andExpect(jsonPath("$.dateOfIssue", is(sdf.format(license.getDateOfIssue()))))
 		.andExpect(jsonPath("$.validTill", is(sdf.format(license.getValidTill()))));
-	}
-
-	/**
-	 * Test method for {@link com.capgemini.onlinevehiclelicense.controller.LicenseController#deleteLicense(java.lang.String)}.
-	 */
-	@Test
-	void testDeleteLicense() {
-		
 	}
 
 }

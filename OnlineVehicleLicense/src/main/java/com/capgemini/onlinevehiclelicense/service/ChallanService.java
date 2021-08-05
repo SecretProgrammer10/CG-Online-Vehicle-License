@@ -1,8 +1,11 @@
 package com.capgemini.onlinevehiclelicense.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
@@ -20,11 +23,12 @@ public class ChallanService implements IChallanService {
 	public String payChallan(String challanNumber) {
 		// TODO Auto-generated method stub
 		try {
-			Challan findChallan = this.challanRepository.findChallan(challanNumber);
-			if(findChallan != null) {
-				findChallan.setStatus("Paid");
-				this.challanRepository.save(findChallan);
-				return findChallan.getStatus();
+			Optional<Challan> findChallan = this.challanRepository.findById(challanNumber);
+			if(findChallan.isPresent()) {
+				Challan challan = findChallan.get();
+				challan.setStatus("Paid");
+				this.challanRepository.save(challan);
+				return challan.getStatus();
 			}
 			else {
 				throw new RecordNotFoundException("Challan Does not Exist!!!");
@@ -37,18 +41,32 @@ public class ChallanService implements IChallanService {
 		}
 	}
 
-
 	@Override
-	public List<Challan> viewAllChallanDetails() {
+	public List<Challan> getChallanByVehicleNumber(String vehicleNumber) {
 		// TODO Auto-generated method stub
-		return this.challanRepository.findAll();
+		return this.challanRepository.getChallanByVehicleNumber(vehicleNumber);
 	}
 
 
 	@Override
-	public List<Challan> getDetailsByVehicleNumber(String vehicleNumber) {
+	public Page<Challan> viewAllChallanDetails(Pageable pageable) {
 		// TODO Auto-generated method stub
-		return this.challanRepository.getDetailsByVehicleNumber(vehicleNumber);
+		return this.challanRepository.findAll(pageable);
+	}
+
+	@Override
+	public Challan getChallanDetailsByChallanNumber(String challanNumber) {
+		// TODO Auto-generated method stub
+		Challan challan;
+		try {
+			challan = this.challanRepository.findById(challanNumber)
+					.orElseThrow(() -> new RecordNotFoundException(challanNumber));
+			return challan;
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 }

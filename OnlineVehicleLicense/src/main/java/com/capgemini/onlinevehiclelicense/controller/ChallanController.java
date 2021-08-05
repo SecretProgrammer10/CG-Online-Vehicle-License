@@ -4,11 +4,14 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.onlinevehiclelicense.model.Challan;
@@ -37,15 +40,15 @@ public class ChallanController {
 			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
 	})
 	@GetMapping("/view-all-challan")
-	public List<Challan> viewAllChallan() {
-		return challanService.viewAllChallanDetails();
+	public Page<Challan> viewAllChallan(Pageable pageable) {
+		return challanService.viewAllChallanDetails(pageable);
 	}
 	
 	@ApiOperation(value = "View Challan By Vehicle Number")
-	@GetMapping("/get-challan-details/{vehicleNumber}")
-	public List<Challan> viewChallanDetailsByVehicleNumber(
-			@ApiParam(value = "Vehicle Number used to retrive challans") @PathVariable("vehicleNumber") String vehicleNumber) {
-		return challanService.getDetailsByVehicleNumber(vehicleNumber);
+	@GetMapping("/view-challan")
+	public List<Challan> viewChallanByVehicleNumber(
+			@ApiParam(value = "Vehicle Number used to retrive challans") @RequestParam String vehicleNumber) {
+		return challanService.getChallanByVehicleNumber(vehicleNumber);
 	}
 	
 	@ApiOperation(value = "Pay Challan")
@@ -53,6 +56,13 @@ public class ChallanController {
 	public String payChallan(
 			@ApiParam(value = "Challan Number") @PathVariable("challanNumber") String challanNumber) {
 		return challanService.payChallan(challanNumber);
+	}
+	
+	@ApiOperation(value = "View Challan Details By Challan Number")
+	@GetMapping("/view-challan-details")
+	public Challan viewChallanDetailsByChallanNumber(
+			@ApiParam(value = "Challan Number") @RequestParam String challanNumber) {
+		return this.challanService.getChallanDetailsByChallanNumber(challanNumber);
 	}
 	
 }

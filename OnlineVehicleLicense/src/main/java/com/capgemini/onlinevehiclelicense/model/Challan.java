@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "challan")
 public class Challan {
@@ -31,6 +33,7 @@ public class Challan {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "applicant_id", nullable = false)
+	@JsonIgnore
 	private Applicant applicant;
 	
 	

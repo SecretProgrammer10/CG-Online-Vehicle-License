@@ -4,6 +4,8 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.onlinevehiclelicense.model.License;
@@ -33,17 +36,7 @@ public class LicenseController {
 	@Autowired
 	private ILicenseService licenseService;
 	
-	@PostMapping("/add-license")
-	public ResponseEntity<License> addLicense(@RequestBody License license) {
-		return licenseService.addLicense(license);
-	}
-	
-	@PutMapping("/renew-license/{licenseNumber}")
-	public ResponseEntity<License> renewLicense(@RequestBody License license, @PathVariable("licenseNumber") String licenseNumber) {
-		return licenseService.renewLicense(license, licenseNumber);
-	}
-	
-	@ApiOperation(value = "View Licenses", response = List.class)
+	@ApiOperation(value = "View Page of All Licenses", response = List.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Operation Successful"),
 			@ApiResponse(code = 401, message = "You do not have the authorization to access this resource"),
@@ -51,8 +44,8 @@ public class LicenseController {
 			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
 	})
 	@GetMapping("/view-all-licenses")
-	public List<License> viewAllLicense() {
-		return licenseService.viewAllLicense();
+	public Page<License> viewAllLicense(Pageable pageable) {
+		return licenseService.viewAllLicense(pageable);
 	}
 	
 	@ApiOperation(value = "View License By License Number")
@@ -68,10 +61,4 @@ public class LicenseController {
 			@ApiParam(value = "License Type Based on which to retrieve license details") @PathVariable("licenseType") String licenseType) {
 		return licenseService.viewLicenseByType(licenseType);
 	}
-	
-	@DeleteMapping("/delete-license/{licenseNumber}")
-	public ResponseEntity<License> deleteLicense(@PathVariable("licenseNumber") String licenseNumber) {
-		return licenseService.deleteLicense(licenseNumber);
-	}
-	
 }
