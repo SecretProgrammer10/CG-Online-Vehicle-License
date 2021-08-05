@@ -1,6 +1,5 @@
 package com.capgemini.onlinevehiclelicense.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.mail.IMailService;
 import com.capgemini.onlinevehiclelicense.model.Application;
+import com.capgemini.onlinevehiclelicense.model.ApplicationStatus;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.License;
@@ -38,22 +38,19 @@ public class RTOOfficerService implements IRTOOfficerService {
 	@Autowired
 	private IChallanRepository challanRepository;
 	@Autowired
-	private ILicenseRepository licenseRepository;
-	@Autowired
 	private IAppointmentRepository appointmentRepository;
 	@Autowired
 	private IMailService mailService;
 	
 	@Override
-	public ResponseEntity<RTOOfficer> officeLogin(String username, String pass) {
+	public ResponseEntity<String> officeLogin(String username, String pass) {
 		// TODO Auto-generated method stub
 		//Optional<RTOOfficer> findOfficer = rtoOfficerRepository.findById(username);
 		try {
 			if(username.equals("user"))
 			{
 				if(pass.equals("pass")) {
-					System.out.println("logged in");
-					return new ResponseEntity<RTOOfficer>(HttpStatus.OK);
+					return new ResponseEntity<String>("Logged In!", HttpStatus.OK);
 				}
 				else
 				{
@@ -67,8 +64,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 		}
 		catch(RecordNotFoundException e)
 		{
-			System.out.println("Error!!!");
-			return  new ResponseEntity<RTOOfficer>(HttpStatus.NOT_FOUND);
+			return  new ResponseEntity<String>("Email or Password is incorrect!!", HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -98,69 +94,32 @@ public class RTOOfficerService implements IRTOOfficerService {
 	}
 
 	@Override
-	public ResponseEntity<Appointment> modifyTestResultById(String applicationNumber, TestResult testResult) {
+	public ResponseEntity<String> modifyTestResultById(String applicantNumber, TestResult testResult) {
 		// TODO Auto-generated method stub
 		try {
-			Appointment findApplication = this.appointmentRepository.findById(applicationNumber)
+			Appointment findAppointment = this.appointmentRepository.findById(applicantNumber)
+					.orElseThrow(() -> new RecordNotFoundException("No such appointment found!!!"));
+			Application findApplication = this.applicationRepository.findById(findAppointment.getApplication().getApplicationNumber())
 					.orElseThrow(() -> new RecordNotFoundException("No such application found!!!"));
-			findApplication.setTestResult(testResult);
-			this.appointmentRepository.save(findApplication);
-			return new ResponseEntity<Appointment>(HttpStatus.OK);
+			if(testResult.toString().equalsIgnoreCase("pass")) {
+				findAppointment.setTestResult(testResult);
+				findApplication.setApplicationStatus(ApplicationStatus.APPROVED);
+			}
+			else {
+				findAppointment.setTestResult(testResult);
+				findApplication.setApplicationStatus(ApplicationStatus.REJECTED);
+			}
+			this.appointmentRepository.save(findAppointment);
+			return new ResponseEntity<String>("Test Result Set!", HttpStatus.OK);
 		} catch (RecordNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new ResponseEntity<Appointment>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("No such application/appointment found!", HttpStatus.NOT_FOUND);
 		}
 	}
 
 	
-	@Override
-	public ResponseEntity<License> generateLearnerLicense(String applcationNumber) {
-		Application matchApplication;
-		try {
-			matchApplication = this.applicationRepository.findById(applcationNumber)
-					.orElseThrow(() -> new RecordNotFoundException("Application Not Found!!!"));
-			
-			if(matchApplication.getApplicationStatus().toString().equalsIgnoreCase("approved")) {
-				License license = new License();
-				license.setLicenseType(LicenseType.LL);
-				java.util.Date today=new java.util.Date(); 
-				license.setDateOfIssue(today);
-				Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 * 20));
-				license.setValidTill(validity);
-				this.licenseRepository.save(license);
-			}
-			return new ResponseEntity<License>(HttpStatus.CREATED);
-		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ResponseEntity<License>(HttpStatus.NOT_FOUND);
-		}
-				
-	}
-
-
-	@Override
-	public ResponseEntity<License> generateDrivingLicense(String applcationNumber) {
-		// TODO Auto-generated method stub
-		try {
-			Appointment matchApplication = this.appointmentRepository.findById(applcationNumber)
-					.orElseThrow(() -> new RecordNotFoundException("Application Not Found!!!"));
-			if(matchApplication.getTestResult().toString().equalsIgnoreCase("pass")) {
-				License license = new License();
-				license.setLicenseType(LicenseType.DL);
-				java.util.Date today=new java.util.Date(); 
-				license.setDateOfIssue(today);
-				Date validity = new Date(today.getTime() + (1000 * 60 * 60 * 24 * 365 * 20));
-				license.setValidTill(validity);
-				this.licenseRepository.save(license);
-				return new ResponseEntity<License>(HttpStatus.CREATED);
-			}
-		} catch(RecordNotFoundException e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<License>(HttpStatus.NOT_FOUND);
-	}
+	
 
 	@Override
 	public String emailLicense(String applicationNumber, boolean pass) {

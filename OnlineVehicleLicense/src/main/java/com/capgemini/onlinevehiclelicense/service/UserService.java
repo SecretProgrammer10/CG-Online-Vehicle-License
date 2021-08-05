@@ -98,24 +98,27 @@ public class UserService implements IUserService{
 
 	
 	@Override
-	public ResponseEntity<Users> forgotPassword(String email, String newPass) {
+	public ResponseEntity<String> forgotPassword(String email, String newPass) {
 		Users findUser;
 		try {
-			findUser = userRepo.findById(email)
-					.orElseThrow(() -> new RecordNotFoundException("Email not found"));
-			boolean checkOTP = sendOtp(findUser.getEmail());
-			if(checkOTP) {
-				findUser.setPassword(newPass);
-				return new ResponseEntity<Users>(HttpStatus.OK);
+			findUser = userRepo.getUserByEmail(email);
+			if(userRepo != null) {
+				boolean checkOTP = sendOtp(findUser.getEmail());
+				if(checkOTP) {
+					findUser.setPassword(newPass);
+					return new ResponseEntity<String>("New Password has been set!", HttpStatus.OK);
+				}
+				else {
+					return new ResponseEntity<String>("Incorrect OTP!", HttpStatus.UNAUTHORIZED);
+				}
 			}
 			else {
-				return new ResponseEntity<Users>(HttpStatus.UNAUTHORIZED);
+				throw new RecordNotFoundException("No such User was found!!!");
 			}
-			
 		}
 		catch(RecordNotFoundException e)
 		{
-			return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("No profile found!!!", HttpStatus.NOT_FOUND);
 		}
 	}
 

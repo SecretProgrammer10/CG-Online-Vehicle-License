@@ -51,7 +51,7 @@ public class UserController {
 	
 	@ApiOperation(value = "Forget Password")
 	@PutMapping("/forget-password")
-	public ResponseEntity<Users> forgetPassword(@Valid @RequestParam String email,@Valid @RequestParam String pass){
+	public ResponseEntity<String> forgetPassword(@Valid @RequestParam String email, @Valid @RequestParam String pass){
 		return userService.forgotPassword(email, pass);
 	}
 	
