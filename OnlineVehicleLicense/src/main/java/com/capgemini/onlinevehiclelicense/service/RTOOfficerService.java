@@ -73,19 +73,19 @@ public class RTOOfficerService implements IRTOOfficerService {
 	@Override
 	public List<Application> viewAllPendingApplications() {
 		// TODO Auto-generated method stub
-		return rtoOfficerRepository.viewPendingApplications();
+		return rtoOfficerRepository.viewPendingApplications(ApplicationStatus.PENDING);
 	}
 
 	@Override
 	public List<Application> viewAllRejectedApplications() {
 		// TODO Auto-generated method stub
-		return rtoOfficerRepository.viewAllRejectedApplications();
+		return rtoOfficerRepository.viewAllRejectedApplications(ApplicationStatus.REJECTED);
 	}
 
 	@Override
 	public List<Application> viewAllApprovedApplications() {
 
-		return rtoOfficerRepository.viewApprovedApplications();
+		return rtoOfficerRepository.viewApprovedApplications(ApplicationStatus.APPROVED);
 
 	}
 

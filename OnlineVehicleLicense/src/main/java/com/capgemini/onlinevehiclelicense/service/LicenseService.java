@@ -141,11 +141,11 @@ public class LicenseService implements ILicenseService {
 			matchLicense = this.licenseRepository.findById(licenseNumber)
 					.orElseThrow(() -> new RecordNotFoundException("License Not Found!!!"));
 			this.licenseRepository.delete(matchLicense);
-			return new ResponseEntity<String>(HttpStatus.OK);
+			return new ResponseEntity<String>("License has been deleted!", HttpStatus.OK);
 		} catch (RecordNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("License not found!", HttpStatus.NOT_FOUND);
 		}
 		
 	}

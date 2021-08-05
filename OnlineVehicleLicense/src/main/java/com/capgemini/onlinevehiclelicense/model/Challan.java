@@ -118,6 +118,20 @@ public class Challan {
 		this.status = status;
 	}
 	
+	/**
+	 * @return the applicant
+	 */
+	public Applicant getApplicant() {
+		return applicant;
+	}
+
+	/**
+	 * @param applicant the applicant to set
+	 */
+	public void setApplicant(Applicant applicant) {
+		this.applicant = applicant;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

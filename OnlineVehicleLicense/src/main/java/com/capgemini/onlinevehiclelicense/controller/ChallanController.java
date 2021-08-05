@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,13 +26,21 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/api/v1/challan")
+@RequestMapping("/challan")
 @Api(value = "Online Vehicle License")
 @Validated
 public class ChallanController {
 
 	@Autowired
 	private IChallanService challanService;
+	
+	@ApiOperation(value = "View Challans", response = List.class)
+	@PostMapping("/add-challan")
+	public ResponseEntity<String> addChallan(
+			@ApiParam("Applicant ID") String applicantId, 
+			@ApiParam("Challan Details") Challan challan){
+		return this.challanService.addChallan(applicantId, challan);
+	}
 	
 	@ApiOperation(value = "View Challans", response = List.class)
 	@ApiResponses(value = {

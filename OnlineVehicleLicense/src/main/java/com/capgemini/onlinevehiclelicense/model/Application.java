@@ -22,12 +22,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-<<<<<<< HEAD
-import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
-=======
+//import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
 //import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
 import com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator;
->>>>>>> 1d4c1624faed1b32bfc1a9edd8cb6a5d9695523b
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -93,17 +90,8 @@ public class Application {
 	@JsonIgnore
 	private RTOOffice rtoOffice;
 	
-
-/*	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-	@JoinColumn(name="applicant_id")
-	private Applicant applicant;
-*/	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-<<<<<<< HEAD
 	@JoinColumn(name = "applicant_id", nullable = false)
-=======
-	@JoinColumn(name = "applicant_number", nullable = false)
->>>>>>> 1d4c1624faed1b32bfc1a9edd8cb6a5d9695523b
 	@JsonIgnore
 	private Applicant applicant;
 
