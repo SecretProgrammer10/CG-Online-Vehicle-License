@@ -203,7 +203,5 @@ public class RTOOfficerService implements IRTOOfficerService {
 				return new ResponseEntity<String>("RTO Officer is already present",HttpStatus.ALREADY_REPORTED);
 			}
 		}	
-	}
-
-	
+	}	
 }
