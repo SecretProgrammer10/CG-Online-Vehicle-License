@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,11 +35,11 @@ public class ChallanController {
 	@Autowired
 	private IChallanService challanService;
 	
-	@ApiOperation(value = "View Challans", response = List.class)
+	@ApiOperation(value = "Add Challans", response = List.class)
 	@PostMapping("/add-challan")
 	public ResponseEntity<String> addChallan(
-			@ApiParam("Applicant ID") String applicantId, 
-			@ApiParam("Challan Details") Challan challan){
+			@ApiParam("Applicant ID") @RequestParam String applicantId, 
+			@ApiParam("Challan Details") @RequestBody Challan challan){
 		return this.challanService.addChallan(applicantId, challan);
 	}
 	

@@ -160,7 +160,7 @@ public class RTOOfficerController {
 	@ApiOperation(value = "Modify Test Results")
 	@PutMapping("/modify-test-results/{testResult}")
 	public ResponseEntity<String> modifyTestResults(
-			@ApiParam(value = "Application Number") @RequestParam String applicantNumber, 
+			@ApiParam(value = "Applicant Number") @RequestParam String applicantNumber, 
 			@ApiParam(value = "Test Result Enum Value") @PathVariable("testResult") TestResult testResult)
 	{
 		return rtoOfficerService.modifyTestResultById(applicantNumber, testResult);
