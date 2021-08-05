@@ -132,7 +132,9 @@ public class RTOOfficerController {
 			@ApiResponse(code = 200, message = "Operation Successful"),
 			@ApiResponse(code = 401, message = "You do not have the authorization to access this resource"),
 			@ApiResponse(code = 403, message = "Access to this resource is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
+			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found"),
+			@ApiResponse(code = 208, message = "Already added")
+			
 	})
 	@GetMapping("/view-all-appointment")
 	public Page<Appointment> viewAllAppointments(Pageable pageable)
