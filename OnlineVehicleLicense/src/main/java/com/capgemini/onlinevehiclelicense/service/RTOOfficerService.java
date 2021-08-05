@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.mail.IMailService;
 import com.capgemini.onlinevehiclelicense.model.Application;
+import com.capgemini.onlinevehiclelicense.model.ApplicationStatus;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.License;
@@ -93,18 +94,27 @@ public class RTOOfficerService implements IRTOOfficerService {
 	}
 
 	@Override
-	public ResponseEntity<String> modifyTestResultById(String applicationNumber, TestResult testResult) {
+	public ResponseEntity<String> modifyTestResultById(String applicantNumber, TestResult testResult) {
 		// TODO Auto-generated method stub
 		try {
-			Appointment findApplication = this.appointmentRepository.findById(applicationNumber)
+			Appointment findAppointment = this.appointmentRepository.findById(applicantNumber)
+					.orElseThrow(() -> new RecordNotFoundException("No such appointment found!!!"));
+			Application findApplication = this.applicationRepository.findById(findAppointment.getApplication().getApplicationNumber())
 					.orElseThrow(() -> new RecordNotFoundException("No such application found!!!"));
-			findApplication.setTestResult(testResult);
-			this.appointmentRepository.save(findApplication);
+			if(testResult.toString().equalsIgnoreCase("pass")) {
+				findAppointment.setTestResult(testResult);
+				findApplication.setApplicationStatus(ApplicationStatus.APPROVED);
+			}
+			else {
+				findAppointment.setTestResult(testResult);
+				findApplication.setApplicationStatus(ApplicationStatus.REJECTED);
+			}
+			this.appointmentRepository.save(findAppointment);
 			return new ResponseEntity<String>("Test Result Set!", HttpStatus.OK);
 		} catch (RecordNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new ResponseEntity<String>("No such application found!", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("No such application/appointment found!", HttpStatus.NOT_FOUND);
 		}
 	}
 

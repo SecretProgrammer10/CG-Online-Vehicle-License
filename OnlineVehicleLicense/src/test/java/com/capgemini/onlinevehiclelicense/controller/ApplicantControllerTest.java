@@ -47,6 +47,149 @@ import org.junit.jupiter.api.Test;
 @ActiveProfiles("test")
 class ApplicantControllerTest {
 
+<<<<<<< HEAD
+	@Autowired
+	private MockMvc mockMvc;
+
+	@MockBean
+	private ApplicantService applicantService;
+
+	@Autowired
+	private ObjectMapper objectMapper;
+
+	private List<Applicant> applicantList;
+
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@BeforeEach
+	void setUp() throws Exception {
+		this.applicantList = new ArrayList<>();
+		this.applicantList.add(new Applicant("123","Neil","Nitin","Mukesh",new SimpleDateFormat("dd/MM/yyyy").parse("15/01/1982"),"Mumbai",Gender.MALE,"Bachelor's in Commerce","9876543210","Indian","Car","2277"));
+	}
+
+	/**
+	 * Test method for {@link com.capgemini.onlinevehiclelicense.controller.ApplicantController#addApplicant(com.capgemini.onlinevehiclelicense.model.Applicant)}.
+	 * @throws Exception 
+	 * @throws JsonProcessingException 
+	 */
+	@Test
+	void testAddApplicant() throws JsonProcessingException, Exception {
+		given(applicantService.addApplicant("111",any(Applicant.class))).willAnswer((invocation) -> invocation.getArgument(0));
+		Applicant applicant = new Applicant("111","First","Middle","Last",new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2000"),"Place",Gender.MALE,"Qualification","99999999","Indian","Car","2323");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		
+		this.mockMvc.perform(post("/user/{username}/add-applicant-profile", "123")
+				.content(objectMapper.writeValueAsString(applicant)))
+		.andExpect(status().isCreated())
+		.andExpect(jsonPath("$.applicantId", is(applicant.getApplicantId())))
+		.andExpect(jsonPath("$.firstName", is(applicant.getFirstName())))
+		.andExpect(jsonPath("$.middleName", is(applicant.getMiddleName())))
+		.andExpect(jsonPath("$.lastName", is(applicant.getMiddleName())))
+		.andExpect(jsonPath("$.dateOfBirth", is(sdf.format(applicant.getDateOfBirth()))))
+		.andExpect(jsonPath("$.placeOfBirth", is(applicant.getPlaceOfBirth())))
+		.andExpect(jsonPath("$.gender", is(applicant.getGender())))
+		.andExpect(jsonPath("$.qualification", is(applicant.getQualification())))
+		.andExpect(jsonPath("$.mobile", is(applicant.getMobile())))
+		.andExpect(jsonPath("$.nationality", is(applicant.getNationality())))
+		.andExpect(jsonPath("$.vehicleType", is(applicant.getVehicleType())))
+		.andExpect(jsonPath("$.vehicleNumber", is(applicant.getVehicleNumber())))
+		;
+	}
+
+	/**
+	 * Test method for {@link com.capgemini.onlinevehiclelicense.controller.ApplicantController#updateApplicantDetails(com.capgemini.onlinevehiclelicense.model.Applicant)}.
+	 * @throws Exception 
+	 * @throws JsonProcessingException 
+	 */
+	@Test
+	void testUpdateApplicantDetails() throws JsonProcessingException, Exception {
+		Applicant applicant = new Applicant("123","Neil","Nitin","Mukesh",new SimpleDateFormat("dd/MM/yyyy").parse("15/01/1982"),"Mumbai",Gender.MALE,"Bachelor's in Commerce","9876543210","Indian","Car","2277");
+		given(applicantService.viewApplicantById("123")).willReturn(null);
+		given(applicantService.updateApplicantDetails("123",any(Applicant.class))).willAnswer((invocation) -> invocation.getArgument(0));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		
+		this.mockMvc.perform(put("/user/{username}/update-applicant-profile", "123")
+				.content(objectMapper.writeValueAsString(applicant)))
+		.andExpect(jsonPath("$.applicantId", is(applicant.getApplicantId())))
+		.andExpect(jsonPath("$.firstName", is(applicant.getFirstName())))
+		.andExpect(jsonPath("$.middleName", is(applicant.getMiddleName())))
+		.andExpect(jsonPath("$.lastName", is(applicant.getMiddleName())))
+		.andExpect(jsonPath("$.dateOfBirth", is(sdf.format(applicant.getDateOfBirth()))))
+		.andExpect(jsonPath("$.placeOfBirth", is(applicant.getPlaceOfBirth())))
+		.andExpect(jsonPath("$.gender", is(applicant.getGender())))
+		.andExpect(jsonPath("$.qualification", is(applicant.getQualification())))
+		.andExpect(jsonPath("$.mobile", is(applicant.getMobile())))
+		.andExpect(jsonPath("$.nationality", is(applicant.getNationality())))
+		.andExpect(jsonPath("$.vehicleType", is(applicant.getVehicleType())))
+		.andExpect(jsonPath("$.vehicleNumber", is(applicant.getVehicleNumber())))
+		;
+
+	}
+
+	/**
+	 * Test method for {@link com.capgemini.onlinevehiclelicense.controller.ApplicantController#removeApplicant(java.lang.String)}.
+	 * @throws Exception 
+	 */
+	@Test
+	void testRemoveApplicant() throws Exception {
+		Applicant applicant = new Applicant("123","Neil","Nitin","Mukesh",new SimpleDateFormat("dd/MM/yyyy").parse("15/01/1982"),"Mumbai",Gender.MALE,"Bachelor's in Commerce","9876543210","Indian","Car","2277");
+		given(applicantService.removeApplicant("111")).willReturn(new ResponseEntity<String>(HttpStatus.OK));
+		doNothing().when(applicantService).removeApplicant(applicant.getApplicantId());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		
+		this.mockMvc.perform(delete("/user/{username}/remove-applicant-profile", "123"))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.applicantId", is(applicant.getApplicantId())))
+		.andExpect(jsonPath("$.firstName", is(applicant.getFirstName())))
+		.andExpect(jsonPath("$.middleName", is(applicant.getMiddleName())))
+		.andExpect(jsonPath("$.lastName", is(applicant.getMiddleName())))
+		.andExpect(jsonPath("$.dateOfBirth", is(sdf.format(applicant.getDateOfBirth()))))
+		.andExpect(jsonPath("$.placeOfBirth", is(applicant.getPlaceOfBirth())))
+		.andExpect(jsonPath("$.gender", is(applicant.getGender())))
+		.andExpect(jsonPath("$.qualification", is(applicant.getQualification())))
+		.andExpect(jsonPath("$.mobile", is(applicant.getMobile())))
+		.andExpect(jsonPath("$.nationality", is(applicant.getNationality())))
+		.andExpect(jsonPath("$.vehicleType", is(applicant.getVehicleType())))
+		.andExpect(jsonPath("$.vehicleNumber", is(applicant.getVehicleNumber())))
+		;
+	}
+
+	/**
+	 * Test method for {@link com.capgemini.onlinevehiclelicense.controller.ApplicantController#viewApplicantById(java.lang.String)}.
+	 * @throws Exception 
+	 */
+	@Test
+	void testViewApplicantById() throws Exception {
+		Applicant applicant = new Applicant("123","Neil","Nitin","Mukesh",new SimpleDateFormat("dd/MM/yyyy").parse("15/01/1982"),"Mumbai",Gender.MALE,"Bachelor's in Commerce","9876543210","Indian","Car","2277");
+		given(applicantService.viewApplicantById("123")).willReturn(applicant);
+
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+		this.mockMvc.perform(get("/user/{username}/view-applicant-profile", "123"))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.firstName", is(applicant.getFirstName())))
+		.andExpect(jsonPath("$.middleName", is(applicant.getMiddleName())))
+		.andExpect(jsonPath("$.lastName", is(applicant.getLastName())))
+		.andExpect(jsonPath("$.dateOfBirth", is(sdf.format(applicant.getDateOfBirth()))))
+		.andExpect(jsonPath("$.placeOfBirth", is(applicant.getPlaceOfBirth())))
+		.andExpect(jsonPath("$.gender", is(applicant.getGender())))
+		.andExpect(jsonPath("$.qualification", is(applicant.getQualification())))
+		.andExpect(jsonPath("$.mobile", is(applicant.getMobile())))
+		.andExpect(jsonPath("$.nationality", is(applicant.getNationality())))
+		.andExpect(jsonPath("$.vehicleType", is(applicant.getVehicleType())))
+		.andExpect(jsonPath("$.vehicleNumber", is(applicant.getVehicleNumber())))
+		;
+		assertEquals("123",applicant.getApplicantId());
+	}
+=======
 
 		@Autowired
 		    private MockMvc mockMvc;
@@ -178,5 +321,6 @@ class ApplicantControllerTest {
 		                .andExpect(jsonPath("$.vehicleNumber", is(applicant.getVehicleNumber())))
 		                ;
 		}
+>>>>>>> 82c1cc02f9dd7b9d9e00c3d5fa01e77d116a652b
 
 }
