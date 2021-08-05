@@ -3,10 +3,7 @@ package com.capgemini.onlinevehiclelicense.model;
 
 import java.util.Date;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 38ba4c62672681a518deb3e3ea2bb0a84eeecce3
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
