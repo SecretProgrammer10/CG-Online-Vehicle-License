@@ -179,24 +179,6 @@ class AppointmentTest {
 		assertEquals(appointment1.getApplication(), null);
 	}
 
-	/**
-	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Appointment#getRtoOfficer()}.
-	 */
-	@Test
-	void testGetRtoOfficer() {
-		
-		assertEquals(appointment.getRtoOfficer(),null);
-		
-	}
-
-	/**
-	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Appointment#setRtoOfficer(com.capgemini.onlinevehiclelicense.model.RTOOfficer)}.
-	 */
-	@Test
-	void testSetRtoOfficer() {
-		appointment1.setRtoOfficer(null);
-		assertEquals(appointment1.getRtoOfficer(), null);
-	}
 
 	/**
 	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.Appointment#equals(java.lang.Object)}.

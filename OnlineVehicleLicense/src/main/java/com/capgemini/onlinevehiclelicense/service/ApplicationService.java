@@ -7,59 +7,100 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
-//import com.capgemini.onlinevehiclelicense.model.Applicant;
+import com.capgemini.onlinevehiclelicense.model.Applicant;
 import com.capgemini.onlinevehiclelicense.model.Application;
-//import com.capgemini.onlinevehiclelicense.model.Application;
+import com.capgemini.onlinevehiclelicense.model.ApplicationStatus;
+import com.capgemini.onlinevehiclelicense.model.Documents;
+import com.capgemini.onlinevehiclelicense.model.RTOOffice;
+import com.capgemini.onlinevehiclelicense.model.Users;
+import com.capgemini.onlinevehiclelicense.repository.IApplicantRepository;
 import com.capgemini.onlinevehiclelicense.repository.IApplicationRepository;
+import com.capgemini.onlinevehiclelicense.repository.IRTOOfficeRepository;
+import com.capgemini.onlinevehiclelicense.repository.IUserRepository;
 
 @Service
 public class ApplicationService implements IApplicationService{
-	
+
 	@Autowired
-	IApplicationRepository applicationRepo;
+	private IApplicationRepository applicationRepository;
+
+	@Autowired
+	private IUserRepository userRepository;
+
+	@Autowired
+	private IApplicantRepository applicantRepository;
+
+
+	@Autowired
+	private IRTOOfficeRepository rtoOfficeRepository;
 
 	@Override
-	public ResponseEntity<Application> createApplication(Application application) {
-		Optional<Application> findApplication = applicationRepo.findById(application.getApplicationNumber());
+	public ResponseEntity<String> createApplication(int rtoId, String username, Application application) {
+		RTOOffice rtoofc;
 		try {
-			if(!findApplication.isPresent())
-			{
-				applicationRepo.save(application);
-				return new ResponseEntity<Application>(HttpStatus.OK);
-			}
-			else
-			{
-				throw new RecordAlreadyPresentException("Application already exists");
-			}
+			rtoofc = this.rtoOfficeRepository.findById(rtoId)
+					.orElseThrow(() -> new RecordNotFoundException("RTO Office with the RtoId:"+rtoId+" not found"));
+
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
-		catch(RecordAlreadyPresentException e)
-		{
-			return new ResponseEntity<Application>(HttpStatus.ALREADY_REPORTED);
+
+		Optional<Users> user = this.userRepository.findById(username);
+		if(user.isPresent()) {
+			Optional<Applicant> applicant = this.applicantRepository.findById(username);
+			if(applicant.isPresent()) {
+				application.setApplicationStatus(ApplicationStatus.PENDING);
+				application.setRtoOffice(rtoofc);
+				application.setApplicant(applicant.get());
+				application.setApplicationNumber(username);
+				System.out.println(application.getApplicationNumber());
+
+				Documents docs = new Documents();
+				docs.setId(username);
+				docs.setIdProof(application.getDocs().getIdProof());
+				docs.setPhoto(application.getDocs().getPhoto());
+				docs.setAddressProof(application.getDocs().getAddressProof());
+				docs.setApplication(application);
+				application.setDocs(docs);
+				this.applicationRepository.save(application);
+
+				return new ResponseEntity<String>("Application submitted successfully",HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>("Applicant profile for the username:"+username+" not found",HttpStatus.NOT_FOUND); 
+			}		
 		}
+		else {
+			return new ResponseEntity<String>("User with the username:"+username+" not found",HttpStatus.NOT_FOUND);
+		}	
 	}
 
 	@Override
-	public String viewApplicationById(String applicationNumber) {
+	public Application viewApplicationById(String applicationNumber) {
 		try {		
-			Application findUser = applicationRepo.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
-				return findUser.toString();
+			Application findUser = applicationRepository.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
+			return findUser;
 		}
 		catch(RecordNotFoundException e)
 		{
-			return e.getMessage();
+			e.getMessage();
+			return null;
 		}
 	}
 
-	@Override
-	public ResponseEntity<Application> updateApplication(Application application) {
-		Optional<Application> findUser = applicationRepo.findById(application.getApplicationNumber());
+/*	@Override
+	public ResponseEntity<String> updateApplication(Application application, String applicationNumber) {
+		Optional<Application> findApplication = applicationRepository.findById(applicationNumber);
 		try {
-			if(findUser.isPresent())
+			if(findApplication.isPresent())
 			{
-				applicationRepo.save(application);
-				return new ResponseEntity<Application>(HttpStatus.OK);
+				Application app = findApplication.get();
+				app.setAmountPaid(null);
+				app.app
+				applicationRepository.save(application);
+				return new ResponseEntity<String>("Application updated successfully",HttpStatus.OK);
 			}
 			else
 			{
@@ -68,28 +109,28 @@ public class ApplicationService implements IApplicationService{
 		}
 		catch(RecordNotFoundException e)
 		{
-			return new ResponseEntity<Application>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(e.getMessage() ,HttpStatus.NOT_FOUND);
 		}
 	}
-
+*/
 	@Override
-	public ResponseEntity<Application> deleteApplicationById(String applicationNumber) {
+	public ResponseEntity<String> deleteApplicationById(String applicationNumber) {
 		try {
-				Application findUser = applicationRepo.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
-				this.applicationRepo.delete(findUser);
-				return new ResponseEntity<Application>(HttpStatus.OK);
+			Application findApplication = applicationRepository.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
+			this.applicationRepository.delete(findApplication);
+			return new ResponseEntity<String>(HttpStatus.OK);
 		}
 		catch(RecordNotFoundException e)
 		{
-			return new ResponseEntity<Application>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@Override
 	public String checkModeOfPayment(String applicationNumber) {
 		try {
-			Application findUser = applicationRepo.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
-			return findUser.getModeOfPayment();
+			Application findApplication = applicationRepository.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
+			return findApplication.getModeOfPayment();
 		}
 		catch(RecordNotFoundException e)
 		{
@@ -98,30 +139,30 @@ public class ApplicationService implements IApplicationService{
 	}
 
 	@Override
-	public ResponseEntity<Application> payAmount(String applicationNumber, Double amountPaid) {
+	public ResponseEntity<String> payAmount(String applicationNumber, Double amountPaid) {
 		try {
-			Application findUser = applicationRepo.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
-			findUser.setPaymentStatus("Paid");
-			findUser.setAmountPaid(amountPaid);
-			return new ResponseEntity<Application>(HttpStatus.OK);
-	}
-	catch(RecordNotFoundException e)
-	{
-		return new ResponseEntity<Application>(HttpStatus.NOT_FOUND);
-	}
+			Application findApplication = applicationRepository.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
+			findApplication.setPaymentStatus("Paid");
+			findApplication.setAmountPaid(amountPaid);
+			return new ResponseEntity<String>(HttpStatus.OK);
+		}
+		catch(RecordNotFoundException e)
+		{
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@Override
 	public String viewPaymentStatus(String applicationNumber) {
 		try {
-			Application findUser = applicationRepo.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
-			return findUser.getPaymentStatus(); 
+			Application findApplication = applicationRepository.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
+			return findApplication.getPaymentStatus(); 
 		}
 		catch(RecordNotFoundException e)
 		{
 			return e.getMessage();
 		}
 	}
-	
-	
+
+
 }

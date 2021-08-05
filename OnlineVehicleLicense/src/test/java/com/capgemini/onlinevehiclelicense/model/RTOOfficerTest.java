@@ -126,22 +126,6 @@ class RTOOfficerTest {
 		assertEquals(rtoOfcr.getEmail(),"janedoe@gmail.com");
 	}
 
-	/**
-	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.RTOOfficer#getAppointment()}.
-	 */
-	@Test
-	void testGetAppointment() {
-		assertEquals(rtoOfficer.getAppointment(),null);
-	}
-
-	/**
-	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.RTOOfficer#setAppointment(java.util.Set)}.
-	 */
-	@Test
-	void testSetAppointment() {
-		rtoOfcr.setAppointment(null);
-		assertEquals(rtoOfcr.getAppointment(),null);
-	}
 
 	/**
 	 * Test method for {@link com.capgemini.onlinevehiclelicense.model.RTOOfficer#getRtoOffice()}.

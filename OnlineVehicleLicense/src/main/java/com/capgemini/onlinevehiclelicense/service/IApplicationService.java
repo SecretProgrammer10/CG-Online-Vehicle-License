@@ -6,11 +6,12 @@ import com.capgemini.onlinevehiclelicense.model.Application;
 
 public interface IApplicationService {
 	
-	public ResponseEntity<Application> createApplication(Application application);
-	public String viewApplicationById(String applicationNumber);
-	public ResponseEntity<Application> updateApplication(Application application);
-	public ResponseEntity<Application> deleteApplicationById(String applicationNumber);
+	public ResponseEntity<String> createApplication(int rtoId, String username,Application application);
+	public Application viewApplicationById(String applicationNumber);
+//	public ResponseEntity<String> updateApplication(Application application, String applicationNumber);
+	public ResponseEntity<String> deleteApplicationById(String applicationNumber);
 	public String checkModeOfPayment(String applicationNumber);
-	public ResponseEntity<Application> payAmount(String applicationNumber, Double amountPaid);
+	public ResponseEntity<String> payAmount(String applicationNumber, Double amountPaid);
 	public String viewPaymentStatus(String applicationNumber);
+	
 }

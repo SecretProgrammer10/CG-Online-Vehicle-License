@@ -10,11 +10,12 @@ import org.springframework.http.ResponseEntity;
 import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
+import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 import com.capgemini.onlinevehiclelicense.model.TestResult;
 
 public interface IRTOOfficerService {
 
-
+	public ResponseEntity<String> addRTOOfficer(int rtoId, RTOOfficer officer);
 	public ResponseEntity<String> officeLogin(String username, String pass);
 	public List<Application> viewAllPendingApplications();
 	public List<Application> viewAllRejectedApplications();

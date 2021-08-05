@@ -22,20 +22,20 @@ public class Users {
 	
 	@Id
 	@Column(name="username")
-	@ApiModelProperty(notes = "Username of the user", example = "Jessica_12")
+	@ApiModelProperty(notes = "Username of the user", example = "Dibyendu_12")
 	@Pattern(regexp="^[a-zA-Z0-9\\._\\-]{6,20}$", message="Username invalid")
 	@NotEmpty(message = "Username cannot be empty")
 	private String username;
 	
 	@Column(name="email",unique = true)
-	@ApiModelProperty(notes = "Email address of the user", example = "jessica@ngilang.com")
+	@ApiModelProperty(notes = "Email address of the user", example = "dibyenduganguly.48@gmail.com")
 	@Email(message = "Email Address")
 	@NotEmpty(message = "Email cannot be empty")
 	@Pattern(regexp="^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message="Email Not Valid") ///^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/
 	private String email;
 	
 	@Column(name="password")
-	@ApiModelProperty(notes = "Password of the user", example = "Jessica@1234")
+	@ApiModelProperty(notes = "Password of the user", example = "Dibyendu@1234")
 	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message="Password Not Valid") //^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[*.!@$%^&(){}[]:;<>,.?/~_+-=|\\]).{8,32}$
 	@NotEmpty(message = "Password cannot be empty")
 	private String password;

@@ -3,6 +3,7 @@ package com.capgemini.onlinevehiclelicense.model;
 
 import java.util.Date;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+<<<<<<< HEAD
 import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
+=======
+//import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
+import com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator;
+>>>>>>> 1d4c1624faed1b32bfc1a9edd8cb6a5d9695523b
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -29,17 +35,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Application {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
-    @GenericGenerator(
-            name = "application_seq", 
-            strategy = "com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator", 
-            parameters = { 
-                    @Parameter(name = ApplicationIdGenerator.INCREMENT_PARAM, value = "1"),
-                    @Parameter(name = ApplicationIdGenerator.CODE_NUMBER_SEPARATOR_PARAMETER, value = "_"), 
-                    @Parameter(name = ApplicationIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")})
-    private String id;
-
-
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
+	@GenericGenerator(name = "application_seq", 
+    strategy = "com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator", 
+    parameters = { @Parameter(name = LicenseIdGenerator.INCREMENT_PARAM, value = "1"),
+        @Parameter(name = LicenseIdGenerator.VALUE_PREFIX_PARAMETER, value = "21_"),
+        @Parameter(name = LicenseIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
+//	@GenericGenerator(
+//            name = "application_seq", 
+//            strategy = "com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator", 
+//            parameters = { 
+//                    @Parameter(name = ApplicationIdGenerator.INCREMENT_PARAM, value = "1"),
+//                    @Parameter(name = ApplicationIdGenerator.CODE_NUMBER_SEPARATOR_PARAMETER, value = "_"), 
+//                    @Parameter(name = ApplicationIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%05d")})
+	@JsonIgnore
 	@Column(name="application_number")
 	private String applicationNumber;
 		
@@ -90,7 +99,11 @@ public class Application {
 	private Applicant applicant;
 */	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+<<<<<<< HEAD
 	@JoinColumn(name = "applicant_id", nullable = false)
+=======
+	@JoinColumn(name = "applicant_number", nullable = false)
+>>>>>>> 1d4c1624faed1b32bfc1a9edd8cb6a5d9695523b
 	@JsonIgnore
 	private Applicant applicant;
 
