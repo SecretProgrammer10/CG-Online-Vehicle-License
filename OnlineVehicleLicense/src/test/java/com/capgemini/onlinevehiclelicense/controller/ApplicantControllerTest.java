@@ -70,7 +70,7 @@ class ApplicantControllerTest {
 		SimpleDateFormat sdf = new SimpleDateFormat();
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
-		this.mockMvc.perform(post("/user/{username}/add-applicant-profile")
+		this.mockMvc.perform(post("/user/{username}/add-applicant-profile", "123")
 				.content(objectMapper.writeValueAsString(applicant)))
 		.andExpect(status().isCreated())
 		.andExpect(jsonPath("$.applicantId", is(applicant.getApplicantId())))
@@ -102,7 +102,7 @@ class ApplicantControllerTest {
 		SimpleDateFormat sdf = new SimpleDateFormat();
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
-		this.mockMvc.perform(put("/user/{username}/update-applicant-profile", applicant.getApplicantId())
+		this.mockMvc.perform(put("/user/{username}/update-applicant-profile", "123")
 				.content(objectMapper.writeValueAsString(applicant)))
 		.andExpect(jsonPath("$.applicantId", is(applicant.getApplicantId())))
 		.andExpect(jsonPath("$.firstName", is(applicant.getFirstName())))
@@ -133,7 +133,7 @@ class ApplicantControllerTest {
 		SimpleDateFormat sdf = new SimpleDateFormat();
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
-		this.mockMvc.perform(delete("/user/{username}/remove-applicant-profile", applicant.getApplicantId()))
+		this.mockMvc.perform(delete("/user/{username}/remove-applicant-profile", "123"))
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.applicantId", is(applicant.getApplicantId())))
 		.andExpect(jsonPath("$.firstName", is(applicant.getFirstName())))
