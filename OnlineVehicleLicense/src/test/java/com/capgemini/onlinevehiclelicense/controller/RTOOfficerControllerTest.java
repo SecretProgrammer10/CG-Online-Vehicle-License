@@ -72,11 +72,11 @@ class RTOOfficerControllerTest {
 
 		this.applicationList.add(new Application("12345",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.DL));
 		this.applicationList.add(new Application("12645",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1200.00,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.LL));
-		this.applicationList.add(new Application("12395",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1300.08,"paid","all ok",ApplicationStatus.APPROVED,LicenseType.DL));
+		this.applicationList.add(new Application("12395",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1300.08,"Paid","all ok",ApplicationStatus.APPROVED,LicenseType.DL));
 
 
 		this.applicationList.add(new Application("12145", new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1900.08,"paid","all ok",ApplicationStatus.PENDING,LicenseType.DL));
-		this.applicationList.add(new Application("12545", new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1800.08,"due","all ok",ApplicationStatus.PENDING,LicenseType.DL));
+		this.applicationList.add(new Application("12545", new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1800.08,"Not Paid","all ok",ApplicationStatus.PENDING,LicenseType.DL));
 		this.applicationList.add(new Application("12445", new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.PENDING,LicenseType.LL));
 
 		this.applicationList.add(new Application("12245",new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-03"),"online",1500.08,"paid","all ok",ApplicationStatus.REJECTED,LicenseType.LL));

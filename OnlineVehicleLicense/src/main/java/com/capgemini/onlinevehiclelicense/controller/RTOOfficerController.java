@@ -82,7 +82,7 @@ public class RTOOfficerController {
 	})
 	@GetMapping("/view-approved-application")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public List<Application> viewAllApprovedApplications( ) 
+	public List<Application> viewAllApprovedApplications() 
 	{
 		return rtoOfficerService.viewAllApprovedApplications();
 	}
