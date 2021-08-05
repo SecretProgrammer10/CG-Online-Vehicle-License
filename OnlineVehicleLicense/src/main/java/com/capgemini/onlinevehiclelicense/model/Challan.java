@@ -33,7 +33,7 @@ public class Challan {
 	
 	@ApiModelProperty(notes = "Amount", example = "1000")
 	@Column(name = "amount")
-	@NotEmpty(message="amount should not be empty")
+	@NotNull(message="amount should not be empty")
 	private Double amount;
 	
 	@NotNull(message = "Vehicle number cannot be null")
