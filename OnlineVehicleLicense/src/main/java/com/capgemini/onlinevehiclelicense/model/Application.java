@@ -22,6 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Application")
@@ -67,16 +68,20 @@ public class Application {
 	
 	@OneToOne(mappedBy = "application", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
+	@JsonIgnore
 	private Documents docs;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")
+	@JsonIgnore
 	private License license;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")
+	@JsonIgnore
 	private Appointment appointment;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="rto_id", nullable = false)
+	@JsonIgnore
 	private RTOOffice rtoOffice;
 	
 
@@ -86,6 +91,7 @@ public class Application {
 */	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "applicant_id", nullable = false)
+	@JsonIgnore
 	private Applicant applicant;
 
 
