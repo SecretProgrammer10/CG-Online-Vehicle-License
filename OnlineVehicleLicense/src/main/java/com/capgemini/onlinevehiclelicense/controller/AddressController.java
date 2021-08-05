@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.onlinevehiclelicense.model.Address;
@@ -42,10 +43,16 @@ public class AddressController {
 		return this.addressService.updateAddress(username, addr, addrType);
 	}
 	
-	@ApiOperation("View Address")
-	@GetMapping("/view-address/{addressType}")
-	public Address viewAddress(@PathVariable("username") String username, @PathVariable("addressType") String addrType) {
-		return this.addressService.viewAddress(username, addrType);
+	@ApiOperation("View Permanent Address")
+	@GetMapping("/view-permanent-address")
+	public Address viewAddress(@RequestParam String username) {
+		return this.addressService.viewAddress(username);
+	}
+	
+	@ApiOperation("View Present Address")
+	@GetMapping("/view-present-address")
+	public TemporaryAddress viewPresentAddress(@RequestParam String username) {
+		return this.addressService.viewPresentAddress(username);
 	}
 	
 	@ApiOperation("Delete Address")

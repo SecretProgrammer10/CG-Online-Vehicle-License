@@ -130,10 +130,23 @@ public class AddressService implements IAddressService{
 	
 
 	@Override
-	public Address viewAddress(String username, String addrType) {
+	public Address viewAddress(String username) {
 		// TODO Auto-generated method stub
 		try {
 			return this.addressRepository.findById(username)
+					.orElseThrow(() -> new RecordNotFoundException("Address Not Found"));
+			
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+	}
+	
+	@Override
+	public TemporaryAddress viewPresentAddress(String username) {
+		// TODO Auto-generated method stub
+		try {
+			return this.temporaryAddressRepository.findById(username)
 					.orElseThrow(() -> new RecordNotFoundException("Address Not Found"));
 			
 		} catch (RecordNotFoundException e) {
@@ -165,4 +178,5 @@ public class AddressService implements IAddressService{
 		return null;
 	}
 */
+	
 }
