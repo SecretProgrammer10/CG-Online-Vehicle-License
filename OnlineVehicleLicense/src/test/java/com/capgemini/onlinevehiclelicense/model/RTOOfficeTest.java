@@ -183,7 +183,7 @@ class RTOOfficeTest {
 	 */
 	@Test
 	void testToString() {
-		assertEquals(new RTOOffice(1, "RamaKrishna").toString(),"RTOOffice [rtoId=1, rtoName=RamaKrishna, rtoOfficer=null, application=null, license=null]");
+		assertEquals((new RTOOffice(1, "RamaKrishna")).toString(),"RTOOffice [rtoId=1, rtoName=RamaKrishna, rtoOfficer=null, application=null, appointment=null, license=null]");
 	}
 
 }
