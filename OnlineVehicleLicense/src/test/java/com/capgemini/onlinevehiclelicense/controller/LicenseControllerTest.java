@@ -60,22 +60,6 @@ class LicenseControllerTest {
 	}
 	
 	/**
-	 * Test method for {@link com.capgemini.onlinevehiclelicense.controller.LicenseController#addLicense(com.capgemini.onlinevehiclelicense.model.License)}.
-	 */
-	@Test
-	void testAddLicense() {
-		
-	}
-
-	/**
-	 * Test method for {@link com.capgemini.onlinevehiclelicense.controller.LicenseController#renewLicense(com.capgemini.onlinevehiclelicense.model.License, java.lang.String)}.
-	 */
-	@Test
-	void testRenewLicense() {
-		
-	}
-
-	/**
 	 * Test method for {@link com.capgemini.onlinevehiclelicense.controller.LicenseController#viewAllLicense()}.
 	 * @throws Exception 
 	 */

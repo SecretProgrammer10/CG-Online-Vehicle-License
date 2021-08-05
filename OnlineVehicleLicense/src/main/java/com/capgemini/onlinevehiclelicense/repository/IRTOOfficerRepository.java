@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.onlinevehiclelicense.model.Application;
+import com.capgemini.onlinevehiclelicense.model.ApplicationStatus;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 //import com.capgemini.onlinevehiclelicense.model.License;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
@@ -20,14 +21,14 @@ public interface IRTOOfficerRepository extends JpaRepository<RTOOfficer, String>
 	@Query("select r from RTOOfficer r where r.email like ?1 ")
 	public Optional<RTOOfficer> findByEmail(String email);
 	
-	@Query("select a from Application a where a.applicationStatus like 'pending'")
-	public List<Application> viewPendingApplications();
+	@Query("select a from Application a where a.applicationStatus like ?1")
+	public List<Application> viewPendingApplications(ApplicationStatus pending);
 	
-	@Query("select a from Application a where a.applicationStatus like 'rejected'")
-	public List<Application> viewAllRejectedApplications();
+	@Query("select a from Application a where a.applicationStatus like ?1")
+	public List<Application> viewAllRejectedApplications(ApplicationStatus rejected);
 	
-	@Query("select a from Application a where a.applicationStatus like 'approved'")
-	public List<Application> viewApprovedApplications();
+	@Query("select a from Application a where a.applicationStatus like ?1")
+	public List<Application> viewApprovedApplications(ApplicationStatus approved);
 	
 	@Query("select a from Application a where a.applicationNumber like ?1")
 	public List<Application> viewApplicationbyId( String applicationNumber);
