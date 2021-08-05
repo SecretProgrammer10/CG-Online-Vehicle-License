@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.onlinevehiclelicense.model.Application;
-import com.capgemini.onlinevehiclelicense.model.Documents;
 import com.capgemini.onlinevehiclelicense.service.ApplicationService;
 
 import io.swagger.annotations.Api;
@@ -21,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@RequestMapping("user/{username}/application")
+@RequestMapping("/user")
 @Api(value = "Online Vehicle License")
 @Validated
 public class ApplicationController {
@@ -30,47 +29,47 @@ public class ApplicationController {
 	ApplicationService applicationService;
 	
 	@ApiOperation(value = "Create application")
-	@PostMapping("/createApplication")
-	public ResponseEntity<String> createApplication(@PathVariable("username") String username, @RequestBody Application application) {
-		return applicationService.createApplication(username, application);
+	@PostMapping("/{username}/application/{rtoOffice}/createApplication")
+	public ResponseEntity<String> createApplication(@PathVariable("rtoOffice") int rtoId, @PathVariable("username") String username, @RequestBody Application application) {
+		return applicationService.createApplication(rtoId, username, application);
 	}
 	
 	@ApiOperation(value = "View application by id")
 	@GetMapping("/viewApplication/{applicationNumber}")
-	public Application viewApplicationById(@PathVariable("username") String username,
+	public Application viewApplicationById(
 			@ApiParam(value = "Application Number Param") @PathVariable String applicationNumber) {
 		return applicationService.viewApplicationById(applicationNumber);
 	}
-	
+/*	
 	@ApiOperation(value = "Update application")
 	@PutMapping("/updateApplication/{applicationNumber}")
-	public ResponseEntity<String> updateApplication(@PathVariable("username") String username, @RequestBody Application application, @PathVariable("applicationNumber") String applicationNumber) {
-		return applicationService.updateApplication(application);
+	public ResponseEntity<String> updateApplication(@RequestBody Application application, @PathVariable("applicationNumber") String applicationNumber) {
+		return applicationService.updateApplication(application,applicationNumber);
 	}
-	
+*/	
 	@ApiOperation(value = "Remove application")
 	@DeleteMapping("/removeApplication/{applicationNumber}")
-	public ResponseEntity<String> deleteApplicationById(@PathVariable("username") String username,
+	public ResponseEntity<String> deleteApplicationById(
 			@ApiParam(value = "Application Number Param") @PathVariable String applicationNumber) {
 		return applicationService.deleteApplicationById(applicationNumber);
 	}
 	
 	@ApiOperation(value = "Check mode of payment")
 	@GetMapping("/paymentMode/{applicationNumber}")
-	public String checkModeOfPayment(@PathVariable("username") String username,
+	public String checkModeOfPayment(
 			@ApiParam(value = "Application Number Param") @PathVariable String applicationNumber) {
 		return applicationService.checkModeOfPayment(applicationNumber);
 	}
 	@ApiOperation(value = "Pay amount")
 	@PutMapping("/payAmount/{applicationNumber}/{amountPaid}")
-	public ResponseEntity<String> payAmount(@PathVariable("username") String username,
+	public ResponseEntity<String> payAmount(
 			@ApiParam(value = "Application Number Param")  @PathVariable String applicationNumber, 
 			@ApiParam(value = "Amount to be paid") @PathVariable Double amountPaid) {
 		return applicationService.payAmount(applicationNumber, amountPaid);
 	}
 	@ApiOperation(value = "View payment status")
 	@GetMapping("/payAmount/{applicationNumber}")
-	public String viewPaymentStatus(@PathVariable("username") String username,
+	public String viewPaymentStatus(
 			@ApiParam(value = "Application Number Param") @PathVariable String applicationNumber) {
 		return applicationService.viewPaymentStatus(applicationNumber);
 	}

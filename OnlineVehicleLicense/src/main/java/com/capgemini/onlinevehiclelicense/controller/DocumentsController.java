@@ -6,13 +6,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Documents;
 import com.capgemini.onlinevehiclelicense.service.IDocumentsService;
@@ -20,7 +18,7 @@ import com.capgemini.onlinevehiclelicense.service.IDocumentsService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/document")
+@RequestMapping("/user/document")
 public class DocumentsController {
 	
 	@Autowired

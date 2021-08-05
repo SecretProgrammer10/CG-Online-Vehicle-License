@@ -1,6 +1,7 @@
 package com.capgemini.onlinevehiclelicense.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
@@ -16,14 +17,13 @@ import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.ApplicationStatus;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
-import com.capgemini.onlinevehiclelicense.model.License;
-import com.capgemini.onlinevehiclelicense.model.LicenseType;
+import com.capgemini.onlinevehiclelicense.model.RTOOffice;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 import com.capgemini.onlinevehiclelicense.model.TestResult;
 import com.capgemini.onlinevehiclelicense.repository.IApplicationRepository;
 import com.capgemini.onlinevehiclelicense.repository.IAppointmentRepository;
 import com.capgemini.onlinevehiclelicense.repository.IChallanRepository;
-import com.capgemini.onlinevehiclelicense.repository.ILicenseRepository;
+import com.capgemini.onlinevehiclelicense.repository.IRTOOfficeRepository;
 import com.capgemini.onlinevehiclelicense.repository.IRTOOfficerRepository;
 import org.springframework.data.domain.Pageable;
 
@@ -41,7 +41,9 @@ public class RTOOfficerService implements IRTOOfficerService {
 	private IAppointmentRepository appointmentRepository;
 	@Autowired
 	private IMailService mailService;
-	
+	@Autowired
+	private IRTOOfficeRepository rtoOfficeRepository;
+
 	@Override
 	public ResponseEntity<String> officeLogin(String username, String pass) {
 		// TODO Auto-generated method stub
@@ -82,7 +84,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 
 	@Override
 	public List<Application> viewAllApprovedApplications() {
-		
+
 		return rtoOfficerRepository.viewApprovedApplications();
 
 	}
@@ -118,8 +120,8 @@ public class RTOOfficerService implements IRTOOfficerService {
 		}
 	}
 
-	
-	
+
+
 
 	@Override
 	public String emailLicense(String applicationNumber, boolean pass) {
@@ -170,20 +172,40 @@ public class RTOOfficerService implements IRTOOfficerService {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public Page<Appointment> viewAllAppointments(Pageable pageable) {
 		// TODO Auto-generated method stub
-		
+
 		return this.appointmentRepository.findAll(pageable);
 	}
-	
-	
+
+
 	@Override
 	public Page<Application> viewAllApplications(Pageable pageable) {
 		// TODO Auto-generated method stub
 		return this.applicationRepository.findAll(pageable);
 	}
 
-	
+	@Override
+	public ResponseEntity<String> addRTOOfficer(int rtoId, RTOOfficer officer) {
+		// TODO Auto-generated method stub
+		Optional<RTOOffice> rtoOffice = this.rtoOfficeRepository.findById(rtoId);
+		if(!rtoOffice.isPresent()){
+			return new ResponseEntity<String>("RTO office not found",HttpStatus.NOT_FOUND);
+		} else {
+			Optional<RTOOfficer> rtoOfcr = this.rtoOfficerRepository.findById(officer.getUsername());
+			if(!rtoOfcr.isPresent()) {
+				officer.setRtoOffice(rtoOffice.get());
+				this.rtoOfficerRepository.save(officer);
+				return new ResponseEntity<String>("RTO Officer is successfully added",HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>("RTO Officer is already present",HttpStatus.ALREADY_REPORTED);
+			}
+		}
+
+
+	}
+
+
 }

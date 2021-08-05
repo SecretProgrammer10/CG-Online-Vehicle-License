@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Documents {
 	//@OneToOne(cascade = CascadeType.ALL)
 	@Id
-	@Column(name = "application_id")
+	@Column(name = "application_number")
 	@JsonIgnore
 	private String id;
 	

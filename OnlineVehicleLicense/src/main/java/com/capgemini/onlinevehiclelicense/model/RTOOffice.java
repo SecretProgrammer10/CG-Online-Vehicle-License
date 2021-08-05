@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="Rtooffice")
@@ -26,13 +28,20 @@ public class RTOOffice {
 	private String rtoName;
 	
 	@OneToMany(cascade= CascadeType.ALL)
+	@JsonIgnore
 	private Set<RTOOfficer> rtoOfficer;
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Application> application;
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<License> license;
+	
+	@OneToMany(cascade= CascadeType.ALL)
+	@JsonIgnore
+	private Set<Appointment> appointment;
 
 	/**
 	 * 
@@ -64,6 +73,20 @@ public class RTOOffice {
 	 */
 	public void setRtoId(int rtoId) {
 		this.rtoId = rtoId;
+	}
+	
+	/**
+	 * @return the appointment
+	 */
+	public Set<Appointment> getAppointment() {
+		return appointment;
+	}
+
+	/**
+	 * @param appointment the appointment to set
+	 */
+	public void setAppointment(Set<Appointment> appointment) {
+		this.appointment = appointment;
 	}
 
 	/**
@@ -171,7 +194,8 @@ public class RTOOffice {
 	@Override
 	public String toString() {
 		return "RTOOffice [rtoId=" + rtoId + ", rtoName=" + rtoName + ", rtoOfficer=" + rtoOfficer + ", application="
-				+ application + ", license=" + license + "]";
+				+ application + ", appointment="
+						+ appointment +", license=" + license + "]";
 	}
 	
 	
