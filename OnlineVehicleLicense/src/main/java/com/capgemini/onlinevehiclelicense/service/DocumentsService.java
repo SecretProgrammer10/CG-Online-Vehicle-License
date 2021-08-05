@@ -1,15 +1,12 @@
 package com.capgemini.onlinevehiclelicense.service;
 
-//import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
-//import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Documents;
 import com.capgemini.onlinevehiclelicense.repository.IDocumentsRepository;
 
@@ -19,25 +16,7 @@ public class DocumentsService implements IDocumentsService{
 	@Autowired
 	private IDocumentsRepository documentsRepository;
 	
-	
-/*	@Override
-	public ResponseEntity<Documents> uploadDocuments(Documents doc) {
-		// TODO Auto-generated method stub
-		Optional<Documents> documents = this.documentsRepository.findById(doc.get);
-		try {
-			if(!documents.isPresent()) {
-				this.documentsRepository.save(doc);
-				return ResponseEntity.ok().build();
-			}
-			else {
-				throw new RecordAlreadyPresentException("Documents already uploaded!!!");
-			}
-		} catch (RecordAlreadyPresentException e) {
-			//e.printStackTrace();
-			return new ResponseEntity<Documents>(HttpStatus.ALREADY_REPORTED);
-		}
-	}
-*/
+
 	@Override
 	public ResponseEntity<Documents> updateDocuments(Documents doc, String app_number) {
 		// TODO Auto-generated method stub

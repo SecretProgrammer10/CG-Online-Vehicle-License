@@ -22,7 +22,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
+//import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
+import com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -30,15 +31,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Application {
 	
 	@Id
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
-    /*@GenericGenerator(
-            name = "application_seq", 
-            strategy = "com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator", 
-            parameters = { 
-                    @Parameter(name = ApplicationIdGenerator.INCREMENT_PARAM, value = "1"),
-                    @Parameter(name = ApplicationIdGenerator.CODE_NUMBER_SEPARATOR_PARAMETER, value = "_"), 
-                    @Parameter(name = ApplicationIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")})
-	*/@JsonIgnore
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
+	@GenericGenerator(name = "application_seq", 
+    strategy = "com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator", 
+    parameters = { @Parameter(name = LicenseIdGenerator.INCREMENT_PARAM, value = "1"),
+        @Parameter(name = LicenseIdGenerator.VALUE_PREFIX_PARAMETER, value = "21_"),
+        @Parameter(name = LicenseIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
+//	@GenericGenerator(
+//            name = "application_seq", 
+//            strategy = "com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator", 
+//            parameters = { 
+//                    @Parameter(name = ApplicationIdGenerator.INCREMENT_PARAM, value = "1"),
+//                    @Parameter(name = ApplicationIdGenerator.CODE_NUMBER_SEPARATOR_PARAMETER, value = "_"), 
+//                    @Parameter(name = ApplicationIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%05d")})
+	@JsonIgnore
 	@Column(name="application_number")
 	private String applicationNumber;
 		

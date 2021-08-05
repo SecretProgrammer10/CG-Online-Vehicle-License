@@ -2,7 +2,6 @@ package com.capgemini.onlinevehiclelicense.model;
 
 
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Appointment")
 public class Appointment {
@@ -26,9 +28,11 @@ public class Appointment {
 	private String appointmentNumber;
 	
 	@Column(name = "test_date")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	private Date testDate;
 	
 	@Column(name = "time_slot")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
 	private Date timeSlot;
 	
 	@Enumerated(EnumType.STRING)
@@ -40,11 +44,13 @@ public class Appointment {
 */	
 	@OneToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name = "application_id", nullable = false)
+	@JsonIgnore
 	private Application application;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "rto_officer_username", nullable=false)
-	private RTOOfficer rtoOfficer;
+	@JoinColumn(name = "rto_office_Id", nullable=false)
+	@JsonIgnore
+	private RTOOffice rtoOffice;
 
     public Appointment() {
 		super();
@@ -140,15 +146,15 @@ public class Appointment {
 	/**
 	 * @return the rtoOfficer
 	 */
-	public RTOOfficer getRtoOfficer() {
-		return rtoOfficer;
+	public RTOOffice getRtoOffice() {
+		return rtoOffice;
 	}
 
 	/**
 	 * @param rtoOfficer the rtoOfficer to set
 	 */
-	public void setRtoOfficer(RTOOfficer rtoOfficer) {
-		this.rtoOfficer = rtoOfficer;
+	public void setRtoOffice(RTOOffice rtoOffice) {
+		this.rtoOffice = rtoOffice;
 	}
 
 	@Override
@@ -200,7 +206,7 @@ public class Appointment {
 		SimpleDateFormat timeFormat=new SimpleDateFormat("HH:mm:ss");
 		return "Appointment [appointmentNumber=" + appointmentNumber + ", testDate=" + sdf.format(testDate) + ", timeSlot="
 				+ timeFormat.format(timeSlot) + ", testResult=" + testResult + ", application=" + application + ", rtoOfficer="
-				+ rtoOfficer + "]";
+				+ rtoOffice + "]";
 	}
     
 }

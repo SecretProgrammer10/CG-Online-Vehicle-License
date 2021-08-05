@@ -44,7 +44,7 @@ public class mailService implements IMailService {
 			helper.setSubject(subject);
 			helper.setText(message);
 
-			helper.addAttachment("License", new ClassPathResource(attachement));
+			helper.addAttachment("License.txt", new ClassPathResource(attachement));
 
 			mailSender.send(msg);
 		} catch(MessagingException e) {

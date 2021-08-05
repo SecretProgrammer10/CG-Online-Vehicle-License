@@ -1,19 +1,20 @@
 package com.capgemini.onlinevehiclelicense.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capgemini.onlinevehiclelicense.exception.RecordAlreadyPresentException;
-import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.service.IAppointmentService;
 
@@ -22,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@RequestMapping("/api/v1/appointment")
+@RequestMapping("/appointment")
 @Api(value = "Online Vehicle License")
 @Validated
 public class AppointmentController {
@@ -32,32 +33,32 @@ public class AppointmentController {
 	
 	@ApiOperation(value = "Create Appointment")
 	@PostMapping("/create-appointment")
-	@ExceptionHandler(RecordAlreadyPresentException.class)
-	public ResponseEntity<Appointment> createAppointment(
-			@ApiParam(value = "Create an Appointment") @RequestBody Appointment appointment) {
-				return this.appointmentService.createAppointment(appointment);
+	public ResponseEntity<String> createAppointment(
+			@RequestParam String applicationNumber,
+			@ApiParam(value = "New Appointment Details") @RequestBody Appointment appointment,
+			@RequestParam int rtoId) {
+				return this.appointmentService.createAppointment(applicationNumber, appointment, rtoId);
 	}
 	
 	@ApiOperation(value = "Reschedule Appointment")
 	@PutMapping("/reschedule-appointment")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<Appointment> updateAppointment(
-			@ApiParam(value = "Reschedule an Appointment") @RequestBody Appointment appointment) {
-		return this.appointmentService.updateAppointment(appointment);
+	public ResponseEntity<String> updateAppointment(
+			@ApiParam(value = "New Test Date") @RequestParam Date testDate, 
+			@ApiParam(value = "New Test Slot") @RequestParam Date testSlot,
+			@ApiParam(value = "Application Number") @RequestParam String applicationNumber) {
+		return this.appointmentService.updateAppointment(testDate, testDate, applicationNumber);
 	}
 	
 	@ApiOperation(value = "View Appointment Details")
-	@GetMapping("/appointment-details/{appointmentNumber}")
-	@ExceptionHandler(RecordNotFoundException.class)
+	@GetMapping("application/{applicationNumber}/appointment-details")
 	public Appointment viewAppointmentDetails(
-			@ApiParam(value = "Appointment Number") @PathVariable("appointmentNumber") String appointmentNumber) {
-		return this.appointmentService.viewAppointmentDetails(appointmentNumber);
+			@ApiParam(value = "Appointment Number") @PathVariable("applicationNumber") String applicationNumber) {
+		return this.appointmentService.viewAppointmentDetails(applicationNumber);
 	}
 	
 	@ApiOperation(value = "Cancel Appointment")
-	@GetMapping("/cancel-appointment/{appointmentNumber}")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<Appointment> cancelAppointment(
+	@DeleteMapping("application/{applicationNumber}/cancel-appointment")
+	public ResponseEntity<String> cancelAppointment(
 			@ApiParam(value = "Appointment Number") @PathVariable("appointmentNumber") String appointmentNumber) {
 		return this.appointmentService.deleteAppointment(appointmentNumber);
 	}

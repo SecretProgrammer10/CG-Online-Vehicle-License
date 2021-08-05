@@ -41,7 +41,7 @@ public class LicenseService implements ILicenseService {
 		RTOOffice rtoOffice;
 		if(application.getApplicationStatus().toString().equalsIgnoreCase("approved")) {
 			try {
-				if(!findLicense.isPresent() && !findLicense.get().getLicenseType().equals(LicenseType.LL)) {
+				if(!findLicense.isPresent()) {
 					rtoOffice = this.rtoOfficeRepository.findById(rtoId)
 							.orElseThrow(() -> new RecordNotFoundException("No Matching RTOOffice found!"));
 					license.setApplication(application);
@@ -70,7 +70,7 @@ public class LicenseService implements ILicenseService {
 		// TODO Auto-generated method stub
 		Optional<License> findLicense = this.licenseRepository.findById(licenseNumber);
 		try {
-			if(findLicense.isPresent() && !findLicense.get().getLicenseType().equals(LicenseType.DL)) {
+			if(findLicense.isPresent() && findLicense.get().getLicenseType().equals(LicenseType.LL)) {
 				License license = findLicense.get();
 				license.setLicenseType(LicenseType.DL);
 				this.licenseRepository.save(license);

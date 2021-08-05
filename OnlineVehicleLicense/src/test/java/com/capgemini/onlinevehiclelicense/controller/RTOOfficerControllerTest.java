@@ -183,7 +183,7 @@ class RTOOfficerControllerTest {
 		this.challanList.add(new Challan("21-67853", "MH567L76", 250.00, "PAID"));
 		this.challanList.add(new Challan("21-98798", "MH153C09", 1000.00, "NOT PAID"));
 
-		given(challanService.viewAllChallanDetails()).willReturn(this.challanList);
+//		given(challanService.viewAllChallanDetails()).willReturn(this.challanList);
 
 		this.mockMvc.perform(get("/api/v1/challan/view-all-challan"))
 		.andExpect(status().isOk())

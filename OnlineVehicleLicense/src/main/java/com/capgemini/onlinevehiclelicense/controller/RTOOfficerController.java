@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.License;
+import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 import com.capgemini.onlinevehiclelicense.model.TestResult;
 import com.capgemini.onlinevehiclelicense.service.ILicenseService;
 import com.capgemini.onlinevehiclelicense.service.IRTOOfficerService;
@@ -46,9 +45,14 @@ public class RTOOfficerController {
 	@Autowired
 	private ILicenseService licenseService;
 	
+	@ApiOperation(value = "Add new RTO_Officer")
+	@PostMapping("{rtoId}/add-rto-officer")
+	public ResponseEntity<String> addRTOOfficer(@PathVariable("rtoId") int rtoId ,@RequestBody RTOOfficer officer){
+		return this.rtoOfficerService.addRTOOfficer(rtoId, officer);
+	}
+	
 	@ApiOperation(value = "Login RTO_Officer")
-	@PostMapping("/loginRtoOfficer")
-	@ExceptionHandler(RecordNotFoundException.class)
+	@PostMapping("/login-rto-officer")
 	public void loginUser(@RequestParam String username, @RequestParam String pass)
 	{
 		rtoOfficerService.officeLogin(username, pass);
@@ -62,7 +66,6 @@ public class RTOOfficerController {
 			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
 	})
 	@GetMapping("/view-pending-application")
-	@ExceptionHandler(RecordNotFoundException.class)
 	public List<Application> viewAllPendingApplications() 
 	{
 		return rtoOfficerService.viewAllPendingApplications();
@@ -76,7 +79,6 @@ public class RTOOfficerController {
 			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
 	})
 	@GetMapping("/view-rejected-application")
-	@ExceptionHandler(RecordNotFoundException.class)
 	public List<Application> viewAllRejectedApplications() 
 	{
 		return rtoOfficerService.viewAllRejectedApplications();
@@ -90,7 +92,6 @@ public class RTOOfficerController {
 			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
 	})
 	@GetMapping("/view-approved-application")
-	@ExceptionHandler(RecordNotFoundException.class)
 	public List<Application> viewAllApprovedApplications( ) 
 	{
 		return rtoOfficerService.viewAllApprovedApplications();
@@ -98,7 +99,6 @@ public class RTOOfficerController {
 	
 	@ApiOperation(value = "View Application By Id")
 	@GetMapping("/view-applicationby-id/{applicationNumber}")
-	@ExceptionHandler(RecordNotFoundException.class)
 	public Application viewApplicationById(
 			@ApiParam(value = "Application Number") @PathVariable("applicationNumber")String applicationNumber)
 	{
@@ -107,7 +107,6 @@ public class RTOOfficerController {
 	
 	@ApiOperation(value = "View Challan By Vehicle Number")
 	@GetMapping("/view-challanby-vehiclenumber/{vehicleNumber}")
-	@ExceptionHandler(RecordNotFoundException.class)
 	public List<Challan> checkChallanByVehicleNumber(
 			@ApiParam(value = "Vehicle Number") @PathVariable("vehicleNumber")String vehicleNumber)
 	{
@@ -158,7 +157,6 @@ public class RTOOfficerController {
 	
 	@ApiOperation(value = "Modify Test Results")
 	@PutMapping("/modify-test-results/{testResult}")
-	@ExceptionHandler(RecordNotFoundException.class)
 	public ResponseEntity<String> modifyTestResults(
 			@ApiParam(value = "Application Number") @RequestParam String applicantNumber, 
 			@ApiParam(value = "Test Result Enum Value") @PathVariable("testResult") TestResult testResult)

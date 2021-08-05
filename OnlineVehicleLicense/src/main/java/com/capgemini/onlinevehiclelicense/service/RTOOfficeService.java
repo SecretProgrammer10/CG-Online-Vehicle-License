@@ -1,9 +1,11 @@
 package com.capgemini.onlinevehiclelicense.service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -35,10 +37,19 @@ public class RTOOfficeService implements IRTOOfficeService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		}	
+	}
+	
+	@Override
+	public ResponseEntity<String> addRTOOffice(RTOOffice rtoOffice){
+		Optional<RTOOffice> rtoOfc = this.rtoofficeRepo.findById(rtoOffice.getRtoId());
+		if(!rtoOfc.isPresent()) {
+			this.rtoofficeRepo.save(rtoOffice);
+			return new ResponseEntity<String>("RTO Office added",HttpStatus.CREATED);
 		}
-		
-		
-		
+		else {
+			return new ResponseEntity<String>("RTO office alraedy present",HttpStatus.ALREADY_REPORTED);
+		}
 	}
 	
 

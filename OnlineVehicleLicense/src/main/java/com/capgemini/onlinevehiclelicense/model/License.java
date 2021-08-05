@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -30,7 +31,7 @@ public class License {
 	
 	@Id
 	@Column(name = "license_number")
-	@Pattern(regexp="^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$")
+//	@Pattern(regexp="^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "license_seq")
 	@GenericGenerator(name = "license_seq", 
 			    strategy = "com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator", 
@@ -41,18 +42,18 @@ public class License {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "license_type")
-	@NotEmpty(message="license type should not be empty")
+	@NotNull(message="license type should not be empty")
 	@JsonIgnore
 	private LicenseType licenseType;
 	
 	@Column(name = "date_of_issue")
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	@NotEmpty(message="date of issue should not be empty")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+	@NotNull(message="date of issue should not be empty")
 	private Date dateOfIssue;
 	
 	@Column(name = "valid_till")
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	@NotEmpty(message="validity should not be empty")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+	@NotNull(message="validity should not be empty")
 	private Date validTill;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional=false)
