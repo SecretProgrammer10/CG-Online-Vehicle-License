@@ -22,6 +22,7 @@ import org.hibernate.annotations.Parameter;
 
 import com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "license")
@@ -41,6 +42,7 @@ public class License {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "license_type")
 	@NotEmpty(message="license type should not be empty")
+	@JsonIgnore
 	private LicenseType licenseType;
 	
 	@Column(name = "date_of_issue")
@@ -55,10 +57,12 @@ public class License {
 	
 	@OneToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name = "application_id", nullable = false)
+	@JsonIgnore
 	private Application application;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "rto_id", nullable = false)
+	@JsonIgnore
 	private RTOOffice rtoOffice;
 
 	/**

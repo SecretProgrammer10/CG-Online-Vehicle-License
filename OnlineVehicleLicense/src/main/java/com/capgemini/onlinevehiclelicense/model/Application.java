@@ -1,12 +1,7 @@
 package com.capgemini.onlinevehiclelicense.model;
 
-import java.time.LocalDate;
 
 import java.util.Date;
-
-import javax.persistence.*;
-
-
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
