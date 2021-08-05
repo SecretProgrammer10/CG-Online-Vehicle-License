@@ -17,9 +17,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name="Applicant")
@@ -31,38 +35,63 @@ public class Applicant {
 	@JsonIgnore
 	private String applicantId;
 	
+	@NotNull(message = "Firstname cannot be null")
+	@ApiModelProperty(notes = "Firstname", example = "Nil")
 	@Column(name="first_name")
 	private String firstName;
 	
+	@NotNull(message = "Middlename cannot be null")
+	@ApiModelProperty(notes = "Middlename", example = "Nitin")
 	@Column(name="middle_name")
 	private String middleName;
 	
+	@NotNull(message = "Lastname cannot be null")
+	@ApiModelProperty(notes = "Lastname", example = "Mukesh")
 	@Column(name="last_name")
 	private String lastName;
 	
+	@NotNull(message = "Date of birth cannot be null")
+	@ApiModelProperty(notes = "Date of birth", example = "19-11-1999")
 	@Column(name="date_of_birth")
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	private Date dateOfBirth;
 	
+	@NotNull(message = "Place of birth cannot be null")
+	@ApiModelProperty(notes = "Firstname", example = "Mumbai")
 	@Column(name="place_of_birth")
 	private String placeOfBirth;
 	
+	@NotNull(message = "Gender cannot be null")
+	@ApiModelProperty(notes = "Firstname")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "gender")
 	private Gender gender;
 	
+	@ApiModelProperty(notes = "Firstname", example = "B.Sc")
 	@Column(name="qualification")
 	private String qualification;
 	
+	@Size(min = 10, max = 10, message 
+		      = "Mobile number consists of 10 digits")
+	@NotNull(message = "Mobile cannot be null")
+	@ApiModelProperty(notes = "Firstname", example = "9876543210")
 	@Column(name="mobile")
 	private String mobile;
 	
+	@NotNull(message = "Nationality cannot be null")
+	@ApiModelProperty(notes = "Nationality", example = "Indian")
 	@Column(name="nationality")
 	private String nationality;
 	
+	@NotNull(message = "Vehicle type cannot be null")
+	@ApiModelProperty(notes = "Vehicle type")
 	@Column(name="vehicle_type")
 	private String vehicleType;
 	
+	@Size(min = 12, max = 12, message 
+		      = "Vehicle number consists of 12 digits")
+	@NotNull(message = "Vehicle number cannot be null")
+	@ApiModelProperty(notes = "Firstname", example = "MH-98-6543210")
 	@Column(name="vehicle_number")
 	private String vehicleNumber;
 	

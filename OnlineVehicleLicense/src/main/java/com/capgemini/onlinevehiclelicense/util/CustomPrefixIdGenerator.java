@@ -21,7 +21,7 @@ import org.hibernate.type.Type;
 import java.io.Serializable;
 import java.util.Properties;
 
-public class LicenseIdGenerator extends SequenceStyleGenerator {
+public class CustomPrefixIdGenerator extends SequenceStyleGenerator {
 
 	public static final String VALUE_PREFIX_PARAMETER = "valuePrefix";
 	public static final String VALUE_PREFIX_DEFAULT = "";

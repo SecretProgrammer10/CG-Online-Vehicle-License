@@ -21,7 +21,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator;
+import com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,13 +31,12 @@ public class License {
 	
 	@Id
 	@Column(name = "license_number")
-//	@Pattern(regexp="^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "license_seq")
 	@GenericGenerator(name = "license_seq", 
-			    strategy = "com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator", 
-			    parameters = { @Parameter(name = LicenseIdGenerator.INCREMENT_PARAM, value = "1"),
-			        @Parameter(name = LicenseIdGenerator.VALUE_PREFIX_PARAMETER, value = "MH_"),
-			        @Parameter(name = LicenseIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
+			    strategy = "com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator", 
+			    parameters = { @Parameter(name = CustomPrefixIdGenerator.INCREMENT_PARAM, value = "1"),
+			        @Parameter(name = CustomPrefixIdGenerator.VALUE_PREFIX_PARAMETER, value = "MH_"),
+			        @Parameter(name = CustomPrefixIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
 	private String licenseNumber;
 	
 	@Enumerated(EnumType.STRING)

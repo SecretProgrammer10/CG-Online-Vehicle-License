@@ -8,8 +8,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "challan")
@@ -20,14 +24,20 @@ public class Challan {
 	@NotEmpty(message="challan Number should not be empty")
 	private String challanNumber;
 	
+	@Size(min = 12, max = 12, message 
+		      = "Vehicle number consists of 12 digits")
+	@ApiModelProperty(notes = "Vehicle number", example = "MH-98-6543210")
 	@Column(name = "vehicle_number")
 	@NotEmpty(message="vehicle number should not be empty")
 	private String vehicleNumber;
 	
+	@ApiModelProperty(notes = "Amount", example = "1000")
 	@Column(name = "amount")
 	@NotEmpty(message="amount should not be empty")
 	private Double amount;
 	
+	@NotNull(message = "Vehicle number cannot be null")
+	@ApiModelProperty(notes = "Challan status", example = "PENDING")
 	@Column(name = "status")
 	private String status;
 	

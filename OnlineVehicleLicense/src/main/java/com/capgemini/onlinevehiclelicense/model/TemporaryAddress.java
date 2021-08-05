@@ -20,8 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class TemporaryAddress {
 
 	@Id
-	/*@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="address_seq")
-	@SequenceGenerator(name="address_seq",sequenceName="address_seq", allocationSize=1)*/
 	@Column(name="address_id")
 	@JsonIgnore
 	private String addrId;

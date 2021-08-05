@@ -17,11 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="Rtoofficer")
 public class RTOOfficer {
 	
-/*	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="rto_id")
-	private RTOOffice rtoffice;
-*/	
-	
 	@Id
 	@Column(name="username")
 	@Pattern(regexp="^[a-zA-Z0-9\\._\\-]{6,20}$",message="invalid user name")

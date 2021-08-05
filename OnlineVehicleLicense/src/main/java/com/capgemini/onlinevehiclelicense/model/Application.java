@@ -18,13 +18,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 //import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
-import com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator;
+import com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name="Application")
@@ -33,13 +36,13 @@ public class Application {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
 	@GenericGenerator(name = "application_seq", 
-    strategy = "com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator", 
-    parameters = { @Parameter(name = LicenseIdGenerator.INCREMENT_PARAM, value = "1"),
-        @Parameter(name = LicenseIdGenerator.VALUE_PREFIX_PARAMETER, value = "21_"),
-        @Parameter(name = LicenseIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
+    strategy = "com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator", 
+    parameters = { @Parameter(name = CustomPrefixIdGenerator.INCREMENT_PARAM, value = "1"),
+        @Parameter(name = CustomPrefixIdGenerator.VALUE_PREFIX_PARAMETER, value = "21_"),
+        @Parameter(name = CustomPrefixIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
 //	@GenericGenerator(
 //            name = "application_seq", 
-//            strategy = "com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator", 
+//            strategy = "com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator", 
 //            parameters = { 
 //                    @Parameter(name = ApplicationIdGenerator.INCREMENT_PARAM, value = "1"),
 //                    @Parameter(name = ApplicationIdGenerator.CODE_NUMBER_SEPARATOR_PARAMETER, value = "_"), 
@@ -48,25 +51,38 @@ public class Application {
 	@Column(name="application_number")
 	private String applicationNumber;
 		
+	@NotNull(message = "Application date cannot be null")
+	@ApiModelProperty(notes = "Application Date")
 	@Column(name="application_date")
 	private Date applicationDate;
 
+	@NotNull(message = "Application date cannot be null")
+	@ApiModelProperty(notes = "Firstname", example = "UPI")
 	@Column(name="mode_of_payment")
 	private String modeOfPayment;
 	
+	@NotNull(message = "Application date cannot be null")
+	@ApiModelProperty(notes = "", example = "1000")
 	@Column(name="amount_paid")
 	private Double amountPaid;
 	
+	@NotNull(message = "Payment cannot be null")
+	@ApiModelProperty(notes = "Firstname", example = "PAID")
 	@Column(name="payment_status")
 	private String paymentStatus;
 	
+	@ApiModelProperty(notes = "Firstname", example = "Remarks")
 	@Column(name="remarks")
 	private String remarks;
 	
+	@NotNull(message = "Application status cannot be null")
+	@ApiModelProperty(notes = "Application status")
 	@Enumerated(EnumType.STRING)
 	@Column(name="application_status")
 	private ApplicationStatus applicationStatus;
 	
+	@NotNull(message = "Application type cannot be null")
+	@ApiModelProperty(notes = "Application")
 	@Enumerated(EnumType.STRING)
 	@Column(name="application_type")
 	private LicenseType applicationType;

@@ -22,13 +22,13 @@ public class AppointmentService implements IAppointmentService {
 
 	@Autowired
 	private IAppointmentRepository appointmentRepository;
-	
+
 	@Autowired
 	private IApplicationRepository applicationRepository ;
-	
+
 	@Autowired
 	private IRTOOfficeRepository officeRepository;
-	
+
 	@Override
 	public ResponseEntity<String> createAppointment(String applicationNumber, Appointment appointment, int rtoId) {
 		// TODO Auto-generated method stub
@@ -40,14 +40,14 @@ public class AppointmentService implements IAppointmentService {
 		}else {
 			appl = application.get();
 		}
-		
+
 		Optional<RTOOffice> rtoOffice = this.officeRepository.findById(rtoId);
 		if(!rtoOffice.isPresent()) {
 			return new ResponseEntity<String>("RTO Office not found",HttpStatus.NOT_FOUND); 
 		} else {
 			rtoOfc = rtoOffice.get();
 		}
-		
+
 		Optional<Appointment> findAppointment = this.appointmentRepository.findById(appointment.getAppointmentNumber());
 		try {
 			if(!findAppointment.isPresent()) {
@@ -69,7 +69,7 @@ public class AppointmentService implements IAppointmentService {
 	public Appointment viewAppointmentDetails(String applicationNumber) {
 		// TODO Auto-generated method stub
 		Appointment appnt ;
-		
+
 		Optional<Application> application = this.applicationRepository.findById(applicationNumber);
 		if(!application.isPresent()) {
 			return null;
@@ -90,7 +90,7 @@ public class AppointmentService implements IAppointmentService {
 	public ResponseEntity<String> updateAppointment(Date testDate, Date testDate2, String applicationNumber) {
 		// TODO Auto-generated method stub
 		Appointment appnt ;
-		
+
 		Optional<Application> application = this.applicationRepository.findById(applicationNumber);
 		if(!application.isPresent()) {
 			return new ResponseEntity<String>("Application not found",HttpStatus.NOT_FOUND);
@@ -114,8 +114,8 @@ public class AppointmentService implements IAppointmentService {
 	@Override
 	public ResponseEntity<String> deleteAppointment(String applicationNumber) {
 		// TODO Auto-generated method stub
-Appointment appnt ;
-		
+		Appointment appnt ;
+
 		Optional<Application> application = this.applicationRepository.findById(applicationNumber);
 		if(!application.isPresent()) {
 			return new ResponseEntity<String>("Application not found",HttpStatus.NOT_FOUND);
