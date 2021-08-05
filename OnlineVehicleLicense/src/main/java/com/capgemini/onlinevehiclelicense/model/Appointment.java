@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator;
+import com.capgemini.onlinevehiclelicense.util.AppointmentIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,12 +33,12 @@ public class Appointment {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
-	@GenericGenerator(name = "application_seq", 
-    strategy = "com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator", 
-    parameters = { @Parameter(name = CustomPrefixIdGenerator.INCREMENT_PARAM, value = "1"),
-        @Parameter(name = CustomPrefixIdGenerator.VALUE_PREFIX_PARAMETER, value = "21_"),
-        @Parameter(name = CustomPrefixIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointment_seq")
+	@GenericGenerator(name = "appointment_seq", 
+    strategy = "com.capgemini.onlinevehiclelicense.util.AppointmentIdGenerator", 
+    parameters = { @Parameter(name = AppointmentIdGenerator.INCREMENT_PARAM, value = "1"),
+        @Parameter(name = AppointmentIdGenerator.VALUE_PREFIX_PARAMETER, value = "APP_"),
+        @Parameter(name = AppointmentIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
 	@Column(name = "appointment_number")
 	private String appointmentNumber;
 	

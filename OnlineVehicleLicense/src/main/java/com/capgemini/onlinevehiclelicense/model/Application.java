@@ -25,6 +25,7 @@ import org.hibernate.annotations.Parameter;
 
 //import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
 import com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -52,7 +53,8 @@ public class Application {
 	private String applicationNumber;
 		
 	@NotNull(message = "Application date cannot be null")
-	@ApiModelProperty(notes = "Application Date")
+	@ApiModelProperty(notes = "Application Date", example = "10-10-2021")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	@Column(name="application_date")
 	private Date applicationDate;
 

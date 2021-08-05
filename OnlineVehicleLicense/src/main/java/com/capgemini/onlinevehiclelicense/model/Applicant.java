@@ -40,7 +40,6 @@ public class Applicant {
 	@Column(name="first_name")
 	private String firstName;
 	
-	@NotNull(message = "Middlename cannot be null")
 	@ApiModelProperty(notes = "Middlename", example = "Nitin")
 	@Column(name="middle_name")
 	private String middleName;
@@ -91,7 +90,7 @@ public class Applicant {
 	@Size(min = 12, max = 12, message 
 		      = "Vehicle number consists of 12 digits")
 	@NotNull(message = "Vehicle number cannot be null")
-	@ApiModelProperty(notes = "Firstname", example = "MH-98-6543210")
+	@ApiModelProperty(notes = "Vehicle number", example = "MH-98-654321")
 	@Column(name="vehicle_number")
 	private String vehicleNumber;
 	
