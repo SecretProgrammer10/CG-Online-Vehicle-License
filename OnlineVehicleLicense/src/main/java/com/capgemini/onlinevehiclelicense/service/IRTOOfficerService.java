@@ -22,7 +22,7 @@ public interface IRTOOfficerService {
 	public Application viewApplicationById(String applicationNumber);
 	public List<Challan> checkChallanByVehicleNumber(String vehicleNumber);
 	public List<Challan> checkAllChallan();
-	public ResponseEntity<String> modifyTestResultById(String applicationNumber, TestResult testResult);
+	public ResponseEntity<String> modifyTestResultById(String applicantNumber, TestResult testResult);
 	public String emailLicense(String applicationNumber, boolean pass);
 	public Page<Appointment> viewAllAppointments(Pageable pageable);
 	public Page<Application> viewAllApplications(Pageable pageable);

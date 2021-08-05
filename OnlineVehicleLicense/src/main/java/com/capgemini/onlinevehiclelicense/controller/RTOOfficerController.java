@@ -3,8 +3,6 @@ package com.capgemini.onlinevehiclelicense.controller;
 import java.util.Date;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -159,17 +157,13 @@ public class RTOOfficerController {
 	}
 	
 	@ApiOperation(value = "Modify Test Results")
-	@PutMapping("/modify-test-results/{applicationNumber}-{testResult}")
+	@PutMapping("/modify-test-results/{testResult}")
 	@ExceptionHandler(RecordNotFoundException.class)
 	public ResponseEntity<String> modifyTestResults(
-			@ApiParam(value = "Application Number") @PathVariable("applicationNumber") String applicationNumber, 
+			@ApiParam(value = "Application Number") @RequestParam String applicantNumber, 
 			@ApiParam(value = "Test Result Enum Value") @PathVariable("testResult") TestResult testResult)
 	{
-		if(testResult.toString().equals("PASS"))
-			sendLicenseMail(applicationNumber, true);
-		else
-			sendLicenseMail(applicationNumber, false);
-		return rtoOfficerService.modifyTestResultById(applicationNumber, testResult);
+		return rtoOfficerService.modifyTestResultById(applicantNumber, testResult);
 	}
 
 	private String sendLicenseMail(String applicationNumber, boolean pass) {
