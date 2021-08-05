@@ -1,11 +1,7 @@
 package com.capgemini.onlinevehiclelicense.model;
 
-import java.time.LocalDate;
 
 import java.util.Date;
-
-import javax.persistence.*;
-
 
 
 import javax.persistence.CascadeType;
@@ -27,23 +23,22 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Application")
 public class Application {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
-    @GenericGenerator(
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
+    /*@GenericGenerator(
             name = "application_seq", 
             strategy = "com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator", 
             parameters = { 
                     @Parameter(name = ApplicationIdGenerator.INCREMENT_PARAM, value = "1"),
                     @Parameter(name = ApplicationIdGenerator.CODE_NUMBER_SEPARATOR_PARAMETER, value = "_"), 
                     @Parameter(name = ApplicationIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")})
-    private String id;
-
-
+	*/@JsonIgnore
 	@Column(name="application_number")
 	private String applicationNumber;
 		
@@ -75,13 +70,16 @@ public class Application {
 	private Documents docs;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")
+	@JsonIgnore
 	private License license;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")
+	@JsonIgnore
 	private Appointment appointment;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="rto_id", nullable = false)
+	@JsonIgnore
 	private RTOOffice rtoOffice;
 	
 
@@ -90,7 +88,8 @@ public class Application {
 	private Applicant applicant;
 */	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "applicant_id", nullable = false)
+	@JoinColumn(name = "applicant_number", nullable = false)
+	@JsonIgnore
 	private Applicant applicant;
 
 

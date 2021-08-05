@@ -39,7 +39,7 @@ public class Applicant {
 	@Column(name="last_name")
 	private String lastName;
 	
-	@Column(name="dare_of_birth")
+	@Column(name="date_of_birth")
 	private Date dateOfBirth;
 	
 	@Column(name="place_of_birth")

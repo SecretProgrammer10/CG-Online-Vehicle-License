@@ -10,17 +10,21 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Documents")
 public class Documents {
 	//@OneToOne(cascade = CascadeType.ALL)
 	@Id
 	@Column(name = "application_id")
+	@JsonIgnore
 	private String id;
 	
 	@OneToOne
 	@MapsId
 	@JoinColumn(name = "application_number")
+	@JsonIgnore
 	private Application application;
 	
 	@Column(name = "photo")
