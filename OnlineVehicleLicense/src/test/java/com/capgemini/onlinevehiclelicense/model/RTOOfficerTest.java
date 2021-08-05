@@ -157,7 +157,7 @@ class RTOOfficerTest {
 	 */
 	@Test
 	void testToString() {
-		assertEquals(new RTOOfficer("John@12", "JohnDoe@1234","johndoe@gmail.com").toString(), "RTOOfficer [username=John@12, password=JohnDoe@1234, email=johndoe@gmail.com, appointment=null, rtoOffice=null]");
+		assertEquals((new RTOOfficer("John@12", "JohnDoe@1234","johndoe@gmail.com")).toString(), "RTOOfficer [username=John@12, password=JohnDoe@1234, email=johndoe@gmail.com, rtoOffice=null]");
 	}
 
 }
