@@ -66,15 +66,22 @@ public class LicenseService implements ILicenseService {
 		}
 	}
 	
-	public ResponseEntity<String> issueDriverLicense(String licenseNumber) {
+	public ResponseEntity<String> issueDriverLicense(String applicationNumber, String licenseNumber) {
 		// TODO Auto-generated method stub
+		Application application = this.applicationRepository.getApplicationByNumber(applicationNumber);
+		String result = application.getAppointment().getTestResult().toString();
 		Optional<License> findLicense = this.licenseRepository.findById(licenseNumber);
 		try {
 			if(findLicense.isPresent() && findLicense.get().getLicenseType().equals(LicenseType.LL)) {
-				License license = findLicense.get();
-				license.setLicenseType(LicenseType.DL);
-				this.licenseRepository.save(license);
-				return new ResponseEntity<String>("License Issued Successfully!", HttpStatus.CREATED);
+				if(result.equalsIgnoreCase("pass")) {
+					License license = findLicense.get();
+					license.setLicenseType(LicenseType.DL);
+					this.licenseRepository.save(license);
+					return new ResponseEntity<String>("License Issued Successfully!", HttpStatus.CREATED);
+				}
+				else {
+					return new ResponseEntity<String>("License cannot be issued!", HttpStatus.FORBIDDEN);
+				}
 			}
 			else
 				throw new RecordAlreadyPresentException("License Already Issued!");
@@ -121,7 +128,7 @@ public class LicenseService implements ILicenseService {
 	}
 
 	@Override
-	public License viewLicenseByType(String licenseType) {
+	public License viewLicenseByType(LicenseType licenseType) {
 		// TODO Auto-generated method stub
 		try {
 			return this.licenseRepository.viewLicenseByType(licenseType)
