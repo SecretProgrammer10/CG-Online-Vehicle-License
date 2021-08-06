@@ -20,13 +20,16 @@ import io.swagger.annotations.ApiModelProperty;
 public class Challan {
 	
 	@Id
+	@Size(min = 6, max = 6, message 
+    = "Challan number consists of 6 digits")
+	@ApiModelProperty(notes="Challan number",example="123456")
 	@Column(name = "challan_number")
 	@NotEmpty(message="challan Number should not be empty")
 	private String challanNumber;
 	
 	@Size(min = 12, max = 12, message 
 		      = "Vehicle number consists of 12 digits")
-	@ApiModelProperty(notes = "Vehicle number", example = "MH-98-6543210")
+	@ApiModelProperty(notes = "Vehicle number", example = "MH-98-654321")
 	@Column(name = "vehicle_number")
 	@NotEmpty(message="vehicle number should not be empty")
 	private String vehicleNumber;

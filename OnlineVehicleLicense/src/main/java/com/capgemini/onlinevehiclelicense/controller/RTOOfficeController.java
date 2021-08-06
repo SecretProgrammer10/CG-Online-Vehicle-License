@@ -42,7 +42,7 @@ public class RTOOfficeController {
 	}
 	
 	@ApiOperation(value = "View RTOOffice By rto_id")
-	@GetMapping("/find-rtooffice-byId{rto_id}")
+	@GetMapping("/find-rtooffice-byId/{rto_id}")
 	public RTOOffice findRtoOfficeById(
 			@ApiParam(value = "rto_id param") @PathVariable("rto_id")int rto_id )
 	{

@@ -25,6 +25,8 @@ import com.capgemini.onlinevehiclelicense.util.LicenseIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "license")
 public class License {
@@ -41,16 +43,19 @@ public class License {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "license_type")
+	@ApiModelProperty(notes="License type")
 	@NotNull(message="license type should not be empty")
 	@JsonIgnore
 	private LicenseType licenseType;
 	
 	@Column(name = "date_of_issue")
+	@ApiModelProperty(notes="Date of issue",example="06-08-2021")
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	@NotNull(message="date of issue should not be empty")
 	private Date dateOfIssue;
 	
 	@Column(name = "valid_till")
+	@ApiModelProperty(notes="Validity till",example="06-08-2041")
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	@NotNull(message="validity should not be empty")
 	private Date validTill;
