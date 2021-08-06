@@ -23,8 +23,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-//import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
-import com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator;
+import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
+//import com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -37,10 +37,10 @@ public class Application {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
 	@GenericGenerator(name = "application_seq", 
-    strategy = "com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator", 
-    parameters = { @Parameter(name = CustomPrefixIdGenerator.INCREMENT_PARAM, value = "1"),
-        @Parameter(name = CustomPrefixIdGenerator.VALUE_PREFIX_PARAMETER, value = "21_"),
-        @Parameter(name = CustomPrefixIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
+    strategy = "com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator", 
+    parameters = { @Parameter(name = ApplicationIdGenerator.INCREMENT_PARAM, value = "1"),
+        @Parameter(name = ApplicationIdGenerator.VALUE_PREFIX_PARAMETER, value = "21_"),
+        @Parameter(name = ApplicationIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
 //	@GenericGenerator(
 //            name = "application_seq", 
 //            strategy = "com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator", 
