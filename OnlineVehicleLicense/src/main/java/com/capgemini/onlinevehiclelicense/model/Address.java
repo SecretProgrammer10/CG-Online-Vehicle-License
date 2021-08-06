@@ -58,7 +58,7 @@ public class Address {
 	private int pincode;
 	
 //	@NotNull(message = "Field cannot be null")
-//	@ApiModelProperty(notes = "True if present address is same as permanent address", example = "400050")
+//	@ApiModelProperty(notes = "True if present address is same as permanent address")
 //	@Transient
 //	private boolean isSame;
 	
