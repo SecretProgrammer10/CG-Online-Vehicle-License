@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.ApplicationStatus;
+//import com.capgemini.onlinevehiclelicense.model.ApplicationStatus;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 //import com.capgemini.onlinevehiclelicense.model.License;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
