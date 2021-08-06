@@ -1,5 +1,7 @@
 package com.capgemini.onlinevehiclelicense.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -16,6 +18,7 @@ import com.capgemini.onlinevehiclelicense.model.RTOOffice;
 import com.capgemini.onlinevehiclelicense.repository.IApplicationRepository;
 import com.capgemini.onlinevehiclelicense.repository.IAppointmentRepository;
 import com.capgemini.onlinevehiclelicense.repository.IRTOOfficeRepository;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Service
 public class AppointmentService implements IAppointmentService {
@@ -87,28 +90,42 @@ public class AppointmentService implements IAppointmentService {
 	}
 
 	@Override
-	public ResponseEntity<String> updateAppointment(Date testDate, Date testDate2, String applicationNumber) {
+	public ResponseEntity<String> updateAppointment(Date testDate, Date timeSlot, String applicationNumber) {
 		// TODO Auto-generated method stub
 		Appointment appnt ;
 
-		Optional<Application> application = this.applicationRepository.findById(applicationNumber);
-		if(!application.isPresent()) {
-			return new ResponseEntity<String>("Application not found",HttpStatus.NOT_FOUND);
-		}
-		else {
-			appnt = application.get().getAppointment();
-		}
+		
+		String newString = new SimpleDateFormat("HH:mm").format(timeSlot);
 		try {
-			Appointment findAppointment = this.appointmentRepository.findById(appnt.getAppointmentNumber())
-					.orElseThrow(() -> new RecordNotFoundException("Appointment does not exist!!!"));
-			findAppointment.setTestDate(appnt.getTestDate());
-			findAppointment.setTimeSlot(appnt.getTimeSlot());
-			this.appointmentRepository.save(findAppointment);
-			return new ResponseEntity<String>("Appointment rescheduled succesfully",HttpStatus.OK);
-		} catch(RecordNotFoundException e) {
-			//e.printStackTrace();
-			return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
+			Date testSlot = new SimpleDateFormat("HH:mm").parse(newString);
+			
+			Optional<Application> application = this.applicationRepository.findById(applicationNumber);
+			if(!application.isPresent()) {
+				return new ResponseEntity<String>("Application not found",HttpStatus.NOT_FOUND);
+			}
+			else {
+				appnt = application.get().getAppointment();
+			}
+			try {
+				Appointment findAppointment = this.appointmentRepository.findById(appnt.getAppointmentNumber())
+						.orElseThrow(() -> new RecordNotFoundException("Appointment does not exist!!!"));
+				findAppointment.setTestDate(testDate);
+				findAppointment.setTimeSlot(testSlot);
+				this.appointmentRepository.save(findAppointment);
+				return new ResponseEntity<String>("Appointment rescheduled succesfully",HttpStatus.OK);
+			} catch(RecordNotFoundException e) {
+				//e.printStackTrace();
+				return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
+			}
+			
+			
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return new ResponseEntity<String>("Error in test slot format",HttpStatus.BAD_REQUEST);
 		}
+		
+		
 	}
 
 	@Override
