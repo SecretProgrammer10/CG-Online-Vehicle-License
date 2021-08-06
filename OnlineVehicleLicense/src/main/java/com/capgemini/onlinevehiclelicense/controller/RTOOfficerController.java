@@ -181,9 +181,12 @@ public class RTOOfficerController {
 	
 	@ApiOperation(value = "Issue Driver License")
 	@PostMapping("/issue-driver-license")
-	public ResponseEntity<String> issueDriverLicense(@RequestParam String applicationNumber, @RequestParam String licenseNumber){
+	public ResponseEntity<String> issueDriverLicense(
+			@RequestParam String applicationNumber, 
+			@RequestParam String licenseNumber,
+			@RequestBody License license){
 		sendLicenseMail(applicationNumber, true);
-		return this.licenseService.issueDriverLicense(applicationNumber, licenseNumber);
+		return this.licenseService.issueDriverLicense(applicationNumber, licenseNumber, license);
 	}
 	
 	@ApiOperation(value = "Renew License")

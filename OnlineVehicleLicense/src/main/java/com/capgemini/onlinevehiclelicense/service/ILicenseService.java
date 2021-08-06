@@ -13,7 +13,7 @@ import com.capgemini.onlinevehiclelicense.model.LicenseType;
 public interface ILicenseService {
 
 	public ResponseEntity<String> issueLearnerLicense(int rtoId, String applicationNumber, License license);
-	public ResponseEntity<String> issueDriverLicense(String applicationNumber, String licenseNumber);
+	public ResponseEntity<String> issueDriverLicense(String applicationNumber, String licenseNumber, License dLicense);
 	public ResponseEntity<String> renewLicense(String licenseNumber, Date dateOfIssue, Date validTill);
 	public Page<License> viewAllLicense(Pageable pageable);
 	public License viewLicenseByNumber(String licenseNumber);

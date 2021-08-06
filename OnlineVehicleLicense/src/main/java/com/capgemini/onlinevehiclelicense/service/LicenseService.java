@@ -66,7 +66,7 @@ public class LicenseService implements ILicenseService {
 		}
 	}
 	
-	public ResponseEntity<String> issueDriverLicense(String applicationNumber, String licenseNumber) {
+	public ResponseEntity<String> issueDriverLicense(String applicationNumber, String licenseNumber, License dLicense) {
 		// TODO Auto-generated method stub
 		Application application = this.applicationRepository.getApplicationByNumber(applicationNumber);
 		String result = application.getAppointment().getTestResult().toString();
@@ -76,6 +76,8 @@ public class LicenseService implements ILicenseService {
 				if(result.equalsIgnoreCase("pass")) {
 					License license = findLicense.get();
 					license.setLicenseType(LicenseType.DL);
+					license.setDateOfIssue(dLicense.getDateOfIssue());
+					license.setValidTill(dLicense.getValidTill());
 					this.licenseRepository.save(license);
 					return new ResponseEntity<String>("License Issued Successfully!", HttpStatus.CREATED);
 				}
