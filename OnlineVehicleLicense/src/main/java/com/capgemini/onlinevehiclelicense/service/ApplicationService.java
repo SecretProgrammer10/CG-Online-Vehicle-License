@@ -52,7 +52,12 @@ public class ApplicationService implements IApplicationService{
 		if(user.isPresent()) {
 			Optional<Applicant> applicant = this.applicantRepository.findById(username);
 			if(applicant.isPresent()) {
-				application.setApplicationStatus(ApplicationStatus.PENDING);
+				if(application.getApplicationType().toString().equals("LL")) {
+					application.setApplicationStatus(ApplicationStatus.APPROVED);
+				}
+				else {
+					application.setApplicationStatus(ApplicationStatus.PENDING);
+				}
 				application.setRtoOffice(rtoofc);
 				application.setApplicant(applicant.get());
 				application.setApplicationNumber(username);
