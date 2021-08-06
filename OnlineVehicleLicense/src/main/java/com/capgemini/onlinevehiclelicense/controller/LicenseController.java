@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.onlinevehiclelicense.model.License;
+import com.capgemini.onlinevehiclelicense.model.LicenseType;
 import com.capgemini.onlinevehiclelicense.service.ILicenseService;
 
 import io.swagger.annotations.Api;
@@ -52,7 +53,7 @@ public class LicenseController {
 	@ApiOperation(value = "View License By Type")
 	@GetMapping("/view-license-by-type/{licenseType}")
 	public License viewLicenseByType(
-			@ApiParam(value = "License Type Based on which to retrieve license details") @PathVariable("licenseType") String licenseType) {
+			@ApiParam(value = "License Type Based on which to retrieve license details") @PathVariable("licenseType") LicenseType licenseType) {
 		return licenseService.viewLicenseByType(licenseType);
 	}
 }
