@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -192,8 +193,9 @@ public class RTOOfficerController {
 	@ApiOperation(value = "Renew License")
 	@PutMapping("/renew-license")
 	public ResponseEntity<String> renewLicense(@RequestParam String applicationNumber, 
-			@RequestParam String licenseNumber, @RequestParam Date dateOfIssue, 
-			@RequestBody Date validTill){
+			@RequestParam String licenseNumber,
+			@DateTimeFormat(pattern="dd-MM-yyyy") @RequestParam Date dateOfIssue, 
+			@DateTimeFormat(pattern="dd-MM-yyyy") @RequestParam Date validTill){
 		sendLicenseMail(applicationNumber, true);
 		return this.licenseService.renewLicense(licenseNumber, dateOfIssue, validTill);
 	}

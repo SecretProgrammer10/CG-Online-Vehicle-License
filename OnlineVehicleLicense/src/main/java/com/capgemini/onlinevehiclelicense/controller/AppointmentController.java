@@ -1,8 +1,10 @@
 package com.capgemini.onlinevehiclelicense.controller;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.service.IAppointmentService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,10 +46,10 @@ public class AppointmentController {
 	@ApiOperation(value = "Reschedule Appointment")
 	@PutMapping("/reschedule-appointment")
 	public ResponseEntity<String> updateAppointment(
-			@ApiParam(value = "New Test Date") @RequestParam Date testDate, 
-			@ApiParam(value = "New Test Slot") @RequestParam Date testSlot,
+			@ApiParam(value = "New Test Date") @RequestParam @DateTimeFormat(pattern="dd-MM-yyyy") Date testDate, 
+			@ApiParam(value = "New Test Date and time Slot") @RequestParam @DateTimeFormat(pattern="dd-MM-yyyy HH:mm") Date testSlot,
 			@ApiParam(value = "Application Number") @RequestParam String applicationNumber) {
-		return this.appointmentService.updateAppointment(testDate, testDate, applicationNumber);
+		return this.appointmentService.updateAppointment(testDate, testSlot, applicationNumber);
 	}
 	
 	@ApiOperation(value = "View Appointment Details")
@@ -59,8 +62,8 @@ public class AppointmentController {
 	@ApiOperation(value = "Cancel Appointment")
 	@DeleteMapping("application/{applicationNumber}/cancel-appointment")
 	public ResponseEntity<String> cancelAppointment(
-			@ApiParam(value = "Appointment Number") @PathVariable("appointmentNumber") String appointmentNumber) {
-		return this.appointmentService.deleteAppointment(appointmentNumber);
+			@ApiParam(value = "Application Number") @PathVariable("applicationNumber") String applicationNumber) {
+		return this.appointmentService.deleteAppointment(applicationNumber);
 	}
 	
 }
