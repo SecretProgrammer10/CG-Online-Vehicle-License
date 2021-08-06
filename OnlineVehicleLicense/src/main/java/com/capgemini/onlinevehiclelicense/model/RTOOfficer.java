@@ -32,7 +32,7 @@ public class RTOOfficer {
 	private String password;
 	
 	@Column(name="email")
-	@ApiModelProperty(notes="Username",example="nil@gmail.com)
+	@ApiModelProperty(notes="Username",example="nil@gmail.com")
 	@NotEmpty(message="email is required")
 	@Pattern(regexp="^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$",message="email not valid")
 	private String email;
