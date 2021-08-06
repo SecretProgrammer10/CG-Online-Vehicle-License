@@ -9,7 +9,7 @@ import com.capgemini.onlinevehiclelicense.model.Users;
 
 public interface IUserService {
 	public ResponseEntity<String> userRegistration(Users user);
-	public ResponseEntity<Users> userLogin(String email, String pass);
+	public ResponseEntity<String> userLogin(String email, String pass);
 	public ResponseEntity<String> changePassword(String email, String pass, String newPass);
 	public ResponseEntity<String> forgotPassword(String email, String pass);
 	public Page<Users> getAllUsers(Pageable pageable);

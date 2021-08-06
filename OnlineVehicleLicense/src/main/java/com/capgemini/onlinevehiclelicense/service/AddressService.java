@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.capgemini.onlinevehiclelicense.exception.RecordNotFoundException;
 import com.capgemini.onlinevehiclelicense.model.Address;
+import com.capgemini.onlinevehiclelicense.model.AddressType;
 import com.capgemini.onlinevehiclelicense.model.Applicant;
 import com.capgemini.onlinevehiclelicense.model.TemporaryAddress;
 import com.capgemini.onlinevehiclelicense.model.Users;
@@ -38,7 +39,7 @@ public class AddressService implements IAddressService{
 	
 	static private boolean flag = false;
 	@Override
-	public ResponseEntity<String> addAddress(String username, Address addr) {
+	public ResponseEntity<String> addAddress(String username, Address addr, boolean same) {
 		// TODO Auto-generated method stub
 		try {
 			Optional<Users> u = this.userRepository.findById(username);
@@ -49,7 +50,7 @@ public class AddressService implements IAddressService{
 					.orElseThrow(() -> new RecordNotFoundException("Applicant profile for "+username+" does not exist"));
 			addr.setAddrId(username);
 			addr.setApplicant(applicant);
-			if(addr.isSame()) {
+			if(same) {
 				flag = true;
 				TemporaryAddress tempAddr = new TemporaryAddress();
 				tempAddr.setAddrId(username);
@@ -97,7 +98,7 @@ public class AddressService implements IAddressService{
 	}
 
 	@Override
-	public ResponseEntity<String> updateAddress(String username, Address addr, String addrType) {
+	public ResponseEntity<String> updateAddress(String username, Address addr, AddressType addrType) {
 		// TODO Auto-generated method stub
 		try {
 			Optional<Users> u = this.userRepository.findById(username);
@@ -105,17 +106,33 @@ public class AddressService implements IAddressService{
 				throw new RecordNotFoundException("User with username: "+username+" not found");
 			}				
 			Address matchAddress;
+			TemporaryAddress tmatchAddress;
 			try {
-				matchAddress = this.addressRepository.findById(username)
-						.orElseThrow(() -> new RecordNotFoundException(addrType+" address does not exist"));
-				matchAddress.setApplicant(addr.getApplicant());
-				matchAddress.setCity(addr.getCity());
-				matchAddress.setHouse(addr.getHouse());
-				matchAddress.setLandmark(addr.getLandmark());
-				matchAddress.setPincode(addr.getPincode());
-				matchAddress.setState(addr.getState());
-				this.addressRepository.save(matchAddress);
-				return new ResponseEntity<String>("Address updated successfully",HttpStatus.OK);
+				if(addrType==AddressType.PERMANENT) {
+					matchAddress = this.addressRepository.findById(username)
+							.orElseThrow(() -> new RecordNotFoundException(addrType+" address does not exist"));
+					matchAddress.setApplicant(addr.getApplicant());
+					matchAddress.setCity(addr.getCity());
+					matchAddress.setHouse(addr.getHouse());
+					matchAddress.setLandmark(addr.getLandmark());
+					matchAddress.setPincode(addr.getPincode());
+					matchAddress.setState(addr.getState());
+					this.addressRepository.save(matchAddress);
+					return new ResponseEntity<String>("Permanent Address updated successfully",HttpStatus.OK);
+				}
+				else {
+					tmatchAddress = this.temporaryAddressRepository.findById(username)
+							.orElseThrow(() -> new RecordNotFoundException(addrType+" address does not exist"));
+					tmatchAddress.setApplicant(addr.getApplicant());
+					tmatchAddress.setCity(addr.getCity());
+					tmatchAddress.setHouse(addr.getHouse());
+					tmatchAddress.setLandmark(addr.getLandmark());
+					tmatchAddress.setPincode(addr.getPincode());
+					tmatchAddress.setState(addr.getState());
+					this.temporaryAddressRepository.save(tmatchAddress);
+					return new ResponseEntity<String>("Temporary Address updated successfully",HttpStatus.OK);
+				}
+								
 			} catch (RecordNotFoundException e) {
 				// TODO Auto-generated catch block
 				return  new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
@@ -156,18 +173,39 @@ public class AddressService implements IAddressService{
 	}
 
 	@Override
-	public ResponseEntity<String> deleteAddress(String username, String addrType) {
+	public ResponseEntity<String> deleteAddress(String username, AddressType addrType) {
 		// TODO Auto-generated method stub
-		Address matchAddress;
+		Optional<Users> u = this.userRepository.findById(username);
 		try {
-			matchAddress = this.addressRepository.findById(username)
-					.orElseThrow(() -> new RecordNotFoundException("Address Not Found"));
-			this.addressRepository.delete(matchAddress);
-			return ResponseEntity.ok().build();
+			if(!u.isPresent()) {
+				throw new RecordNotFoundException("User with username: "+username+" not found");
+			}
+			Address matchAddress;
+			TemporaryAddress tempMatchAddress;
+			try {
+				if(addrType == AddressType.PERMANENT) {
+					matchAddress = this.addressRepository.findById(username)
+							.orElseThrow(() -> new RecordNotFoundException("Address Not Found"));
+					this.addressRepository.delete(matchAddress);
+					return new ResponseEntity<String>("Deleted",HttpStatus.OK);
+				} else {
+					tempMatchAddress = this.temporaryAddressRepository.findById(username)
+							.orElseThrow(() -> new RecordNotFoundException("Address Not Found"));
+					this.temporaryAddressRepository.delete(tempMatchAddress);
+					return new ResponseEntity<String>("Deleted",HttpStatus.OK);
+				}
+				
+			} catch (RecordNotFoundException e) {
+				// TODO Auto-generated catch block
+				return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			}
+			
 		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			return  new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
 		}
+		
+		
 		
 	}
 /*

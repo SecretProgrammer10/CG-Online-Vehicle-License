@@ -13,21 +13,26 @@ import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name="Rtoofficer")
 public class RTOOfficer {
 	
 	@Id
 	@Column(name="username")
+	@ApiModelProperty(notes="Username",example="Nil@12345")
 	@Pattern(regexp="^[a-zA-Z0-9\\._\\-]{6,20}$",message="invalid user name")
 	private String username;
 	
 	@Column(name="password")
+	@ApiModelProperty(notes="Username",example="Nil_1234")
 	@NotEmpty(message="password is required")
 	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",message="password is invalid")
 	private String password;
 	
 	@Column(name="email")
+	@ApiModelProperty(notes="Username",example="nil@gmail.com")
 	@NotEmpty(message="email is required")
 	@Pattern(regexp="^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$",message="email not valid")
 	private String email;

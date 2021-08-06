@@ -57,10 +57,10 @@ public class Address {
 	@Column(name="pincode")
 	private int pincode;
 	
-	@NotNull(message = "Field cannot be null")
-	@ApiModelProperty(notes = "True if present address is same as permanent address", example = "400050")
-	@Transient
-	private boolean isSame;
+//	@NotNull(message = "Field cannot be null")
+//	@ApiModelProperty(notes = "True if present address is same as permanent address", example = "400050")
+//	@Transient
+//	private boolean isSame;
 	
 	//@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	//@OneToOne(cascade = CascadeType.ALL)
@@ -200,19 +200,19 @@ public class Address {
 	}
 
 
-	/**
-	 * @return the isSame
-	 */
-	public boolean isSame() {
-		return isSame;
-	}
-
-	/**
-	 * @param isSame the isSame to set
-	 */
-	public void setSame(boolean isSame) {
-		this.isSame = isSame;
-	}
+//	/**
+//	 * @return the isSame
+//	 */
+//	public boolean isSame() {
+//		return isSame;
+//	}
+//
+//	/**
+//	 * @param isSame the isSame to set
+//	 */
+//	public void setSame(boolean isSame) {
+//		this.isSame = isSame;
+//	}
 
 	@Override
 	public int hashCode() {

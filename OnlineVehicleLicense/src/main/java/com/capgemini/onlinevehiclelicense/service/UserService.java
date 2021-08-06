@@ -45,14 +45,14 @@ public class UserService implements IUserService{
 	}
 
 	@Override
-	public ResponseEntity<Users> userLogin(String username, String pass) {
+	public ResponseEntity<String> userLogin(String username, String pass) {
 		Optional<Users> findUser = this.userRepo.findById(username);
 		try {
 			if(findUser.isPresent())
 			{
 				if(findUser.get().getPassword().equals(pass)) {
 					System.out.println("Logged In");
-					return new ResponseEntity<Users>(HttpStatus.OK);
+					return new ResponseEntity<String>("Succesfully logged in!!!",HttpStatus.OK);
 				}
 				else {
 					throw new RecordNotFoundException("Invlaid Password!!!");
@@ -60,13 +60,13 @@ public class UserService implements IUserService{
 			}
 			else
 			{
-				throw new RecordNotFoundException("Invalid email");
+				throw new RecordNotFoundException("User with username does not exist");
 			}
 		}
 		catch(RecordNotFoundException e)
 		{
 			System.out.println("Error!!");
-			return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
 		}
 	}
 
