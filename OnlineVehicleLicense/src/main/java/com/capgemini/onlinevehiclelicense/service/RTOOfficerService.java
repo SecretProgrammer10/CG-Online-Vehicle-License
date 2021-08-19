@@ -96,10 +96,10 @@ public class RTOOfficerService implements IRTOOfficerService {
 	}
 
 	@Override
-	public ResponseEntity<String> modifyTestResultById(String applicantNumber, TestResult testResult) {
+	public ResponseEntity<String> modifyTestResultById(String appointmentNumber, TestResult testResult) {
 		// TODO Auto-generated method stub
 		try {
-			Appointment findAppointment = this.appointmentRepository.findById(applicantNumber)
+			Appointment findAppointment = this.appointmentRepository.findById(appointmentNumber)
 					.orElseThrow(() -> new RecordNotFoundException("No such appointment found!!!"));
 			Application findApplication = this.applicationRepository.findById(findAppointment.getApplication().getApplicationNumber())
 					.orElseThrow(() -> new RecordNotFoundException("No such application found!!!"));
