@@ -161,10 +161,10 @@ public class RTOOfficerController {
 	@ApiOperation(value = "Modify Test Results")
 	@PutMapping("/modify-test-results/{testResult}")
 	public ResponseEntity<String> modifyTestResults(
-			@ApiParam(value = "Applicant Number") @RequestParam String applicantNumber, 
+			@ApiParam(value = "Appointment Number") @RequestParam String appointmentNumber, 
 			@ApiParam(value = "Test Result Enum Value") @PathVariable("testResult") TestResult testResult)
 	{
-		return rtoOfficerService.modifyTestResultById(applicantNumber, testResult);
+		return rtoOfficerService.modifyTestResultById(appointmentNumber, testResult);
 	}
 
 	private String sendLicenseMail(String applicationNumber, boolean pass) {
