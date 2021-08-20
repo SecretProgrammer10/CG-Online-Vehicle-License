@@ -36,7 +36,7 @@ public class Users {
 	
 	@Column(name="password")
 	@ApiModelProperty(notes = "Password of the user", example = "Dibyendu@1234")
-	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message="Password Not Valid") //^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[*.!@$%^&(){}[]:;<>,.?/~_+-=|\\]).{8,32}$
+	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#%&+=])(?=\\S+$).{8,}$", message="Password Not Valid") //^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[*.!@$%^&(){}[]:;<>,.?/~_+-=|\\]).{8,32}$
 	@NotEmpty(message = "Password cannot be empty")
 	private String password;
 	
@@ -63,7 +63,7 @@ public class Users {
 	public Users(
 			@Pattern(regexp = "^[a-zA-Z0-9\\._\\-]{6,20}$", message = "Username invalid") @NotEmpty(message = "Username cannot be empty") String username,
 			@Email(message = "Email Address") @NotEmpty(message = "Email cannot be empty") String email,
-			@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$", message = "Password Not Valid") @NotEmpty(message = "Password cannot be empty") String password) {
+			@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#%&+=])(?=\\S+$).{8,20}$", message = "Password Not Valid") @NotEmpty(message = "Password cannot be empty") String password) {
 		super();
 		this.username = username;
 		this.email = email;
