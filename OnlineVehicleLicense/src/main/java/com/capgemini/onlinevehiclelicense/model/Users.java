@@ -31,7 +31,7 @@ public class Users {
 	@ApiModelProperty(notes = "Email address of the user", example = "dibyenduganguly.48@gmail.com")
 	@Email(message = "Email Address")
 	@NotEmpty(message = "Email cannot be empty")
-	@Pattern(regexp="^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message="Email Not Valid") ///^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/
+	//@Pattern(regexp="^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message="Email Not Valid") ///^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/
 	private String email;
 	
 	@Column(name="password")
@@ -53,20 +53,24 @@ public class Users {
 		// TODO Auto-generated constructor stub
 	}
 
+
+
 	/**
-	 * @param email
 	 * @param username
+	 * @param email
 	 * @param password
 	 */
 	public Users(
-			@NotEmpty(message = "Email cannot be empty") @Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$", message = "Email Not Valid") String email,
-			@Pattern(regexp = "^[A-Za-z]\\\\w{5, 29}$", message = "Username invalid") @NotEmpty(message = "Username cannot be empty") String username,
-			@Pattern(regexp = "(?=.\\d)(?=.[a-z])(?=.[A-Z])(?=.[@#$%]).{8,20}", message = "Password Not Valid") @NotEmpty(message = "Password cannot be empty") String password) {
+			@Pattern(regexp = "^[a-zA-Z0-9\\._\\-]{6,20}$", message = "Username invalid") @NotEmpty(message = "Username cannot be empty") String username,
+			@Email(message = "Email Address") @NotEmpty(message = "Email cannot be empty") String email,
+			@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$", message = "Password Not Valid") @NotEmpty(message = "Password cannot be empty") String password) {
 		super();
-		this.email = email;
 		this.username = username;
+		this.email = email;
 		this.password = password;
 	}
+
+
 
 	/**
 	 * @return the email

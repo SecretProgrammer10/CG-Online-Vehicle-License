@@ -35,12 +35,12 @@ public class UserService implements IUserService{
 			}
 			else
 			{
-				throw new RecordAlreadyPresentException("This email is already in use");
+				throw new RecordAlreadyPresentException("This username is already in use");
 			}
 		}
 		catch(RecordAlreadyPresentException e)
 		{
-			return new ResponseEntity<String>("This email is already in use", HttpStatus.ALREADY_REPORTED);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.ALREADY_REPORTED);
 		}
 	}
 
@@ -55,12 +55,12 @@ public class UserService implements IUserService{
 					return new ResponseEntity<String>("Succesfully logged in!!!",HttpStatus.OK);
 				}
 				else {
-					throw new RecordNotFoundException("Invlaid Password!!!");
+					throw new RecordNotFoundException("Invalid Password!!!");
 				}
 			}
 			else
 			{
-				throw new RecordNotFoundException("User with username does not exist");
+				throw new RecordNotFoundException("User with username : " + username +" does not exist");
 			}
 		}
 		catch(RecordNotFoundException e)
