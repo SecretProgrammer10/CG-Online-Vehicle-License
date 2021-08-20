@@ -28,6 +28,19 @@ public class UserService implements IUserService{
 	{
 		Optional<Users> findUser = userRepo.findById(user.getUsername());
 		try {
+			Users findUserByEmail = userRepo.getUserByEmail(user.getEmail());
+			if(findUserByEmail!=null) {
+				throw new RecordAlreadyPresentException("Entered email already in use");
+			}
+		} catch (RecordNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (RecordAlreadyPresentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.ALREADY_REPORTED);
+		}
+		try {
 			if(!findUser.isPresent())
 			{
 				userRepo.save(user);
