@@ -38,7 +38,7 @@ public class UserController {
 	}
 	
 	@ApiOperation(value = "Login Users")
-	@PostMapping("/login-user")
+	@GetMapping("/login-user")
 	public ResponseEntity<String> loginUser(@Valid @RequestParam String username,@Valid @RequestParam String pass)
 	{
 		return userService.userLogin(username, pass);
