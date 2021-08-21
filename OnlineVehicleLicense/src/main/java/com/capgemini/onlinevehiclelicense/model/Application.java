@@ -91,6 +91,7 @@ public class Application {
 	
 	@OneToOne(mappedBy = "application", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
+	@JsonIgnore
 	private Documents docs;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")

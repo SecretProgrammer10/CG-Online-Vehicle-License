@@ -65,9 +65,9 @@ public class ApplicationService implements IApplicationService{
 
 				Documents docs = new Documents();
 				docs.setId(username);
-				docs.setIdProof(application.getDocs().getIdProof());
-				docs.setPhoto(application.getDocs().getPhoto());
-				docs.setAddressProof(application.getDocs().getAddressProof());
+//				docs.setIdProof(application.getDocs().getIdProof());
+//				docs.setPhoto(application.getDocs().getPhoto());
+//				docs.setAddressProof(application.getDocs().getAddressProof());
 				docs.setApplication(application);
 				application.setDocs(docs);
 				this.applicationRepository.save(application);
@@ -85,7 +85,8 @@ public class ApplicationService implements IApplicationService{
 	@Override
 	public Application viewApplicationById(String applicationNumber) {
 		try {		
-			Application findUser = applicationRepository.findById(applicationNumber).orElseThrow(() -> new RecordNotFoundException("Application not found"));
+			Application findUser = applicationRepository.findById(applicationNumber).
+					orElseThrow(() -> new RecordNotFoundException("Application not found"));
 			return findUser;
 		}
 		catch(RecordNotFoundException e)

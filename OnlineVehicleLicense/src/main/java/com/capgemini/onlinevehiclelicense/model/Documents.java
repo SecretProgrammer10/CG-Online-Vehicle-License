@@ -5,10 +5,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,18 +33,21 @@ public class Documents {
 	
 	@ApiModelProperty(notes = "Photo", example = "Photo.jpeg")
 	@Column(name = "photo")
-	@NotEmpty(message="photo should not be empty")
-	private String photo;
+	//@NotNull(message="photo should not be empty")
+	@Lob
+	private byte[] photo;
 	
 	@ApiModelProperty(notes = "Photo", example = "Voter.pdf")
 	@Column(name = "id_proof")
-	@NotEmpty(message="id proof should not be empty")
-	private String idProof;
+	//@NotNull(message="id proof should not be empty")
+	@Lob
+	private byte[] idProof;
 	
 	@ApiModelProperty(notes = "Photo", example = "Aadhar.pdf")
 	@Column(name = "address_proof")
-	@NotEmpty(message="address proof should not be empty")
-	private String addressProof;
+	//@NotNull(message="address proof should not be empty")
+	@Lob
+	private byte[] addressProof;
 
 	/**
 	 * 
@@ -58,9 +63,9 @@ public class Documents {
 	 * @param idProof
 	 * @param addressProof
 	 */
-	public Documents(String id, @NotEmpty(message = "photo should not be empty") String photo,
-			@NotEmpty(message = "id proof should not be empty") String idProof,
-			@NotEmpty(message = "address proof should not be empty") String addressProof) {
+	public Documents(String id, @NotEmpty(message = "photo should not be empty") byte[] photo,
+			@NotEmpty(message = "id proof should not be empty") byte[] idProof,
+			@NotEmpty(message = "address proof should not be empty") byte[] addressProof) {
 		super();
 		this.id = id;
 		this.photo = photo;
@@ -99,42 +104,42 @@ public class Documents {
 	/**
 	 * @return the photo
 	 */
-	public String getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 
 	/**
 	 * @param photo the photo to set
 	 */
-	public void setPhoto(String photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
 
 	/**
 	 * @return the idProof
 	 */
-	public String getIdProof() {
+	public byte[] getIdProof() {
 		return idProof;
 	}
 
 	/**
 	 * @param idProof the idProof to set
 	 */
-	public void setIdProof(String idProof) {
+	public void setIdProof(byte[] idProof) {
 		this.idProof = idProof;
 	}
 
 	/**
 	 * @return the addressProof
 	 */
-	public String getAddressProof() {
+	public byte[] getAddressProof() {
 		return addressProof;
 	}
 
 	/**
 	 * @param addressProof the addressProof to set
 	 */
-	public void setAddressProof(String addressProof) {
+	public void setAddressProof(byte[] addressProof) {
 		this.addressProof = addressProof;
 	}
 
