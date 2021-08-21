@@ -39,7 +39,7 @@ public class ApplicationController {
 	@ApiOperation(value = "View application by id")
 	@GetMapping("/viewApplication/{applicationNumber}")
 	public Application viewApplicationById(
-			@ApiParam(value = "Application Number Param") @PathVariable String applicationNumber) {
+			@ApiParam(value = "Application Number Param") @PathVariable("applicationNumber") String applicationNumber) {
 		return applicationService.viewApplicationById(applicationNumber);
 	}
 /*	
@@ -52,27 +52,27 @@ public class ApplicationController {
 	@ApiOperation(value = "Remove application")
 	@DeleteMapping("/removeApplication/{applicationNumber}")
 	public ResponseEntity<String> deleteApplicationById(
-			@ApiParam(value = "Application Number Param") @PathVariable String applicationNumber) {
+			@ApiParam(value = "Application Number Param") @PathVariable("applicationNumber") String applicationNumber) {
 		return applicationService.deleteApplicationById(applicationNumber);
 	}
 	
 	@ApiOperation(value = "Check mode of payment")
 	@GetMapping("/paymentMode/{applicationNumber}")
 	public String checkModeOfPayment(
-			@ApiParam(value = "Application Number Param") @PathVariable String applicationNumber) {
+			@ApiParam(value = "Application Number Param") @PathVariable("applicationNumber") String applicationNumber) {
 		return applicationService.checkModeOfPayment(applicationNumber);
 	}
 	@ApiOperation(value = "Pay amount")
 	@PutMapping("/payAmount/{applicationNumber}/{amountPaid}")
 	public ResponseEntity<String> payAmount(
-			@ApiParam(value = "Application Number Param")  @PathVariable String applicationNumber, 
+			@ApiParam(value = "Application Number Param")  @PathVariable("applicationNumber") String applicationNumber, 
 			@ApiParam(value = "Amount to be paid") @PathVariable Double amountPaid) {
 		return applicationService.payAmount(applicationNumber, amountPaid);
 	}
 	@ApiOperation(value = "View payment status")
 	@GetMapping("/payAmount/{applicationNumber}")
 	public String viewPaymentStatus(
-			@ApiParam(value = "Application Number Param") @PathVariable String applicationNumber) {
+			@ApiParam(value = "Application Number Param") @PathVariable("applicationNumber") String applicationNumber) {
 		return applicationService.viewPaymentStatus(applicationNumber);
 	}
 }
