@@ -58,6 +58,7 @@ public class Appointment {
 	@ApiModelProperty(notes = "Test Result")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "test_result")
+	@JsonIgnore
 	private TestResult testResult;
 	
 /*	@OneToOne

@@ -71,6 +71,7 @@ public class Application {
 	@NotNull(message = "Payment cannot be null")
 	@ApiModelProperty(notes = "Firstname", example = "PAID")
 	@Column(name="payment_status")
+	@JsonIgnore
 	private String paymentStatus;
 	
 	@ApiModelProperty(notes = "Firstname", example = "Remarks")
