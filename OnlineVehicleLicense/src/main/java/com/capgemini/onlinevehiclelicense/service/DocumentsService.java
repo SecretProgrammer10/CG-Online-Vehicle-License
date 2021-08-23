@@ -2,9 +2,14 @@ package com.capgemini.onlinevehiclelicense.service;
 
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,19 +43,7 @@ public class DocumentsService implements IDocumentsService{
 		}		
 
 	}
-
-	@Override
-	public Documents viewDocuments(String app_number) {
-		// TODO Auto-generated method stub
-		try {
-			return this.documentsRepository.findById(app_number)
-					.orElseThrow(() -> new RecordNotFoundException("Document Not Found!!!"));
-		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			return null;
-		}
-	}
-
+	
 	@Override
 	public ResponseEntity<String> deleteDocuments(String appl_number) {
 		// TODO Auto-generated method stub
@@ -150,6 +143,36 @@ public class DocumentsService implements IDocumentsService{
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
 		return new ResponseEntity<String>("File Uploaded Successfully", HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<Resource> viewPhoto(String applicationId) {
+		// TODO Auto-generated method stub
+		Optional<Documents> docs = this.documentsRepository.findById(applicationId);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=photo")
+				.contentType(MediaType.APPLICATION_PDF)
+				.body(new ByteArrayResource(docs.get().getPhoto()));
+	}
+
+	@Override
+	public ResponseEntity<Resource> viewIdProof(String applicationId) {
+		// TODO Auto-generated method stub
+		Optional<Documents> docs = this.documentsRepository.findById(applicationId);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=idProof")
+				.contentType(MediaType.APPLICATION_PDF)
+				.body(new ByteArrayResource(docs.get().getIdProof()));
+	}
+
+	@Override
+	public ResponseEntity<Resource> viewAddressProof(String applicationId) {
+		// TODO Auto-generated method stub
+		Optional<Documents> docs = this.documentsRepository.findById(applicationId);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=addressProof")
+				.contentType(MediaType.APPLICATION_PDF)
+				.body(new ByteArrayResource(docs.get().getAddressProof()));
 	}
 
 }

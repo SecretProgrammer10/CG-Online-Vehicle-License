@@ -68,7 +68,6 @@ public class Application {
 	@Column(name="amount_paid")
 	private Double amountPaid;
 	
-	@NotNull(message = "Payment cannot be null")
 	@ApiModelProperty(notes = "Firstname", example = "PAID")
 	@Column(name="payment_status")
 	@JsonIgnore
