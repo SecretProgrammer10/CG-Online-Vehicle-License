@@ -1,7 +1,9 @@
 package com.capgemini.onlinevehiclelicense.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,8 @@ public class RTOOfficeService implements IRTOOfficeService{
 		
 		return rtoofficeRepo.findAll();
 	}
+	
+	private static Map<Integer, String> rtoOfficeMap = new TreeMap<Integer, String>();
 
 	@Override
 	public RTOOffice findRtoOfficesById(int rto_id) {
@@ -45,12 +49,22 @@ public class RTOOfficeService implements IRTOOfficeService{
 		Optional<RTOOffice> rtoOfc = this.rtoofficeRepo.findById(rtoOffice.getRtoId());
 		if(!rtoOfc.isPresent()) {
 			this.rtoofficeRepo.save(rtoOffice);
+			this.setMap(rtoOffice.getRtoName());
 			return new ResponseEntity<String>("RTO Office added",HttpStatus.CREATED);
 		}
 		else {
 			return new ResponseEntity<String>("RTO office alraedy present",HttpStatus.ALREADY_REPORTED);
 		}
 	}
+
+	private void setMap(String rtoName) {
+		// TODO Auto-generated method stub
+		RTOOffice rtoOffice = this.rtoofficeRepo.getRtoId(rtoName);
+		rtoOfficeMap.put(rtoOffice.getRtoId(), rtoName);
+	}
 	
+	public Map<Integer, String> getRtoOfficeMap(){
+		return rtoOfficeMap;
+	}
 
 }

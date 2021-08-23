@@ -37,10 +37,15 @@ public class AddressService implements IAddressService{
 	@Autowired
 	private IUserRepository userRepository;
 	
-	static private boolean flag = false;
+	//static private boolean flag = false;
 	@Override
-	public ResponseEntity<String> addAddress(String username, Address addr, boolean same) {
+	public ResponseEntity<String> addAddress(String username, Address addr) {
 		// TODO Auto-generated method stub
+//		if(!flag) {
+//			
+//		} else {
+//			return new ResponseEntity<String>("Permanent Address is same as Temporary Address",HttpStatus.FORBIDDEN);
+//		}
 		try {
 			Optional<Users> u = this.userRepository.findById(username);
 			if(!u.isPresent()) {
@@ -50,18 +55,6 @@ public class AddressService implements IAddressService{
 					.orElseThrow(() -> new RecordNotFoundException("Applicant profile for "+username+" does not exist"));
 			addr.setAddrId(username);
 			addr.setApplicant(applicant);
-			if(same) {
-				flag = true;
-				TemporaryAddress tempAddr = new TemporaryAddress();
-				tempAddr.setAddrId(username);
-				tempAddr.setApplicant(applicant);
-				tempAddr.setCity(addr.getCity());
-				tempAddr.setHouse(addr.getHouse());
-				tempAddr.setLandmark(addr.getLandmark());
-				tempAddr.setPincode(addr.getPincode());
-				tempAddr.setState(addr.getState());
-				this.temporaryAddressRepository.save(tempAddr);
-			}
 			this.addressRepository.save(addr);
 			return new ResponseEntity<String>("Successfully saved address!",HttpStatus.OK);
 		} catch (RecordNotFoundException e) {
@@ -72,29 +65,36 @@ public class AddressService implements IAddressService{
 	}
 	
 	@Override
-	public ResponseEntity<String> addTemporaryAddress(String username, TemporaryAddress addr) {
-		// TODO Auto-generated method stub
-		if(!flag) {
-			try {
-				Optional<Users> u = this.userRepository.findById(username);
-				if(!u.isPresent()) {
-					throw new RecordNotFoundException("User with username: "+username+" not found");
-				}
-				Applicant applicant = this.applicantRepository.findById(username)
-						.orElseThrow(() -> new RecordNotFoundException("Applicant profile for "+username+" does not exist"));
+	public ResponseEntity<String> addTemporaryAddress(String username, TemporaryAddress tempAddr, boolean same) {
+		// TODO Auto-generated method stub\
+		try {
+			Optional<Users> u = this.userRepository.findById(username);
+			if(!u.isPresent()) {
+				throw new RecordNotFoundException("User with username: "+username+" not found");
+			}
+			Applicant applicant = this.applicantRepository.findById(username)
+					.orElseThrow(() -> new RecordNotFoundException("Applicant profile for "+username+" does not exist"));
+			tempAddr.setAddrId(username);
+			tempAddr.setApplicant(applicant);
+			if(same) {
+				//flag = true;
+				Address addr = new Address();
 				addr.setAddrId(username);
 				addr.setApplicant(applicant);
-				this.temporaryAddressRepository.save(addr);
-				return new ResponseEntity<String>("Successfully saved address!",HttpStatus.OK);
-			} catch (RecordNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
+				addr.setCity(tempAddr.getCity());
+				addr.setHouse(tempAddr.getHouse());
+				addr.setLandmark(tempAddr.getLandmark());
+				addr.setPincode(tempAddr.getPincode());
+				addr.setState(tempAddr.getState());
+				this.addressRepository.save(addr);
 			}
-		} else {
-			return new ResponseEntity<String>("Temporary Address is same as Permanent Address",HttpStatus.FORBIDDEN);
-		}
-			
+			this.temporaryAddressRepository.save(tempAddr);
+			return new ResponseEntity<String>("Successfully saved address!",HttpStatus.OK);
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
+		}	
 	}
 
 	@Override
