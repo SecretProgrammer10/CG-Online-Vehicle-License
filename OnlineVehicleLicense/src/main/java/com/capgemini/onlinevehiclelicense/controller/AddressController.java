@@ -29,20 +29,22 @@ public class AddressController {
 	private IAddressService addressService;
 	
 	@ApiOperation("Add Address")
-	@PostMapping("/add-address/{same}")
-	public ResponseEntity<String> addAddress(@PathVariable("username") String username, @RequestBody Address addr,@PathVariable("same") boolean same){
-		return this.addressService.addAddress(username, addr, same);
+	@PostMapping("/add-address")
+	public ResponseEntity<String> addAddress(@PathVariable("username") String username, @RequestBody Address addr){
+		return this.addressService.addAddress(username, addr);
 	}
 	
 	@ApiOperation("Add Temporary Address")
-	@PostMapping("/add-temporary-address")
-	public ResponseEntity<String> addTemporaryAddress(@PathVariable("username") String username,@RequestBody TemporaryAddress addr){
-		return this.addressService.addTemporaryAddress(username, addr);
+	@PostMapping("/add-temporary-address/{same}")
+	public ResponseEntity<String> addTemporaryAddress(@PathVariable("username") String username,@RequestBody TemporaryAddress tempAddr,
+			@PathVariable("same") boolean same){
+		return this.addressService.addTemporaryAddress(username, tempAddr, same);
 	}
 	
 	@ApiOperation("Update Operation")
 	@PutMapping("/update-address/{addressType}")
-	public ResponseEntity<String> updateAddress(@PathVariable("username") String username,@RequestBody Address addr,@PathVariable("addressType") AddressType addrType){
+	public ResponseEntity<String> updateAddress(@PathVariable("username") String username,@RequestBody Address addr,
+			@PathVariable("addressType") AddressType addrType){
 		return this.addressService.updateAddress(username, addr, addrType);
 	}
 	

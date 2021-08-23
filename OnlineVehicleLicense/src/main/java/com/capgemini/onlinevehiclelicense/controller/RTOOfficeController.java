@@ -1,6 +1,7 @@
 package com.capgemini.onlinevehiclelicense.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,12 @@ public class RTOOfficeController {
 	@PostMapping("/add-rto-office")
 	public ResponseEntity<String> addRTOOffice(@RequestBody RTOOffice rtoOffice){
 		return this.rtoofficeService.addRTOOffice(rtoOffice);
+	}
+	
+	@ApiOperation(value = "Get RTO Office Map")
+	@GetMapping("/get-rto-office-map")
+	public Map<Integer, String> getRtoOfficeMap(){
+		return this.rtoofficeService.getRtoOfficeMap();
 	}
 
 }

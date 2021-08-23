@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -38,19 +37,19 @@ public class Address {
 	@Column(name="house")
 	private String house;
 	
-	@NotNull(message = "State cannot be null")
-	@ApiModelProperty(notes = "Name of State", example = "Maharashtra")
-	@Column(name="state")
-	private String state;
+	@ApiModelProperty(notes = "Landmark", example = "Bandstand")
+	@Column(name="landmark")
+	private String landmark;
 	
 	@NotNull(message = "City cannot be null")
 	@ApiModelProperty(notes = "Name of city", example = "Mumbai")
 	@Column(name="city")
 	private String city;
 	
-	@ApiModelProperty(notes = "Landmark", example = "Bandstand")
-	@Column(name="landmark")
-	private String landmark;
+	@NotNull(message = "State cannot be null")
+	@ApiModelProperty(notes = "Name of State", example = "Maharashtra")
+	@Column(name="state")
+	private String state;
 	
 	@NotNull(message = "Pincode cannot be null")
 	@ApiModelProperty(notes = "Pincode", example = "400050")
