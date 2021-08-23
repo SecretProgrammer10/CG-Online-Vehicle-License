@@ -82,6 +82,7 @@ public class Application {
 	@ApiModelProperty(notes = "Application status")
 	@Enumerated(EnumType.STRING)
 	@Column(name="application_status")
+	@JsonIgnore
 	private ApplicationStatus applicationStatus;
 	
 	@NotNull(message = "Application type cannot be null")
