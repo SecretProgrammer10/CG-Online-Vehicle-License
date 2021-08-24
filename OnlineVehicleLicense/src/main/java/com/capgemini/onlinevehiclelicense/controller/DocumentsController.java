@@ -1,6 +1,7 @@
 package com.capgemini.onlinevehiclelicense.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,11 +67,25 @@ public class DocumentsController {
 		return this.documentsService.updateDocuments(doc, app_number);
 	}
 	
-	@ApiOperation("View Documents")
-	@GetMapping("/view-documents/{applicationNumber}")
+	@ApiOperation("View Photo")
+	@GetMapping("/view-phot/{applicationNumber}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public Documents viewDocuments(@PathVariable("applicationNumber") String app_number) {
-		return this.documentsService.viewDocuments(app_number);
+	public ResponseEntity<Resource> viewPhoto(@PathVariable("applicationNumber") String applicationNumber) {
+		return this.documentsService.viewPhoto(applicationNumber);
+	}
+	
+	@ApiOperation("View Id Proof")
+	@GetMapping("/view-id-proof/{applicationNumber}")
+	@ExceptionHandler(RecordNotFoundException.class)
+	public ResponseEntity<Resource> viewIdProof(@PathVariable("applicationNumber") String applicationNumber) {
+		return this.documentsService.viewIdProof(applicationNumber);
+	}
+	
+	@ApiOperation("View Address Proof")
+	@GetMapping("/view-address-proof/{applicationNumber}")
+	@ExceptionHandler(RecordNotFoundException.class)
+	public ResponseEntity<Resource> viewAddressProof(@PathVariable("applicationNumber") String applicationNumber) {
+		return this.documentsService.viewAddressProof(applicationNumber);
 	}
 	
 	@ApiOperation("Delete Documents")

@@ -68,9 +68,9 @@ public class Application {
 	@Column(name="amount_paid")
 	private Double amountPaid;
 	
-	@NotNull(message = "Payment cannot be null")
 	@ApiModelProperty(notes = "Firstname", example = "PAID")
 	@Column(name="payment_status")
+	@JsonIgnore
 	private String paymentStatus;
 	
 	@ApiModelProperty(notes = "Firstname", example = "Remarks")
@@ -81,6 +81,7 @@ public class Application {
 	@ApiModelProperty(notes = "Application status")
 	@Enumerated(EnumType.STRING)
 	@Column(name="application_status")
+	@JsonIgnore
 	private ApplicationStatus applicationStatus;
 	
 	@NotNull(message = "Application type cannot be null")
