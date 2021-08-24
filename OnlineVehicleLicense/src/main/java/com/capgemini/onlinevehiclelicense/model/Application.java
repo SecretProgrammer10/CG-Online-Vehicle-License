@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,10 +18,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
-import com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator;
 //import com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,19 +29,6 @@ import io.swagger.annotations.ApiModelProperty;
 public class Application {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_seq")
-	@GenericGenerator(name = "application_seq", 
-    strategy = "com.capgemini.onlinevehiclelicense.util.ApplicationIdGenerator", 
-    parameters = { @Parameter(name = ApplicationIdGenerator.INCREMENT_PARAM, value = "1"),
-        @Parameter(name = ApplicationIdGenerator.VALUE_PREFIX_PARAMETER, value = "21_"),
-        @Parameter(name = ApplicationIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d") })
-//	@GenericGenerator(
-//            name = "application_seq", 
-//            strategy = "com.capgemini.onlinevehiclelicense.util.CustomPrefixIdGenerator", 
-//            parameters = { 
-//                    @Parameter(name = ApplicationIdGenerator.INCREMENT_PARAM, value = "1"),
-//                    @Parameter(name = ApplicationIdGenerator.CODE_NUMBER_SEPARATOR_PARAMETER, value = "_"), 
-//                    @Parameter(name = ApplicationIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%05d")})
 	@JsonIgnore
 	@Column(name="application_number")
 	private String applicationNumber;
