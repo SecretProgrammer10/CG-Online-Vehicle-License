@@ -50,13 +50,13 @@ public class AddressController {
 	
 	@ApiOperation("View Permanent Address")
 	@GetMapping("/view-permanent-address")
-	public Address viewAddress(@RequestParam String username) {
+	public Address viewAddress(@PathVariable("username") String username) {
 		return this.addressService.viewAddress(username);
 	}
 	
 	@ApiOperation("View Present Address")
 	@GetMapping("/view-present-address")
-	public TemporaryAddress viewPresentAddress(@RequestParam String username) {
+	public TemporaryAddress viewPresentAddress(@PathVariable("username") String username) {
 		return this.addressService.viewPresentAddress(username);
 	}
 	
