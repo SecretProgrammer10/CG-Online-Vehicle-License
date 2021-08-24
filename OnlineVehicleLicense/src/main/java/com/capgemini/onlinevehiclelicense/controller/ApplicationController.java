@@ -75,11 +75,11 @@ public class ApplicationController {
 			@ApiParam(value = "Application Number Param") @PathVariable("applicationNumber") String applicationNumber) {
 		return applicationService.viewPaymentStatus(applicationNumber);
 	}
-	@GetMapping("/application/view-application/{applicationNumber}")
+	@GetMapping("/application/view-ll-application/{applicationNumber}")
 	public Application viewLLApplicationById(@PathVariable("applicationNumber") String username) {
 		return applicationService.viewLLApplicationById(username);
 	}
-	@GetMapping("/application/view-application/{applicationNumber}")
+	@GetMapping("/application/view-dl-application/{applicationNumber}")
 	public Application viewDLApplicationById(@PathVariable("applicationNumber") String username) {
 		return applicationService.viewDLApplicationById(username);
 	}
