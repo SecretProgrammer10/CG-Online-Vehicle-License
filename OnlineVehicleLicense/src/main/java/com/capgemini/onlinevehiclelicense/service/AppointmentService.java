@@ -18,7 +18,6 @@ import com.capgemini.onlinevehiclelicense.model.RTOOffice;
 import com.capgemini.onlinevehiclelicense.repository.IApplicationRepository;
 import com.capgemini.onlinevehiclelicense.repository.IAppointmentRepository;
 import com.capgemini.onlinevehiclelicense.repository.IRTOOfficeRepository;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Service
 public class AppointmentService implements IAppointmentService {
