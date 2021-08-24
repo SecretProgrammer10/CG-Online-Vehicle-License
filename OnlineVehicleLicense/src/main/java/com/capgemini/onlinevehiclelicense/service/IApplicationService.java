@@ -13,5 +13,7 @@ public interface IApplicationService {
 	public String checkModeOfPayment(String applicationNumber);
 	public ResponseEntity<String> payAmount(String applicationNumber, Double amountPaid);
 	public String viewPaymentStatus(String applicationNumber);
+	public Application viewLLApplicationById(String username);
+	public Application viewDLApplicationById(String username);
 	
 }

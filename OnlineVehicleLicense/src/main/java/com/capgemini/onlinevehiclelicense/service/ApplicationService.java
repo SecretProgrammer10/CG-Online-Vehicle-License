@@ -38,6 +38,7 @@ public class ApplicationService implements IApplicationService{
 	@Override
 	public ResponseEntity<String> createApplication(int rtoId, String username, Application application) {
 		RTOOffice rtoofc;
+		
 		try {
 			rtoofc = this.rtoOfficeRepository.findById(rtoId)
 					.orElseThrow(() -> new RecordNotFoundException("RTO Office with the RtoId:"+rtoId+" not found"));
@@ -54,10 +55,14 @@ public class ApplicationService implements IApplicationService{
 			if(applicant.isPresent()) {
 				if(application.getApplicationType().toString().equals("LL")) {
 					application.setApplicationStatus(ApplicationStatus.APPROVED);
+					application.setApplicationNumber(username+"LL");
 				}
 				else {
 					application.setApplicationStatus(ApplicationStatus.PENDING);
+					application.setApplicationNumber(username+"DL");
 				}
+				
+				application.setPaymentStatus("PAID");
 				application.setRtoOffice(rtoofc);
 				application.setApplicant(applicant.get());
 				application.setApplicationNumber(username);
@@ -169,6 +174,27 @@ public class ApplicationService implements IApplicationService{
 			return e.getMessage();
 		}
 	}
-
+	
+	@Override
+	public Application viewLLApplicationById(String username) {
+		try {
+			Application findLLApplication = applicationRepository.findById(username).orElseThrow(() -> new RecordNotFoundException("Application not found"));
+			return findLLApplication;
+		} catch(RecordNotFoundException e) {
+			e.getMessage();
+			return null;
+		}
+	}
+	
+	@Override
+	public Application viewDLApplicationById(String username) {
+		try {
+			Application findDLApplication = applicationRepository.findById(username).orElseThrow(() -> new RecordNotFoundException("Application not found"));
+			return findDLApplication;
+		} catch(RecordNotFoundException e) {
+			e.getMessage();
+			return null;
+		}
+	}
 
 }
