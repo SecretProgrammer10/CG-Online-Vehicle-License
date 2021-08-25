@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiParam;
 
 @CrossOrigin(origins = "http://localhost:4205")
 @RestController
-@RequestMapping("/appointment")
+@RequestMapping("/user/appointment")
 @Api(value = "Online Vehicle License")
 @Validated
 public class AppointmentController {

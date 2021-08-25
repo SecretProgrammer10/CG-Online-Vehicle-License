@@ -35,12 +35,14 @@ public class AppointmentService implements IAppointmentService {
 	public ResponseEntity<String> createAppointment(String applicationNumber, Appointment appointment, int rtoId) {
 		// TODO Auto-generated method stub
 		Application appl;
+		Appointment appnt;
 		RTOOffice rtoOfc;
 		Optional<Application> application = this.applicationRepository.findById(applicationNumber);
 		if(!application.isPresent()) {
 			return new ResponseEntity<String>("Application not found",HttpStatus.NOT_FOUND);
 		}else {
 			appl = application.get();
+			appnt = application.get().getAppointment();
 		}
 
 		Optional<RTOOffice> rtoOffice = this.officeRepository.findById(rtoId);
@@ -49,14 +51,13 @@ public class AppointmentService implements IAppointmentService {
 		} else {
 			rtoOfc = rtoOffice.get();
 		}
-
-		Optional<Appointment> findAppointment = this.appointmentRepository.findById(appointment.getAppointmentNumber());
+		
 		try {
-			if(!findAppointment.isPresent()) {
+			if(appnt == null) {
 				appointment.setApplication(appl);
 				appointment.setRtoOffice(rtoOfc);
 				this.appointmentRepository.save(appointment);
-				return new ResponseEntity<String>(HttpStatus.CREATED);
+				return new ResponseEntity<String>("Appointment Created Successfully!!!", HttpStatus.CREATED);
 			}
 			else {
 				throw new RecordAlreadyPresentException("Appointment Already Present!!!");
