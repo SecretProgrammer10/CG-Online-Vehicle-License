@@ -38,15 +38,12 @@ public class RTOOffice {
 	private Set<RTOOfficer> rtoOfficer;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JsonIgnore
 	private Set<Application> application;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JsonIgnore
 	private Set<License> license;
 	
 	@OneToMany(cascade= CascadeType.ALL)
-	@JsonIgnore
 	private Set<Appointment> appointment;
 
 	/**
