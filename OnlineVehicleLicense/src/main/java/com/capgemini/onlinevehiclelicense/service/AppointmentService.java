@@ -64,7 +64,7 @@ public class AppointmentService implements IAppointmentService {
 			}
 		} catch(RecordAlreadyPresentException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.ALREADY_REPORTED);
 		}
 	}
 
