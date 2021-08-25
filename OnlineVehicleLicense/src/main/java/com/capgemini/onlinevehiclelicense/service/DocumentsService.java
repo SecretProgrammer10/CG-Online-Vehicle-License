@@ -151,7 +151,7 @@ public class DocumentsService implements IDocumentsService{
 		Optional<Documents> docs = this.documentsRepository.findById(applicationId);
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=photo")
-				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.contentType(MediaType.IMAGE_JPEG)
 				.body(new ByteArrayResource(docs.get().getPhoto()));
 	}
 
