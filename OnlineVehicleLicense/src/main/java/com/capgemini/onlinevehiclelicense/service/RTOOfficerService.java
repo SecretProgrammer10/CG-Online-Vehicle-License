@@ -49,9 +49,11 @@ public class RTOOfficerService implements IRTOOfficerService {
 		// TODO Auto-generated method stub
 		//Optional<RTOOfficer> findOfficer = rtoOfficerRepository.findById(username);
 		try {
-			if(username.equals("user"))
+			RTOOfficer findOfficer = rtoOfficerRepository.findById(username)
+					.orElseThrow(() -> new RecordNotFoundException("No User Found..."));
+			if(username.equals(findOfficer.getUsername()))
 			{
-				if(pass.equals("pass")) {
+				if(pass.equals(findOfficer.getPassword())) {
 					return new ResponseEntity<String>("Logged In!", HttpStatus.OK);
 				}
 				else
@@ -61,7 +63,7 @@ public class RTOOfficerService implements IRTOOfficerService {
 			}
 			else
 			{
-				throw new RecordNotFoundException("Invalid email");
+				throw new RecordNotFoundException("Invalid username");
 			}
 		}
 		catch(RecordNotFoundException e)
