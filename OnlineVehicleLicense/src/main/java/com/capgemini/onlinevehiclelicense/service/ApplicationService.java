@@ -53,13 +53,16 @@ public class ApplicationService implements IApplicationService{
 		if(user.isPresent()) {
 			Optional<Applicant> applicant = this.applicantRepository.findById(username);
 			if(applicant.isPresent()) {
+				Documents docs = new Documents();
 				if(application.getApplicationType().toString().equals("LL")) {
 					application.setApplicationStatus(ApplicationStatus.APPROVED);
 					application.setApplicationNumber(username+"LL");
+					docs.setId(username+"LL");
 				}
 				else {
 					application.setApplicationStatus(ApplicationStatus.PENDING);
 					application.setApplicationNumber(username+"DL");
+					docs.setId(username+"DL");
 				}
 				
 				application.setPaymentStatus("PAID");
@@ -68,8 +71,8 @@ public class ApplicationService implements IApplicationService{
 				application.setApplicationNumber(username);
 				System.out.println(application.getApplicationNumber());
 
-				Documents docs = new Documents();
-				docs.setId(username);
+				
+				
 //				docs.setIdProof(application.getDocs().getIdProof());
 //				docs.setPhoto(application.getDocs().getPhoto());
 //				docs.setAddressProof(application.getDocs().getAddressProof());
