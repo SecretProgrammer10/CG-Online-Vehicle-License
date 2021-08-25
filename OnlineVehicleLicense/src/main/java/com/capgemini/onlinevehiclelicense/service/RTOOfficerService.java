@@ -2,6 +2,7 @@ package com.capgemini.onlinevehiclelicense.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
@@ -176,17 +177,17 @@ public class RTOOfficerService implements IRTOOfficerService {
 	}
 	
 	@Override
-	public Page<Appointment> viewAllAppointments(Pageable pageable) {
+	public Set<Appointment> viewAllAppointmentsByRtoId(int rtoId) {
 		// TODO Auto-generated method stub
 		
-		return this.appointmentRepository.findAll(pageable);
+		return this.appointmentRepository.getAppointments(rtoId);
 	}
 	
 	
 	@Override
-	public Page<Application> viewAllApplications(Pageable pageable) {
+	public Set<Application> viewAllApplicationsByRtoId(int rtoId) {
 		// TODO Auto-generated method stub
-		return this.applicationRepository.findAll(pageable);
+		return this.applicationRepository.getApplications(rtoId);
 	}
 
 	@Override
@@ -206,4 +207,9 @@ public class RTOOfficerService implements IRTOOfficerService {
 			}
 		}	
 	}	
+	
+	@Override
+	public int getRtoId(String username) {
+		return this.rtoOfficerRepository.findRtoId(username);
+	}
 }
