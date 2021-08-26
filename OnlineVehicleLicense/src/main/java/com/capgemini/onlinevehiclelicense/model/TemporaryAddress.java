@@ -21,7 +21,7 @@ public class TemporaryAddress {
 
 	@Id
 	@Column(name="address_id")
-	@JsonIgnore
+	
 	private String addrId;
 	
 	@Column(name="house")

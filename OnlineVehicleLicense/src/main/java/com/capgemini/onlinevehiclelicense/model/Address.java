@@ -27,7 +27,7 @@ public class Address {
 	/*@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="address_seq")
 	@SequenceGenerator(name="address_seq",sequenceName="address_seq", allocationSize=1)*/
 	@Column(name="address_id")
-	@JsonIgnore
+	
 	private String addrId;
 	
 	@NotNull(message = "House cannot be null")
