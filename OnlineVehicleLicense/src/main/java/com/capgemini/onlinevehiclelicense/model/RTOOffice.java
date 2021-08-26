@@ -25,7 +25,7 @@ public class RTOOffice {
 	@Id
 	@Column(name="rto_id")
     @GeneratedValue (strategy = GenerationType.AUTO)
-	@JsonIgnore
+	
 	private int rtoId;
 	
 	@ApiModelProperty(notes = "RTO Office Name", example = "PUNE")
@@ -38,12 +38,15 @@ public class RTOOffice {
 	private Set<RTOOfficer> rtoOfficer;
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Application> application;
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<License> license;
 	
 	@OneToMany(cascade= CascadeType.ALL)
+	@JsonIgnore
 	private Set<Appointment> appointment;
 
 	/**

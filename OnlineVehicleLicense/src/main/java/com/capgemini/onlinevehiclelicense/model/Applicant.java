@@ -32,7 +32,7 @@ public class Applicant {
 	@Id
 	@Column(name="applicant_id")
 	@NotEmpty(message = "ID cannot be empty")
-	@JsonIgnore
+	
 	private String applicantId;
 	
 	@NotNull(message = "Firstname cannot be null")
@@ -105,7 +105,7 @@ public class Applicant {
 	private TemporaryAddress tempAddress;
 	
 	//@OneToMany(cascade=CascadeType.ALL)
-	//@JsonIgnore
+	//
 	//private Set<Address> address;
 	
 	@OneToMany(cascade=CascadeType.ALL)
