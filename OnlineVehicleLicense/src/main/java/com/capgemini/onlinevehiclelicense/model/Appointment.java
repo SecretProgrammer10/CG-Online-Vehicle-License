@@ -54,11 +54,10 @@ public class Appointment {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
 	private Date timeSlot;
 	
-	@NotNull(message = "Application date cannot be null")
+	@NotNull(message = "Test Result cannot be null")
 	@ApiModelProperty(notes = "Test Result")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "test_result")
-	@JsonIgnore
 	private TestResult testResult;
 	
 /*	@OneToOne

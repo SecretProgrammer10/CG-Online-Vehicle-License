@@ -2,6 +2,7 @@ package com.capgemini.onlinevehiclelicense.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.Appointment;
 import com.capgemini.onlinevehiclelicense.model.Challan;
 import com.capgemini.onlinevehiclelicense.model.License;
+import com.capgemini.onlinevehiclelicense.model.RTOOffice;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 import com.capgemini.onlinevehiclelicense.model.TestResult;
 import com.capgemini.onlinevehiclelicense.service.ILicenseService;
@@ -139,10 +141,10 @@ public class RTOOfficerController {
 			@ApiResponse(code = 208, message = "Already added")
 			
 	})
-	@GetMapping("/view-all-appointment")
-	public Page<Appointment> viewAllAppointments(Pageable pageable)
+	@GetMapping("/view-all-appointment/{rtoId}")
+	public Set<Appointment> viewAllAppointmentsByRtoId(@PathVariable("rtoId") int rtoId)
 	{
-		return rtoOfficerService.viewAllAppointments(pageable);
+		return rtoOfficerService.viewAllAppointmentsByRtoId(rtoId);
 		
 	}
 	
@@ -153,10 +155,10 @@ public class RTOOfficerController {
 			@ApiResponse(code = 403, message = "Access to this resource is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you are looking for does not exist/cannot be found")
 	})
-	@GetMapping("/view-all-applications")
-	public Page<Application> viewAllApplications(Pageable pageable)
+	@GetMapping("/view-all-applications/{rtoId}")
+	public Set<Application> viewAllApplicationsByRtoId(@PathVariable("rtoId") int rtoId)
 	{
-		return rtoOfficerService.viewAllApplications(pageable);
+		return rtoOfficerService.viewAllApplicationsByRtoId(rtoId);
 		
 	}
 	
@@ -206,5 +208,11 @@ public class RTOOfficerController {
 	@DeleteMapping("/delete-license")
 	public ResponseEntity<String> deleteLicense(@RequestParam String licenseNumber){
 		return this.licenseService.deleteLicense(licenseNumber);
+	}
+	
+	@ApiOperation(value = "Get RtoId")
+	@GetMapping("/get-rtoId/{username}")
+	public int getRtoId(@PathVariable("username") String username) {
+		return this.rtoOfficerService.getRtoId(username);
 	}
 }

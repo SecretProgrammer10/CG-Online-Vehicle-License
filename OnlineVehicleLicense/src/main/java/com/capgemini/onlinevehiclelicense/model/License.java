@@ -45,7 +45,7 @@ public class License {
 	@Column(name = "license_type")
 	@ApiModelProperty(notes="License type")
 	@NotNull(message="license type should not be empty")
-	@JsonIgnore
+	
 	private LicenseType licenseType;
 	
 	@Column(name = "date_of_issue")

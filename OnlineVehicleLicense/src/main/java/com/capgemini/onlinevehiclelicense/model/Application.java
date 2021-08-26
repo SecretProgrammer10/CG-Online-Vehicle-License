@@ -29,7 +29,6 @@ import io.swagger.annotations.ApiModelProperty;
 public class Application {
 	
 	@Id
-	@JsonIgnore
 	@Column(name="application_number")
 	private String applicationNumber;
 		
@@ -51,7 +50,6 @@ public class Application {
 	
 	@ApiModelProperty(notes = "Firstname", example = "PAID")
 	@Column(name="payment_status")
-	@JsonIgnore
 	private String paymentStatus;
 	
 	@ApiModelProperty(notes = "Firstname", example = "Remarks")
@@ -62,7 +60,7 @@ public class Application {
 	@ApiModelProperty(notes = "Application status")
 	@Enumerated(EnumType.STRING)
 	@Column(name="application_status")
-	@JsonIgnore
+	
 	private ApplicationStatus applicationStatus;
 	
 	@NotNull(message = "Application type cannot be null")
@@ -76,8 +74,8 @@ public class Application {
 	@JsonIgnore
 	private Documents docs;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")
 	@JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")
 	private License license;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="application")

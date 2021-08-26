@@ -11,6 +11,7 @@ import com.capgemini.onlinevehiclelicense.model.Application;
 import com.capgemini.onlinevehiclelicense.model.ApplicationStatus;
 //import com.capgemini.onlinevehiclelicense.model.ApplicationStatus;
 import com.capgemini.onlinevehiclelicense.model.Challan;
+import com.capgemini.onlinevehiclelicense.model.RTOOffice;
 //import com.capgemini.onlinevehiclelicense.model.License;
 import com.capgemini.onlinevehiclelicense.model.RTOOfficer;
 //import com.capgemini.onlinevehiclelicense.model.Users;
@@ -36,5 +37,8 @@ public interface IRTOOfficerRepository extends JpaRepository<RTOOfficer, String>
 
 	@Query("select c from Challan c where c.vehicleNumber like ?1")
 	public List<Challan> checkAllChallanByVehicleNumber(String vehicleNumber);
+
+	@Query("select rto.rtoId from RTOOffice rto where rto.rtoName in (select r.rtoOffice.rtoName from RTOOfficer r where r.username like ?1)")
+	public int findRtoId(String username);
 	
 }

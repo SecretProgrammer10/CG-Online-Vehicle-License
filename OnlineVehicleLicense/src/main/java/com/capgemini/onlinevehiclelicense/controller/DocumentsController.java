@@ -2,6 +2,7 @@ package com.capgemini.onlinevehiclelicense.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +36,6 @@ public class DocumentsController {
 	
 	@ApiOperation("Upload Photo")
 	@PostMapping("/{applicationNumber}/upload-photo")
-	@ExceptionHandler(RecordAlreadyPresentException.class)
 	public ResponseEntity<String> uploadPhoto(@ApiParam(value = "Application Number Param") @PathVariable("applicationNumber") String id, 
 			@RequestParam MultipartFile photo)
 	{
@@ -44,7 +44,6 @@ public class DocumentsController {
 	
 	@ApiOperation("Upload Id Proof")
 	@PostMapping("/{applicationNumber}/upload-idProof")
-	@ExceptionHandler(RecordAlreadyPresentException.class)
 	public ResponseEntity<String> uploadIdProof(@ApiParam(value = "Application Number Param") @PathVariable("applicationNumber") String id, 
 			@RequestParam MultipartFile idProof)
 	{
@@ -53,7 +52,6 @@ public class DocumentsController {
 	
 	@ApiOperation("Upload Address Proof")
 	@PostMapping("/{applicationNumber}/upload-addressProof")
-	@ExceptionHandler(RecordAlreadyPresentException.class)
 	public ResponseEntity<String> uploadAddressProof(@ApiParam(value = "Application Number Param") @PathVariable("applicationNumber") String id,
 			@RequestParam MultipartFile addressProof)
 	{
@@ -62,14 +60,12 @@ public class DocumentsController {
 	
 	@ApiOperation("Update Documents")
 	@PutMapping("/update-documents/{applicationNumber}")
-	@ExceptionHandler(RecordNotFoundException.class)
 	public ResponseEntity<String> updateDocuments(@RequestBody Documents doc, @PathVariable("applicationNumber") String app_number){
 		return this.documentsService.updateDocuments(doc, app_number);
 	}
 	
 	@ApiOperation("View Photo")
 	@GetMapping("/view-phot/{applicationNumber}")
-	@ExceptionHandler(RecordNotFoundException.class)
 	public ResponseEntity<Resource> viewPhoto(@PathVariable("applicationNumber") String applicationNumber) {
 		return this.documentsService.viewPhoto(applicationNumber);
 	}
@@ -83,14 +79,12 @@ public class DocumentsController {
 	
 	@ApiOperation("View Address Proof")
 	@GetMapping("/view-address-proof/{applicationNumber}")
-	@ExceptionHandler(RecordNotFoundException.class)
 	public ResponseEntity<Resource> viewAddressProof(@PathVariable("applicationNumber") String applicationNumber) {
 		return this.documentsService.viewAddressProof(applicationNumber);
 	}
 	
 	@ApiOperation("Delete Documents")
 	@DeleteMapping("delete-documents/{applicationNumber}")
-	@ExceptionHandler(RecordNotFoundException.class)
 	public ResponseEntity<String> deleteDocuments(@PathVariable("applicationNumber") String appl_number){
 		return this.documentsService.deleteDocuments(appl_number);
 	}

@@ -68,7 +68,6 @@ public class ApplicationService implements IApplicationService{
 				application.setPaymentStatus("PAID");
 				application.setRtoOffice(rtoofc);
 				application.setApplicant(applicant.get());
-				application.setApplicationNumber(username);
 				System.out.println(application.getApplicationNumber());
 
 				
